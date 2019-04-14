@@ -14,19 +14,19 @@ const testsRouter = {
   children: [
     {
       path: 'add',
-      component: () => import('@/views/charts/keyboard'),
+      component: () => import('@/views/test/add'),
       name: 'KeyboardChart',
       meta: { title: 'addQuestions', noCache: true }
     },
     {
       path: 'type',
-      component: () => import('@/views/charts/line'),
+      component: () => import('@/views/test/type'),
       name: 'LineChart',
       meta: { title: 'questionsTypes', noCache: true }
     },
     {
       path: 'view',
-      component: () => import('@/views/charts/mixChart'),
+      component: () => import('@/views/test/view'),
       name: 'MixChart',
       meta: { title: 'viewQuestions', noCache: true }
     }
