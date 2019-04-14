@@ -4,10 +4,13 @@
     <sidebar class="sidebar-container" />
     <div :class="{hasTagsView:needTagsView}" class="main-container">
       <div :class="{'fixed-header':fixedHeader}">
+        <!-- 导航 -->
         <navbar />
         <tags-view v-if="needTagsView" />
       </div>
+      <!-- 二级路由区域 -->
       <app-main />
+      <!-- 悬浮的设置菜单 -->
       <right-panel v-if="showSettings">
         <settings />
       </right-panel>
