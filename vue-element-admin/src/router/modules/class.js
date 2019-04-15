@@ -14,17 +14,17 @@ const classesRouter = {
   children: [
     {
       path: 'class',
-      component: () => import('@/views/charts/keyboard'),
+      component: () => import('@/views/class/class'),
       name: 'KeyboardChart',
       meta: { title: 'classesAdmin', noCache: true }
     }, {
       path: 'room',
-      component: () => import('@/views/charts/mixChart'),
+      component: () => import('@/views/class/room'),
       name: 'MixChart',
       meta: { title: 'roomAdmin', noCache: true }
     }, {
       path: 'student',
-      component: () => import('@/views/charts/mixChart'),
+      component: () => import('@/views/class/student'),
       name: 'MixChart',
       meta: {
         title: 'studentAdmin',

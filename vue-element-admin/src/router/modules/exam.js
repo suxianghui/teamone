@@ -14,12 +14,12 @@ const examsRouter = {
   children: [
     {
       path: 'add',
-      component: () => import('@/views/charts/keyboard'),
+      component: () => import('@/views/exam/add'),
       name: 'KeyboardChart',
       meta: { title: 'addExams', noCache: true }
     }, {
       path: 'list',
-      component: () => import('@/views/charts/mixChart'),
+      component: () => import('@/views/exam/list'),
       name: 'MixChart',
       meta: { title: 'examsList', noCache: true }
     }

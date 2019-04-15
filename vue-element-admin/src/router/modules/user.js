@@ -14,12 +14,12 @@ const usersRouter = {
   children: [
     {
       path: 'add',
-      component: () => import('@/views/charts/keyboard'),
+      component: () => import('@/views/user/add'),
       name: 'KeyboardChart',
       meta: { title: 'addUsers', noCache: true }
     }, {
       path: 'view',
-      component: () => import('@/views/charts/mixChart'),
+      component: () => import('@/views/user/view'),
       name: 'MixChart',
       meta: { title: 'viewusers', noCache: true }
     }
