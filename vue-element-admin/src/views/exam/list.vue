@@ -6,28 +6,28 @@
         <div class="contentTop">
           <div class="formBox">
             <p>考试类型:</p>
-            <el-select v-model="value" placeholder>
+            <el-select v-model="examValue" placeholder>
               <el-option
                 v-for="item in examOptions"
                 :key="item.value"
                 :label="item.label"
-                :value="item.value"
+                :value="item.label"
               />
             </el-select>
           </div>
           <div class="formBox">
             <p>课程:</p>
-            <el-select v-model="value" placeholder>
+            <el-select v-model="classValue" placeholder>
               <el-option
                 v-for="item in classOptions"
                 :key="item.value"
                 :label="item.label"
-                :value="item.value"
+                :value="item.label"
               />
             </el-select>
           </div>
           <!-- <div class="btnBox"> -->
-          <el-button class="btn" style="width:130px;height:36px;text-align:center;margin-top:0;" type="primary">
+          <el-button class="btn" style="width:130px;height:36px;text-align:center;margin-top:0;" type="primary" @click="searchBtn">
             <i class="el-icon-search" /><span>查询</span>
           </el-button>
           <!-- </div> -->
@@ -35,8 +35,8 @@
         <div class="contentBot">
           <div class="title">
             <span>试卷列表</span>
-            <div class="condition">
-              <span class="active">全部</span>
+            <div class="condition" @click="toggleType">
+              <span>全部</span>
               <span>进行中</span>
               <span>已结束</span>
             </div>
@@ -64,6 +64,8 @@ export default {
   name: 'List',
   data() {
     return {
+      examValue: '',
+      classValue: '',
       examOptions: [{
         value: '选项1',
         label: '周考1'
@@ -165,6 +167,13 @@ export default {
     }
   },
   methods: {
+    searchBtn() {
+      console.log(this.examValue)
+      console.log(this.classValue)
+    },
+    toggleType(e) {
+      console.log(e.target.innerText)  //全部 - 进行中 - 已结束
+    }
   }
 }
 </script>

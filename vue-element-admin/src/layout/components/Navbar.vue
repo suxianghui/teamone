@@ -8,7 +8,9 @@
     >
     <!-- <breadcrumb id="breadcrumb-container" class="breadcrumb-container" /> -->
     <div class="right-menu">
-      111
+      <!-- <img src="https://cdn.nlark.com/yuque/0/2019/png/anonymous/1547609339813-e4e49227-157c-452d-be7e-408ca8654ffe.png?x-oss-process=image/resize,m_fill,w_48,h_48/format,png" 
+      alt="">
+      <span>chenmanjie</span> -->
     </div>
   </div>
   <!-- <div class="right-menu">
@@ -128,6 +130,11 @@ export default {
     float: right;
     height: 100%;
     line-height: 50px;
+    >img{
+      width:66px;
+      height:66px;
+      border-radius:50%;
+    }
 
     &:focus {
       outline: none;

@@ -7,6 +7,6 @@
 <script>
 
 export default {
-  name: 'Await'
+  name: 'Awaits'
 }
 </script>
