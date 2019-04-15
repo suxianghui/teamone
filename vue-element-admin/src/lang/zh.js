@@ -62,27 +62,22 @@ export default {
     clipboardDemo: 'Clipboard',
     i18n: '国际化',
     externalLink: '外链',
-
     questions: '试题管理',
-    addQuestions: "添加试题",
-    questionsTypes: "试题分类",
-    viewQuestions: "查看试题",
-
-    users: "用户管理",
-    addUsers: "添加用户",
-    viewusers: "用户展示",
-
-    exams: "考试管理",
-    addExams: "添加考试",
-    examsList: "试卷列表",
-
-    classes: "班级管理",
-    classesAdmin: "班级管理",
-    roomAdmin: "教室管理",
-    studentAdmin: "学生管理",
-
-    papers: "阅卷管理",
-    awaitClass: "待批班级"
+    addQuestions: '试题管理',
+    questionsTypes: '添加试题',
+    viewQuestions: '查看试题',
+    users: '用户管理',
+    addUsers: '添加用户',
+    viewusers: '用户展示',
+    exams: '考试管理',
+    addExams: '添加考试',
+    examsList: '试卷列表',
+    classes: '班级管理',
+    classesAdmin: '班级管理',
+    roomAdmin: '教室管理',
+    studentAdmin: '学生管理',
+    papers: '阅卷管理',
+    awaitClass: '待批班级'
   },
   navbar: {
     logOut: '退出登录',
