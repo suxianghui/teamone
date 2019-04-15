@@ -1,5 +1,6 @@
 <template>
-  <div id="tags-view-container" class="tags-view-container">
+  <div />
+  <!-- <div id="tags-view-container" class="tags-view-container">
     <scroll-pane ref="scrollPane" class="tags-view-wrapper">
       <router-link
         v-for="tag in visitedViews"
@@ -31,16 +32,16 @@
         {{ $t('tagsView.closeAll') }}
       </li>
     </ul>
-  </div>
+  </div> -->
 </template>
 
 <script>
-import ScrollPane from './ScrollPane'
+// import ScrollPane from './ScrollPane'
 import { generateTitle } from '@/utils/i18n'
 import path from 'path'
 
 export default {
-  components: { ScrollPane },
+  // components: { ScrollPane },
   data() {
     return {
       visible: false,

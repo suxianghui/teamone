@@ -1,23 +1,34 @@
 <template>
   <div :class="classObj" class="app-wrapper">
+    <div class="navbar">
+      <img
+        src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1551624718911&di=4a7004f8d71bd8da84d4eadf1b59e689&imgtype=0&src=http%3A%2F%2Fimg105.job1001.com%2Fupload%2Falbum%2F2014-10-15%2F1413365052_95IE3msH.jpg"
+        alt=""
+        style="width:120px;"
+      >
+      <!-- <breadcrumb id="breadcrumb-container" class="breadcrumb-container" /> -->
+      <div class="right-menu">
+        111
+      </div>
+    </div>
     <div v-if="device==='mobile'&&sidebar.opened" class="drawer-bg" @click="handleClickOutside" />
     <sidebar class="sidebar-container" />
     <div :class="{hasTagsView:needTagsView}" class="main-container">
       <div :class="{'fixed-header':fixedHeader}">
-        <navbar />
+        <!-- <navbar /> -->
         <tags-view v-if="needTagsView" />
       </div>
       <app-main />
-      <right-panel v-if="showSettings">
+      <!-- <right-panel v-if="showSettings">
         <settings />
-      </right-panel>
+      </right-panel> -->
     </div>
   </div>
 </template>
 
 <script>
-import RightPanel from '@/components/RightPanel'
-import { AppMain, Navbar, Settings, Sidebar, TagsView } from './components'
+// import RightPanel from '@/components/RightPanel'
+import { AppMain, Sidebar, TagsView } from './components' // Navbar, Settings,
 import ResizeMixin from './mixin/ResizeHandler'
 import { mapState } from 'vuex'
 
@@ -25,9 +36,9 @@ export default {
   name: 'Layout',
   components: {
     AppMain,
-    Navbar,
-    RightPanel,
-    Settings,
+    // Navbar,
+    // RightPanel,
+    // Settings,
     Sidebar,
     TagsView
   },
@@ -66,6 +77,23 @@ export default {
     position: relative;
     height: 100%;
     width: 100%;
+    .navbar{
+      width: 100%;
+      height:66px;
+      display: flex;
+      background:#fff;
+      justify-content: space-between;
+      align-items: center;
+      padding:0 46px 0 61px;
+      box-sizing: border-box;
+      position: fixed;
+      top:0;
+      left:0;
+      z-index:99;
+    }
+    .sidebar-container{
+      margin-top:66px;
+    }
 
     &.mobile.openSidebar {
       position: fixed;

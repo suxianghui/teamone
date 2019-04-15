@@ -10,6 +10,3 @@ export default {
   name: 'Await'
 }
 </script>
-
-<style scoped>
-</style>

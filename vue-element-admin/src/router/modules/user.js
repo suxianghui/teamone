@@ -19,7 +19,7 @@ const usersRouter = {
       meta: { title: 'addUsers', noCache: true }
     }, {
       path: 'view',
-      component: () => import('@/views/user/view'),
+      component: () => import('@/views/user/views'),
       name: 'MixChart',
       meta: { title: 'viewusers', noCache: true }
     }

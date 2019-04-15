@@ -10,6 +10,3 @@ export default {
   name: 'Class'
 }
 </script>
-
-<style scoped>
-</style>

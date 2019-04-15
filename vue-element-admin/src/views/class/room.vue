@@ -10,6 +10,3 @@ export default {
   name: 'Room'
 }
 </script>
-
-<style scoped>
-</style>
