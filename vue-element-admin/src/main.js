@@ -26,10 +26,10 @@ import './utils/errorLog' // error log
 // 挂载只定义过滤器
 import * as filters from './filters' // global filters
 // 挂载mock ，拦截请求
-import { mockXHR } from '../mock' // simulation data
+// import { mockXHR } from '../mock' // simulation data
 
 // mock api in github pages site build
-if (process.env.NODE_ENV === 'production') { mockXHR() }
+// if (process.env.NODE_ENV === 'production') { mockXHR() }
 
 // 注册全局过滤器
 Vue.use(Element, {
