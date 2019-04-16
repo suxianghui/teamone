@@ -29,6 +29,11 @@ const testsRouter = {
       component: () => import('@/views/test/view'),
       name: 'MixChart',
       meta: { title: 'viewQuestions', noCache: true }
+    },
+    {
+      path: 'details',
+      component: () => import('@/views/test/details'),
+      meta: { title: '', noCache: true }
     }
   ]
 }

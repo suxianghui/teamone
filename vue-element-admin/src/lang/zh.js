@@ -62,7 +62,6 @@ export default {
     clipboardDemo: 'Clipboard',
     i18n: '国际化',
     externalLink: '外链',
-
     questions: '试题管理',
     addQuestions: '添加试题',
     questionsTypes: '试题分类',
@@ -80,7 +79,6 @@ export default {
     classesAdmin: '班级管理',
     roomAdmin: '教室管理',
     studentAdmin: '学生管理',
-
     papers: '阅卷管理',
     awaitClass: '待批班级'
   },

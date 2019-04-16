@@ -1,6 +1,8 @@
 <template>
   <section class="app-main">
+    <!-- 动画 -->
     <transition name="fade-transform" mode="out-in">
+      <!-- 缓存组件(通过闭包来实现:存在着内存泄漏) -->
       <keep-alive :include="cachedViews">
         <router-view :key="key" />
       </keep-alive>
