@@ -43,11 +43,19 @@
               <p>考试时间:</p>
               <div class="alltime">
                 <div class="block">
-                  <el-date-picker v-model="startTime" align="right" type="date" placeholder="开始时间" />&nbsp;-&nbsp;
+                  <el-date-picker
+                    v-model="startTime"
+                    type="datetime"
+                    placeholder="选择日期时间">
+                  </el-date-picker>
                   <span v-if="isShow5">请选择开始时间</span>
-                </div>
+                </div>&nbsp; - &nbsp;
                 <div class="block">
-                  <el-date-picker v-model="endTime" type="date" placeholder="结束时间" />
+                  <el-date-picker
+                    v-model="endTime"
+                    type="datetime"
+                    placeholder="选择日期时间">
+                  </el-date-picker>
                   <span v-if="isShow6">请选择结束时间</span>
                 </div>
               </div>
@@ -61,7 +69,7 @@
 </template>
 
 <script>
-import { momentTime } from "@/utils/index"
+import { momentTime } from '@/utils/index'
 
 export default {
   name: 'Add',
@@ -138,31 +146,7 @@ export default {
           value: '选项10',
           label: 'node高级'
         }
-      ],
-      rules: {
-          name: [
-            { required: true, message: '请输入活动名称', trigger: 'blur' },
-            { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
-          ],
-          region: [
-            { required: true, message: '请选择活动区域', trigger: 'change' }
-          ],
-          date1: [
-            { type: 'date', required: true, message: '请选择日期', trigger: 'change' }
-          ],
-          date2: [
-            { type: 'date', required: true, message: '请选择时间', trigger: 'change' }
-          ],
-          type: [
-            { type: 'array', required: true, message: '请至少选择一个活动性质', trigger: 'change' }
-          ],
-          resource: [
-            { required: true, message: '请选择活动资源', trigger: 'change' }
-          ],
-          desc: [
-            { required: true, message: '请填写活动形式', trigger: 'blur' }
-          ]
-        }
+      ]
     }
   },
   methods: {
@@ -174,10 +158,10 @@ export default {
       !this.startTime ? this.isShow5 = true : this.isShow5 = false
       !this.endTime ? this.isShow6 = true : this.isShow6 = false
 
-      console.log(this.examName)
-      console.log(this.examGradeValue)
-      console.log(this.examTypeValue)
-      console.log(this.questionNum)
+      // console.log(this.examName)
+      // console.log(this.examGradeValue)
+      // console.log(this.examTypeValue)
+      // console.log(this.questionNum)
       console.log(momentTime(this.startTime))
       console.log(this.endTime)
     }
@@ -238,6 +222,7 @@ h2 {
     .alltime{
       width: 100%;
       display: flex;
+      align-items: center;
     }
   }
 }

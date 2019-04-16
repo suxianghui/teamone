@@ -1,7 +1,7 @@
 
 import request from '@/utils/request'
 
-export let fetchList = query => {
+export const submitExam = query => {
   return request({
     url: '/exam/exam',
     method: 'get',

@@ -172,7 +172,8 @@ export default {
       console.log(this.classValue)
     },
     toggleType(e) {
-      console.log(e.target.innerText)  //全部 - 进行中 - 已结束
+      // 全部 - 进行中 - 已结束
+      console.log(e.target.innerText)
     }
   }
 }
