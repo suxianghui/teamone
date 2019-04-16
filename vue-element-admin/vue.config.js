@@ -30,6 +30,7 @@ module.exports = {
       warnings: false,
       errors: true
     },
+    //跨域代理
     proxy: {
       // change xxx-api/login => mock/login
       // detail: https://cli.vuejs.org/config/#devserver-proxy
@@ -39,7 +40,14 @@ module.exports = {
         pathRewrite: {
           ['^' + process.env.VUE_APP_BASE_API]: ''
         }
-      }
+      },
+      // 'api':{
+      //   target:`http://169.254.18.69:7001/`,
+      //   changeOrigin:true,
+      //   pathRewrite:{
+      //     '/api':''
+      //   }
+      // }
     },
     after: require('./mock/mock-server.js')
   },

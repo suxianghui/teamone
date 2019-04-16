@@ -12,7 +12,7 @@
           <span :id="idx === 1 ? 'blue':'gray' " class="updateUser" @click="change(1)">刷新用户</span>
         </p>
 
-        <div>
+        <div v-if="idx === 0">
           <el-input v-model="userName" placeholder="请输入用户名" />
           <el-input v-model="pwd" placeholder="请输入密码" show-password />
           <el-select v-model="identityId" placeholder="请选择身份id">
@@ -97,9 +97,9 @@
         <p>
           <span>给身份设置api接口权限</span>
         </p>
-        <el-select v-model="identityId" placeholder="请选择身份id">
+        <el-select v-model="identityId_api" placeholder="请选择身份id">
           <el-option
-            v-for="item in identityIdValue"
+            v-for="item in identityId_apiValue"
             :key="item.value"
             :label="item.label"
             :value="item.label"
@@ -123,9 +123,9 @@
         <p>
           <span>给身份设置视图权限</span>
         </p>
-        <el-select v-model="identityId" placeholder="请选择身份id">
+        <el-select v-model="identityId_view" placeholder="请选择身份id">
           <el-option
-            v-for="item in identityIdValue"
+            v-for="item in identityId_viewValue"
             :key="item.value"
             :label="item.label"
             :value="item.label"
@@ -159,6 +159,8 @@ export default {
       userId: '',
       pwd: '',
       identityId: '',
+      identityId_api: '',
+      identityId_view: '',
       identityName: '',
       apiJurisdictionName: '',
       apiJurisdictionUrl: '',
@@ -167,10 +169,30 @@ export default {
       apiJurisdictionId: '',
       viewJurisdictionId: '',
       idx: 0,
+      identityId_viewValue:[
+        {
+          value:'选项1',
+          label:'视图'
+        }
+      ],
+      identityId_apiValue:[
+        {
+          value:'选项1',
+          label:'123456'
+        }
+      ],
       userIdValue: [
         {
           value: '选项1',
           label: '黄金糕'
+        },
+        {
+          value: '选项2',
+          label: '狮子头'
+        },
+        {
+          value: '选项3',
+          label: '黄金酥'
         }
       ],
       viewJurisdictionIdValue: [
@@ -201,19 +223,19 @@ export default {
   },
   computed: {
     ...mapState({
-      addUserlist: state => state.addUsers.addUserlist
+      // addUserlist: state => state.addUsers.addUserlist
     })
   },
   methods: {
-    ...mapMutations({
-      updateUser: 'addUsers/updateUser'
-    }),
-    ...mapActions({
-      getAddUserData: 'addUsers/getAddUserData'
-    }),
-    created() {
-      this.getAddUserData()
-    },
+    // ...mapMutations({
+    //   updateUser: 'addUsers/updateUser'
+    // }),
+    // ...mapActions({
+    //   getAddUserData: 'addUsers/getAddUserData'
+    // }),
+    // created() {
+    //   this.getAddUserData()
+    // },
     // 点击事件
     jurisdiction() {
       console.log(1)
