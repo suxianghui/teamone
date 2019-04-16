@@ -14,15 +14,15 @@ const papersRouter = {
   children: [
     {
       path: 'await',
-      component: () => import('@/views/paper/await'),
+      component: () => import('@/views/paper/awaits'),
       name: 'KeyboardChart',
       meta: { title: 'awaitClass' }
     },
     {
-      path: 'await',
-      component: () => import('@/views/paper/await'),
+      path: 'await1',
+      component: () => import('@/views/paper/paperList'),
       name: 'KeyboardChart',
-      meta: { title: '' }
+      meta: { title: '123' }
     }
   ]
 }

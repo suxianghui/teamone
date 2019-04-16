@@ -1,3 +1,4 @@
+import moment from 'moment'
 /**
  * Created by jiachenpan on 16/11/18.
  */
@@ -8,6 +9,10 @@
  * @param {string} cFormat
  * @returns {string}
  */
+export function momentTime(str) {
+  return moment(Date.now(), str).valueOf();
+}
+
 export function parseTime(time, cFormat) {
   if (arguments.length === 0) {
     return null

@@ -1,15 +1,310 @@
 <template>
-  <div class="chart-container">
-    add
+  <div class="wrap">
+    <!-- 头部标签 -->
+    <p>添加用户</p>
+    <!-- 大盒子包裹六个方块 -->
+    <div class="addBox">
+
+      <!-- 一、添加用户/更新用户 -->
+      <div class="user">
+        <p>
+          <span :id="idx === 0 ? 'blue':'gray' " @click="change(0)">添加用户</span>
+          <span :id="idx === 1 ? 'blue':'gray' " class="updateUser" @click="change(1)">刷新用户</span>
+        </p>
+
+        <div>
+          <el-input v-model="userName" placeholder="请输入用户名" />
+          <el-input v-model="pwd" placeholder="请输入密码" show-password />
+          <el-select v-model="identityId" placeholder="请选择身份id">
+            <el-option
+              v-for="item in identityIdValue"
+              :key="item.value"
+              :label="item.label"
+              :value="item.label"
+            />
+          </el-select>
+        </div>
+
+        <div v-if="idx === 1">
+          <el-select v-model="userId" placeholder="请选择用户id">
+            <el-option
+              v-for="item in userIdValue"
+              :key="item.value"
+              :label="item.label"
+              :value="item.label"
+            />
+          </el-select>
+          <el-input v-model="userName" placeholder="请输入用户名" />
+          <el-input v-model="pwd" placeholder="请输入密码" show-password />
+          <el-select v-model="identityId" placeholder="请选择身份id">
+            <el-option
+              v-for="item in identityIdValue"
+              :key="item.value"
+              :label="item.label"
+              :value="item.label"
+            />
+          </el-select>
+        </div>
+        <div class="btn">
+          <el-button type="primary" @click="set">确定</el-button>
+          <el-button plain>重置</el-button>
+        </div>
+      </div>
+      <!-- 二、添加身份-->
+      <div class="user">
+        <p>
+          <span>添加身份</span>
+        </p>
+        <el-input v-model="identityName" placeholder="请输入身份名称" />
+        <div class="btn">
+          <el-button type="primary" @click="identity">确定</el-button>
+          <el-button plain>重置</el-button>
+        </div>
+      </div>
+      <!-- 三、添加api接口权限-->
+      <div class="user">
+        <p>
+          <span>添加api接口权限</span>
+        </p>
+        <el-input v-model="apiJurisdictionName" placeholder="请输入api接口权限名称" />
+        <el-input v-model="apiJurisdictionUrl" placeholder="请输入api接口权限url" />
+        <el-input v-model="apiJurisdictionMethod" placeholder="请输入api接口权限方法" />
+        <div class="btn">
+          <el-button type="primary" @click="jurisdiction">确定</el-button>
+          <el-button plain>重置</el-button>
+        </div>
+      </div>
+      <!-- 四、添加视图接口权限-->
+      <div class="user">
+        <p>
+          <span>添加视图接口权限</span>
+        </p>
+        <el-select v-model="existingView" placeholder="请选择已有视图">
+          <el-option
+            v-for="item in existingViewValue"
+            :key="item.value"
+            :label="item.label"
+            :value="item.label"
+          />
+        </el-select>
+        <div class="btn">
+          <el-button type="primary" @click="view">确定</el-button>
+          <el-button plain>重置</el-button>
+        </div>
+      </div>
+      <!-- 五、给身份设置api接口权限-->
+      <div class="user">
+        <p>
+          <span>给身份设置api接口权限</span>
+        </p>
+        <el-select v-model="identityId" placeholder="请选择身份id">
+          <el-option
+            v-for="item in identityIdValue"
+            :key="item.value"
+            :label="item.label"
+            :value="item.label"
+          />
+        </el-select>
+        <el-select v-model="apiJurisdictionId" placeholder="请选择api接口权限id">
+          <el-option
+            v-for="item in apiJurisdictionIdValue"
+            :key="item.value"
+            :label="item.label"
+            :value="item.label"
+          />
+        </el-select>
+        <div class="btn">
+          <el-button type="primary" @click="api">确定</el-button>
+          <el-button plain>重置</el-button>
+        </div>
+      </div>
+      <!-- 六、给身份设置视图权限-->
+      <div class="user">
+        <p>
+          <span>给身份设置视图权限</span>
+        </p>
+        <el-select v-model="identityId" placeholder="请选择身份id">
+          <el-option
+            v-for="item in identityIdValue"
+            :key="item.value"
+            :label="item.label"
+            :value="item.label"
+          />
+        </el-select>
+        <el-select v-model="viewJurisdictionId" placeholder="请选择视图权限id">
+          <el-option
+            v-for="item in viewJurisdictionIdValue"
+            :key="item.value"
+            :label="item.label"
+            :value="item.label"
+          />
+        </el-select>
+        <div class="btn">
+          <el-button type="primary" @click="set">确定</el-button>
+          <el-button plain>重置</el-button>
+        </div>
+      </div>
+
+    </div>
   </div>
 </template>
 
 <script>
+import { mapState, mapActions, mapMutations } from 'vuex'
 
 export default {
-  name: 'Add'
+  data() {
+    return {
+      userName: '',
+      userId: '',
+      pwd: '',
+      identityId: '',
+      identityName: '',
+      apiJurisdictionName: '',
+      apiJurisdictionUrl: '',
+      apiJurisdictionMethod: '',
+      existingView: '',
+      apiJurisdictionId: '',
+      viewJurisdictionId: '',
+      idx: 0,
+      userIdValue: [
+        {
+          value: '选项1',
+          label: '黄金糕'
+        }
+      ],
+      viewJurisdictionIdValue: [
+        {
+          value: '选项1',
+          label: '黄金糕'
+        }
+      ],
+      existingViewValue: [
+        {
+          value: '选项1',
+          label: '黄金糕'
+        }
+      ],
+      apiJurisdictionIdValue: [
+        {
+          value: '选项1',
+          label: '黄金糕'
+        }
+      ],
+      identityIdValue: [
+        {
+          value: '选项1',
+          label: '黄金糕'
+        }
+      ]
+    }
+  },
+  computed: {
+    ...mapState({
+      addUserlist: state => state.addUsers.addUserlist
+    })
+  },
+  methods: {
+    ...mapMutations({
+      updateUser: 'addUsers/updateUser'
+    }),
+    ...mapActions({
+      getAddUserData: 'addUsers/getAddUserData'
+    }),
+    created() {
+      this.getAddUserData()
+    },
+    // 点击事件
+    jurisdiction() {
+      console.log(1)
+    },
+    set() {
+      console.log(2)
+    },
+    identity() {
+      console.log(3)
+    },
+    api() {
+      console.log(4)
+    },
+    view() {
+      console.log(5)
+    },
+    change(idx) {
+      this.idx = idx
+      if (this.idx === 0) {
+
+      } else if (this.idx === 1) {
+
+      }
+    }
+  }
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+.wrap{
+  width: 100%;
+  height: 100%;
+  padding:0 24px;
+  box-sizing: border-box;
+  >p{
+    font-size:22px;
+    font-weight: 500;
+    padding:20px 0;
+    // >span{
+    //   color: rgba(0, 0, 0, 0.65)
+    // }
+  }
+}
+.addBox {
+    display: flex;
+    flex-wrap: wrap;
+    border-left: 1px solid #ccc;
+    border-top: 1px solid #ccc;
+  .user {
+    width: 33.3%;
+    border-right: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    .btn {
+      margin: 8px 0;
+    }
+    span {
+      font-size: 14px;
+      background: #fff;
+      padding: 8px 10px;
+      border: 1px solid #0139fd;
+      color: #0139fd;
+      cursor: pointer;
+    }
+    .updateUser {
+      border: 1px solid #ccc;
+      color: #ccc;
+      margin-left: -4px;
+    }
+    #blue {
+      border: 1px solid #0139fd;
+      color: #0139fd;
+    }
+    #gray {
+      border: 1px solid #ccc;
+      color: #ccc;
+    }
+  }
+}
+.el-select {
+  margin: 8px 0;
+  width: 180px;
+}
+.el-button--primary {
+  width: 120px;
+}
+.el-input {
+  margin: 8px 0;
+}
 </style>
