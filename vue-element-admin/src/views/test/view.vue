@@ -5,10 +5,10 @@
       <div class="curriculumtype">
         <span>课程类型: </span>
         <span :class="isTrue?'all backblue':'all'" @click="tapAll">All</span>
-        <div v-if="isTrue===false">
-          <span v-for="(item,index) in currtype" :key="index" :class="clickindex==index?'currsps backblue':'currsps'" @click="(em,index)">{{ item }}</span>
+        <div style="display: inline-block" v-if="isTrue===false">
+          <span v-for="(item,index) in currtype" :key="index" :class="clickindex==index?'currsps backblue':'currsps'" @click="bindtap(item,index)">{{ item }}</span>
         </div>
-        <div v-if="isTrue">
+        <div style="display: inline-block" v-if="isTrue">
           <span v-for="(item,index) in currtype" :key="index" class="currsps backblue" @click="bindtap(item,index)">{{ item }}</span>
         </div>
       </div>
@@ -131,6 +131,7 @@ export default {
     width: 100%;
     height: calc(100vh - 84px);
     height: 100%;
+    padding-top:66px;
   }
 
   .tittle {
@@ -140,7 +141,7 @@ export default {
   }
 
   .topbox {
-    width: 1653px;
+    width: 95%;
     height: 184px;
     background: white;
     border-radius: 10px;
@@ -149,7 +150,7 @@ export default {
   }
 
   .bottombox {
-    width: 1653px;
+    width: 95%;
     background: white;
     border-radius: 10px;
     padding: 24px;
@@ -197,7 +198,7 @@ export default {
   }
 
   .studytype {
-    width: 1605px;
+    width: 100%;
     height: 73px;
     margin-top: 10px;
   }
@@ -223,7 +224,7 @@ export default {
   }
 
   .childrenbox {
-    width: 1605px;
+    width: 98%;
     height: 115px;
     border-bottom: 1px solid #eee;
     position: relative;

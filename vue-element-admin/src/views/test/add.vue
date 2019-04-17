@@ -5,17 +5,17 @@
       <div class="inp">
         <p>题目信息</p>
         <p>题干</p>
-        <el-input v-model="input10" placeholder="请输入题目标题,不超过20个字" class="elinput" />
+        <el-input v-model="title" placeholder="请输入题目标题,不超过20个字" class="elinput" />
       </div>
       <div class="textear">
         <p>题目主题</p>
         <div class="editor-container">
-          <markdown-editor v-model="content1" height="300px" class="mark" />
+          <markdown-editor v-model="questions_stem" height="300px" class="mark" />
         </div>
       </div>
       <div class="select">
         <P>请选择考试类型</P>
-        <el-select slot="prepend" v-model="select1" placeholder="请选择" class="sel">
+        <el-select slot="prepend" v-model="exam_id" placeholder="请选择" class="sel">
           <el-option
             v-for="item in study"
             :key="item.value"
@@ -26,7 +26,7 @@
       </div>
       <div class="select">
         <P>选择课程类型</P>
-        <el-select slot="prepend" v-model="select2" placeholder="请选择" class="sel">
+        <el-select slot="prepend" v-model="subject_id" placeholder="请选择" class="sel">
           <el-option
             v-for="item in curriculum"
             :key="item.value"
@@ -37,7 +37,7 @@
       </div>
       <div class="select">
         <P>选择题目类型</P>
-        <el-select slot="prepend" v-model="select3" placeholder="请选择" class="sel">
+        <el-select slot="prepend" v-model="questions_type_id" placeholder="请选择" class="sel">
           <el-option
             v-for="item in subject"
             :key="item.value"
@@ -47,9 +47,9 @@
         </el-select>
       </div>
       <div class="textear">
-        <p>题目主题</p>
+        <p>答案信息</p>
         <div class="editor-container">
-          <markdown-editor v-model="content2" height="300px" class="mark" />
+          <markdown-editor v-model="questions_answer" height="300px" class="mark" />
         </div>
       </div>
       <div class="btn">
@@ -61,20 +61,18 @@
 
 <script>
 import MarkdownEditor from '@/components/MarkdownEditor'
+import {mapState} from 'vuex'
 export default {
   name: 'MarkdownDemo',
   components: { MarkdownEditor },
   data() {
     return {
-      input3: '',
-      input4: '',
-      input5: '',
-      input10: '',
-      content1: '',
-      content2: '',
-      select1: '',
-      select2: '',
-      select3: '',
+      title: '',
+      questions_stem: '',
+      exam_id: '',
+      subject_id: '',
+      questions_type_id: '',
+      questions_answer: '',
       study: [{
         value: '选项1',
         label: '周考1'
@@ -119,7 +117,10 @@ export default {
   computed: {
     language() {
       return this.languageTypeList[this.$store.getters.language]
-    }
+    },
+    // ...mapState({
+    //   studyType : state=>state.index.
+    // })
   },
   methods: {
     getHtml() {
@@ -136,7 +137,7 @@ export default {
       width: 100%;
       height: calc(100vh - 84px);
       height: 100%;
-
+      padding-top:66px;
     }
 
     .tittle {

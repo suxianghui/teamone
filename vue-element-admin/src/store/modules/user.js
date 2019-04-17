@@ -31,21 +31,10 @@ const mutations = {
 const actions = {
   // user login
   async login({ commit }, userInfo) {
-    console.log(userInfo,'store')
     const { username, password } = userInfo
-    let res = await login({ user_name: username,user_pwd:password});
-   //接口携带两个参数
-   console.log('res',res) 
-    // return new Promise((resolve, reject) => {
-    //   login({ username: username.trim(), password: password }).then(response => {
-    //     const { data } = response
-    //     commit('SET_TOKEN', data.token)
-    //     setToken(data.token)
-    //     resolve()
-    //   }).catch(error => {
-    //     reject(error)
-    //   })
-    // })
+    let res = await login({user_name: username, user_pwd: password});
+    setToken(res.token);
+    return res;
   },
 
   // get user info

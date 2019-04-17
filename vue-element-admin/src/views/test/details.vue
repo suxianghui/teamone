@@ -48,6 +48,7 @@ export default {
         width: 100%;
         height: calc(100vh - 84px);
         background: #f0f2f5;
+        padding-top:66px;
     }
 
     .tittle {
@@ -56,7 +57,7 @@ export default {
     }
 
     .messtitle {
-        width: 1136px;
+        width: 60%;
         background: white;
         border-radius: 10px;
         margin-left: 20px;
@@ -67,7 +68,7 @@ export default {
     }
 
     .Answer {
-        width: 500px;
+        width: 35%;
         background: white;
         border-radius: 10px;
         float: left;

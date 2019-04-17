@@ -1,13 +1,12 @@
 import axios from 'axios'
 import { MessageBox, Message } from 'element-ui'
-import store from '@/store'
 import { getToken } from '@/utils/auth'
 
 // create an axios instance
 const service = axios.create({
-  //axios 可以创建实例，也可以直接使用
-  baseURL:'/api',
-  // baseURL: process.env.VUE_APP_BASE_API, // api 的 base_url
+  // baseURL: 'http://169.254.12.55:7001', // api 的 base_url
+
+  baseURL: '/api',
   // withCredentials: true, // 跨域请求时发送 cookies
   timeout: 5000 // request timeout
 })
@@ -47,9 +46,13 @@ service.interceptors.response.use(//响应拦截器
 //响应拦截器,所以响应回来的 拦截器都需要走这里走
   response => {
     const res = response.data
+    if (res.code == 1){
+      return res;
+    }
+
     // if (res.code !== 20000) {
     //   Message({
-    //     message: res.message || 'error',
+    //     message: res.msg || 'error',
     //     type: 'error',
     //     duration: 5 * 1000
     //   })

@@ -18,6 +18,7 @@
     <div v-if="device==='mobile'&&sidebar.opened" class="drawer-bg" @click="handleClickOutside" />
     <sidebar class="sidebar-container" />
     <div :class="{hasTagsView:needTagsView}" class="main-container">
+      <!-- 导航 -->
       <div :class="{'fixed-header':fixedHeader}">
         <!-- <navbar /> -->
         <tags-view v-if="needTagsView" />
@@ -39,12 +40,12 @@ import { mapState } from 'vuex'
 export default {
   name: 'Layout',
   components: {
-    AppMain,
-    // Navbar,
-    // RightPanel,
-    // Settings,
+    RightPanel,
+    Navbar,
     Sidebar,
-    TagsView
+    AppMain,
+    TagsView,
+    Settings
   },
   mixins: [ResizeMixin],
   computed: {
@@ -73,76 +74,45 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~@/styles/mixin.scss";
-@import "~@/styles/variables.scss";
+  @import "~@/styles/mixin.scss";
+  @import "~@/styles/variables.scss";
 
-.app-wrapper {
-  @include clearfix;
-  position: relative;
-  height: 100%;
-  width: 100%;
-  .navbar {
+  .app-wrapper {
+    @include clearfix;
+    position: relative;
+    height: 100%;
     width: 100%;
-    height: 66px;
-    display: flex;
-    background: #fff;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 46px 0 61px;
-    box-sizing: border-box;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 99;
-    .right-menu {
-      display: flex;
-      align-items: center;
-      > img {
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-      }
-      span {
-        margin-left: 10px;
-        font-size: 13px;
-        color: #6e338f;
-      }
+
+    &.mobile.openSidebar {
+      position: fixed;
+      top: 0;
     }
   }
-  .sidebar-container {
-    margin-top: 66px;
+
+  .drawer-bg {
+    background: #000;
+    opacity: 0.3;
+    width: 100%;
+    top: 0;
+    height: 100%;
+    position: absolute;
+    z-index: 999;
   }
 
-  &.mobile.openSidebar {
+  .fixed-header {
     position: fixed;
     top: 0;
+    right: 0;
+    z-index: 9;
+    width: calc(100% - #{$sideBarWidth});
+    transition: width 0.28s;
   }
-}
 
-.drawer-bg {
-  background: #000;
-  opacity: 0.3;
-  width: 100%;
-  top: 0;
-  height: 100%;
-  position: absolute;
-  z-index: 999;
-}
+  .hideSidebar .fixed-header {
+    width: calc(100% - 54px)
+  }
 
-.fixed-header {
-  position: fixed;
-  top: 0;
-  right: 0;
-  z-index: 9;
-  width: calc(100% - #{$sideBarWidth});
-  transition: width 0.28s;
-}
-
-.hideSidebar .fixed-header {
-  width: calc(100% - 54px);
-}
-
-.mobile .fixed-header {
-  width: 100%;
-}
+  .mobile .fixed-header {
+    width: 100%;
+  }
 </style>

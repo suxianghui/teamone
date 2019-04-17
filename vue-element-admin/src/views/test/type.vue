@@ -17,20 +17,15 @@
         </el-dialog>
         <div class="table">
           <div class="head">
-            <span>类型id</span>
-            <span>类型名称</span>
-            <span>操作</span>
+            <span class="typelist">类型id</span>
+            <span class="typelist">类型名称</span>
+            <span class="typelist">操作</span>
           </div>
           <div class="count">
-            <div class="count-text">
-              <span>sjfksjkf</span>
-              <span>简答题</span>
-              <span />
-            </div>
-            <div class="count-text">
-              <span>sjfksjkf</span>
-              <span>简答题</span>
-              <span />
+            <div v-for="(item,index) in list" class="count-text" :key="index">
+              <span class="typeid">{{item.exam_id}}</span>
+              <span class="typeid">{{item.exam_name}}</span>
+              <span class="typeid"></span>
             </div>
           </div>
         </div>
@@ -56,7 +51,15 @@ export default {
         resource: '',
         desc: ''
       },
-      formLabelWidth: '120px'
+      formLabelWidth: '120px',
+      list:[{
+            exam_id: "8sc5d7-7p5f9e-cb2zii-ahe5i",
+            exam_name: "周考1"
+        },
+        {
+            exam_id: "jpg8y9-zbzt7o-jpvuhf-fwnjvr",
+            exam_name: "周考2"
+        }]
     }
   }
 }
@@ -68,18 +71,19 @@ export default {
     position: relative;
     width: 100%;
     height: calc(100vh - 84px);
+    padding-top:66px;
   }
 
   .box {
     width: 100%;
-    height: 60%;
-    background: #ccc;
+    height: 100%;
+    background: #eee;
   }
 
   .tittle {
     padding: 30px;
-    font-size: 25px;
-    font-weight: 800;
+    font-size: 26px;
+    font-weight: 200;
   }
 
   .little-box {
@@ -105,11 +109,8 @@ export default {
   }
 
   .head {
-    display: flex;
-    justify-content: space-around;
     height: 45px;
-    align-items: center;
-    background: #ccc;
+    background: #fafafa;;
     width: 95%;
     margin: 0 auto;
   }
@@ -118,19 +119,27 @@ export default {
     width: 95%;
     margin: 0 auto;
   }
-
+  .typelist{
+    width: 33%;
+    height: 100%;
+    display: inline-block;
+    line-height: 45px;
+    padding:0 20px;
+  }
+  .typeid{
+    width: 33%;
+    line-height: 45px;
+    padding:0 20px;
+    display: inline-block;
+  }
   .count-text {
-    text-align: center;
-    display: flex;
-    justify-content: space-around;
     height: 45px;
-    align-items: center;
     width: 100%;
-    margin: 0 auto;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid #fafafa;;
+    font-size: 14px;
   }
 
   .count-text:hover {
-    background: #ccc;
+    background: #fafafa;;
   }
 </style>

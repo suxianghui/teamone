@@ -69,13 +69,13 @@
       </div>
     </el-form>
 
-    <el-dialog :title="$t('login.thirdparty')" :visible.sync="showDialog">
+    <!-- <el-dialog :title="$t('login.thirdparty')" :visible.sync="showDialog">
       {{ $t('login.thirdpartyTips') }}
       <br>
       <br>
       <br>
       <social-sign />
-    </el-dialog>
+    </el-dialog> -->
   </div>
 </template>
 
@@ -83,6 +83,7 @@
 import { validUsername } from '@/utils/validate'
 import LangSelect from '@/components/LangSelect'
 import SocialSign from './socialSignin'
+import {mapActions} from 'vuex'
 
 import { mapActions } from "vuex";
 
@@ -90,10 +91,9 @@ export default {
   name: 'Login',
   components: { LangSelect, SocialSign },
   data() {
-    //用户名的自定义校验
+    // 用户名的自定义校验
     const validateUsername = (rule, value, callback) => {
-      if (!value) {//用户名规则，可以自定义
-      // if (!validUsername(value)) {
+      if (!value) {
         callback(new Error('Please enter the correct user name'))
       //不得少于 6 个数字，否则提示报错
       } else {
@@ -114,17 +114,8 @@ export default {
       },
       // 校验，有几个需要校验的就写几条规则
       loginRules: {
-        //每一项为数组格式，数组里边每一个可以加多个规则，用对象的形式
-        username: [{ required: true,//必填
-         trigger: 'blur'//失去焦点时 触发校验
-         }, 
-         {
-           trigger: 'blur',
-           validator: validateUsername
-         }],
-        password: [{ required: true, trigger: 'blur',validator: validatePassword }]
-        //trigger 表示行为，什么时候触发
-        //validator  表示自定义校验，可以写一个函数，如果校验通过，则直接调用 callback;如果校验不通过，则传一个 newerror 出来
+        username: [{ required: true, trigger: 'blur'}, {trigger:'blur', validator: validateUsername }],
+        password: [{ required: true, trigger: 'blur', validator: validatePassword }]
       },
       passwordType: 'password',
       capsTooltip: false,
@@ -156,20 +147,9 @@ export default {
   },
   methods: {
     ...mapActions({
-      login:'user/login'
+      login: 'user/login',
+      generateRoutes: 'permission/generateRoutes'
     }),
-    // checkCapslock({ shiftKey, key } = {}) {
-    //   if (key && key.length === 1) {
-    //     if (shiftKey && (key >= 'a' && key <= 'z') || !shiftKey && (key >= 'A' && key <= 'Z')) {
-    //       this.capsTooltip = true
-    //     } else {
-     //       this.capsTooltip = false
-    //     }
-    //   }
-    //   if (key === 'CapsLock' && this.capsTooltip === true) {
-    //     this.capsTooltip = false
-    //   }
-    // },
     showPwd() {
       if (this.passwordType === 'password') {
         this.passwordType = ''
@@ -183,45 +163,22 @@ export default {
     // 登录按钮
     handleLogin() {
       this.$refs.loginForm.validate(async valid => {
-        //validate 有两个参数(boolean，object)是否校验成功和未通过校验的字段，
-        //若不传入回调函数，则会返回 promise
-        if (valid) {//判断校验通过
-        //loginForm里边就是 data数据，username和password
-          this.loading = true //loading加载
+        if (valid) {
+          console.log(this.loginForm);
+          this.loading = true
           let res = await this.login(this.loginForm);
-          console.log('login res...',res)
-          // this.$store.dispatch('user/login', this.loginForm)
-          //   .then(() => {
-          //     this.$router.push({ path: this.redirect || '/' })
-          //     this.loading = false
-          //   })
-          //   .catch(() => {
-          //     this.loading = false
-          //   })
+          console.log('login res...', res);
+          if (res.code == 1){
+            await this.generateRoutes([]);
+            this.$router.push({ path: this.redirect || '/' })
+          }
+          this.loading = false
         } else {
           console.log('error submit!!')
           return false
         }
       })
     }
-    // afterQRScan() {
-    //   if (e.key === 'x-admin-oauth-code') {
-    //     const code = getQueryObject(e.newValue)
-    //     const codeMap = {
-    //       wechat: 'code',
-    //       tencent: 'code'
-    //     }
-    //     const type = codeMap[this.auth_type]
-    //     const codeName = code[type]
-    //     if (codeName) {
-    //       this.$store.dispatch('LoginByThirdparty', codeName).then(() => {
-    //         this.$router.push({ path: this.redirect || '/' })
-    //       })
-    //     } else {
-    //       alert('第三方登录失败')
-    //     }
-    //   }
-    // }
   }
 }
 </script>
