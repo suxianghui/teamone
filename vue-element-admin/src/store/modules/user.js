@@ -34,7 +34,10 @@ const actions = {
     const { username, password } = userInfo
     let res = await login({ user_name: username,user_pwd:password});
    //接口携带两个参数
-   console.log('res',res) 
+   console.log('res...',res) 
+    setToken(res.token)
+    return res
+  //  setToken(res.token);
     // return new Promise((resolve, reject) => {
     //   login({ username: username.trim(), password: password }).then(response => {
     //     const { data } = response

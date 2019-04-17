@@ -160,7 +160,8 @@ export default {
   },
   methods: {
     ...mapActions({
-      login:'user/login'
+      login:'user/login',
+      generateRoutes:'permission/generateRoutes'
     }),
     // checkCapslock({ shiftKey, key } = {}) {
     //   if (key && key.length === 1) {
@@ -195,6 +196,11 @@ export default {
           this.loading = true //loading加载
           let res = await this.login(this.loginForm);
           console.log('login res...',res)
+          if(res.code == 1){
+            await this.generateRoutes([])
+            this.$router.push({ path: this.redirect || '/' })
+          }
+          this.loading = false;
           // this.$store.dispatch('user/login', this.loginForm)
           //   .then(() => {
           //     this.$router.push({ path: this.redirect || '/' })
