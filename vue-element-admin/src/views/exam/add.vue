@@ -162,8 +162,9 @@ export default {
       // console.log(this.examGradeValue)
       // console.log(this.examTypeValue)
       // console.log(this.questionNum)
-      console.log(momentTime(this.startTime))
-      console.log(this.endTime)
+      console.log(momentTime(this.startTime.toLocaleString()))
+      // console.log(this.startTime))
+      console.log(this.endTime.toString())
     }
   }
 }

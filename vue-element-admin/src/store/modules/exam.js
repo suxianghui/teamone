@@ -1,3 +1,5 @@
+import { submitExam } from "../../api/exam";
+
 // import { submitExam } from '@/api/exam'
 
 const state = {
@@ -9,10 +11,9 @@ const mutations = {
 }
 
 const actions = {
-  submitExam({ commit }, payload) {
-    console.log(payload)
-    // let result = payload;
-    commit('submitExamRes', payload)
+  async getSubmitExam({ commit }, payload) {
+    console.log(payload,'store')
+    let res = await submitExam(payload);
   }
 }
 

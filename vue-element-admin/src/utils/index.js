@@ -10,7 +10,7 @@ import moment from 'moment'
  * @returns {string}
  */
 export function momentTime(str) {
-  return moment(Date.now(), str).valueOf()
+  return moment().add(2,'hours').format(str)
 }
 
 export function parseTime(time, cFormat) {
