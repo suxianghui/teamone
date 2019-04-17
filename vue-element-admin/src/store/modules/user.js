@@ -31,6 +31,7 @@ const mutations = {
 const actions = {
   // user login
   async login({ commit }, userInfo) {
+    console.log(userInfo,'store')
     const { username, password } = userInfo
     let res = await login({ user_name: username,user_pwd:password});
    //接口携带两个参数
