@@ -3,11 +3,14 @@
     <div v-if="device==='mobile'&&sidebar.opened" class="drawer-bg" @click="handleClickOutside" />
     <sidebar class="sidebar-container" />
     <div :class="{hasTagsView:needTagsView}" class="main-container">
+      <!-- 导航 -->
       <div :class="{'fixed-header':fixedHeader}">
         <navbar />
         <tags-view v-if="needTagsView" />
       </div>
+      <!--  二级路由区域 -->
       <app-main />
+      <!-- 悬浮设置菜单 -->
       <right-panel v-if="showSettings">
         <settings />
       </right-panel>
@@ -17,19 +20,19 @@
 
 <script>
 import RightPanel from '@/components/RightPanel'
-import { AppMain, Navbar, Settings, Sidebar, TagsView } from './components'
+import { Navbar, Sidebar, AppMain, TagsView, Settings } from './components'
 import ResizeMixin from './mixin/ResizeHandler'
 import { mapState } from 'vuex'
 
 export default {
   name: 'Layout',
   components: {
-    AppMain,
-    Navbar,
     RightPanel,
-    Settings,
+    Navbar,
     Sidebar,
-    TagsView
+    AppMain,
+    TagsView,
+    Settings
   },
   mixins: [ResizeMixin],
   computed: {

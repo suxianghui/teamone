@@ -7,10 +7,6 @@ Vue.use(Router)
 import Layout from '@/layout'
 
 /* Router Modules */
-// import componentsRouter from './modules/components'
-// import chartsRouter from './modules/charts'
-// import tableRouter from './modules/table'
-// import nestedRouter from './modules/nested'
 import testsRouter from './modules/test'
 import usersRouter from './modules/user'
 import examsRouter from './modules/exam'
@@ -80,19 +76,6 @@ export const constantRoutes = [
     component: () => import('@/views/errorPage/401'),
     hidden: true
   },
-  // {
-  //   path: '',
-  //   component: Layout,
-  //   redirect: 'Test',
-  //   children: [
-  //     {
-  //       path: 'test',
-  //       component: () => import('@/views/test/add'),
-  //       name: 'Test',
-  //       meta: { title: 'questions', icon: 'dashboard', noCache: true, affix: true }
-  //     }
-  //   ]
-  // }
   {
     path: '',
     component: Layout,

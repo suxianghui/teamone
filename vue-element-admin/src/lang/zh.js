@@ -63,15 +63,18 @@ export default {
     i18n: '国际化',
     externalLink: '外链',
     questions: '试题管理',
-    addQuestions: '试题管理',
-    questionsTypes: '添加试题',
+    addQuestions: '添加试题',
+    questionsTypes: '试题分类',
     viewQuestions: '查看试题',
+
     users: '用户管理',
     addUsers: '添加用户',
     viewusers: '用户展示',
+
     exams: '考试管理',
     addExams: '添加考试',
     examsList: '试卷列表',
+
     classes: '班级管理',
     classesAdmin: '班级管理',
     roomAdmin: '教室管理',
