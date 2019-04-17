@@ -85,7 +85,6 @@ import LangSelect from '@/components/LangSelect'
 import SocialSign from './socialSignin'
 import {mapActions} from 'vuex'
 
-import { mapActions } from "vuex";
 
 export default {
   name: 'Login',

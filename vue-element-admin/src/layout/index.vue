@@ -40,12 +40,12 @@ import { mapState } from 'vuex'
 export default {
   name: 'Layout',
   components: {
-    RightPanel,
-    Navbar,
+    // RightPanel,
+    // Navbar,
     Sidebar,
     AppMain,
     TagsView,
-    Settings
+    // Settings
   },
   mixins: [ResizeMixin],
   computed: {

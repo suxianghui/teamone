@@ -60,6 +60,9 @@
 </template>
 
 <script>
+import { mapActions, mapMutations} from 'vuex'
+
+
 export default {
   name: 'List',
   data() {
@@ -166,7 +169,17 @@ export default {
       ]
     }
   },
+  mounted() {
+  },
+  computed: {
+    ...mapMutations({
+      allExamList: state => state.allExamList
+    }),
+  },
   methods: {
+    ...mapActions({
+      getExamList: 'exam/getExamList'
+    }),
     searchBtn() {
       console.log(this.examValue)
       console.log(this.classValue)

@@ -4,6 +4,7 @@ import getters from './getters'
 
 import addQuestions from './modules/test/addQuestions'
 import getTypeExam from './modules/test/getTypeExam'
+import exam from './modules/exam'
 Vue.use(Vuex)
 
 // https://webpack.js.org/guides/dependency-management/#requirecontext
@@ -23,7 +24,8 @@ const store = new Vuex.Store({
   modules,
   getters,
   addQuestions,
-  getTypeExam
+  getTypeExam,
+  exam
 })
 
 export default store
