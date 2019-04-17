@@ -1,13 +1,19 @@
 <template>
   <div class="login-container">
+    
+    <!-- el-form表单,  :rules="loginRules" 指的是下边制定的一些规则 -->
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
+<<<<<<< HEAD
+=======
+<!-- 系统登录四个大字 -->
+>>>>>>> 9c10ea3ba27baa5e7bca8462c2c6667478bd121f
       <div class="title-container">
         <h3 class="title">
           {{ $t('login.title') }}
         </h3>
         <lang-select class="set-language" />
       </div>
-
+<!-- 账号输入框 -->
       <el-form-item prop="username">
         <span class="svg-container">
           <svg-icon icon-class="user" />
@@ -21,7 +27,7 @@
           auto-complete="on"
         />
       </el-form-item>
-
+<!-- 密码输入框 -->
       <el-tooltip v-model="capsTooltip" content="Caps lock is On" placement="right" manual>
         <el-form-item prop="password">
           <span class="svg-container">
@@ -42,7 +48,7 @@
           </span>
         </el-form-item>
       </el-tooltip>
-
+<!-- 登录按钮 -->
       <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">
         {{ $t('login.logIn') }}
       </el-button>
@@ -64,6 +70,8 @@ import LangSelect from '@/components/LangSelect'
 import SocialSign from './socialSignin'
 import {mapActions} from 'vuex'
 
+import { mapActions } from "vuex";
+
 export default {
   name: 'Login',
   components: { LangSelect, SocialSign },
@@ -72,6 +80,7 @@ export default {
     const validateUsername = (rule, value, callback) => {
       if (!value) {
         callback(new Error('Please enter the correct user name'))
+      //不得少于 6 个数字，否则提示报错
       } else {
         callback()
       }
@@ -88,6 +97,7 @@ export default {
         username: 'suxianghui',
         password: 'Suxianghui123!'
       },
+      // 校验，有几个需要校验的就写几条规则
       loginRules: {
         username: [{ required: true, trigger: 'blur'}, {trigger:'blur', validator: validateUsername }],
         password: [{ required: true, trigger: 'blur', validator: validatePassword }]
@@ -131,10 +141,11 @@ export default {
       } else {
         this.passwordType = 'password'
       }
-      this.$nextTick(() => {
+      this.$nextTick(() => { //在下一个生命周期获取焦点
         this.$refs.password.focus()
       })
     },
+    // 登录按钮
     handleLogin() {
       this.$refs.loginForm.validate(async valid => {
         if (valid) {

@@ -30,6 +30,7 @@ module.exports = {
       warnings: false,
       errors: true
     },
+    //跨域代理
     proxy: {
       '/api': {
         target: `http://169.254.18.69:7001/`,

@@ -18,6 +18,7 @@ function checkNeed(arg) {
   return false
 }
 
+//全局处理报错
 if (checkNeed()) {
   Vue.config.errorHandler = function(err, vm, info, a) {
   // Don't ask me why I use Vue.nextTick, it just a hack.

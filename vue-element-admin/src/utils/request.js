@@ -4,14 +4,22 @@ import { getToken } from '@/utils/auth'
 
 // create an axios instance
 const service = axios.create({
+<<<<<<< HEAD
   // baseURL: 'http://169.254.12.55:7001', // api 的 base_url
 
   baseURL: '/api',
+=======
+  //axios 可以创建实例，也可以直接使用
+  baseURL:'/api',
+  // baseURL: process.env.VUE_APP_BASE_API, // api 的 base_url
+>>>>>>> 9c10ea3ba27baa5e7bca8462c2c6667478bd121f
   // withCredentials: true, // 跨域请求时发送 cookies
   timeout: 5000 // request timeout
 })
 
 // request interceptor
+
+//请求拦截器,所有请求都需要走这里过一遍
 service.interceptors.request.use(
   config => {
     // Do something before request is sent
@@ -29,7 +37,7 @@ service.interceptors.request.use(
 )
 
 // response interceptor
-service.interceptors.response.use(
+service.interceptors.response.use(//响应拦截器
   /**
    * If you want to get information such as headers or status
    * Please return  response => response
@@ -40,8 +48,11 @@ service.interceptors.response.use(
    * 如想通过 XMLHttpRequest 来状态码标识 逻辑可写在下面error中
    * 以下代码均为样例，请结合自生需求加以修改，若不需要，则可删除
    */
+
+//响应拦截器,所以响应回来的 拦截器都需要走这里走
   response => {
     const res = response.data
+<<<<<<< HEAD
     if (res.code == 1){
       return res;
     }
@@ -49,6 +60,11 @@ service.interceptors.response.use(
     // if (res.code !== 20000) {
     //   Message({
     //     message: res.msg || 'error',
+=======
+    // if (res.code !== 20000) {
+    //   Message({
+    //     message: res.message || 'error',
+>>>>>>> 9c10ea3ba27baa5e7bca8462c2c6667478bd121f
     //     type: 'error',
     //     duration: 5 * 1000
     //   })
@@ -83,3 +99,4 @@ service.interceptors.response.use(
 )
 
 export default service
+

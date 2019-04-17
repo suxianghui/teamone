@@ -27,6 +27,7 @@
           </el-tab-pane>
         </el-tabs>
       </div>
+       <!-- <span class="title">用户管理</span> -->
       <!-- 表格 -->
       <div>
         <el-table
@@ -130,6 +131,7 @@ export default {
     margin-block-end: 0.67em;
     margin-inline-start: 0px;
     margin-inline-end: 0px;
+
 }
 .el-tabs__nav{
   /* background: #fff; */
