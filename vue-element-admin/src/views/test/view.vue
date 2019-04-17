@@ -130,6 +130,7 @@ export default {
     width: 100%;
     height: calc(100vh - 84px);
     height: 100%;
+    padding-top:66px;
   }
 
   .tittle {
@@ -139,7 +140,7 @@ export default {
   }
 
   .topbox {
-    width: 1653px;
+    width: 95%;
     height: 184px;
     background: white;
     border-radius: 10px;
@@ -148,7 +149,7 @@ export default {
   }
 
   .bottombox {
-    width: 1653px;
+    width: 95%;
     background: white;
     border-radius: 10px;
     padding: 24px;
@@ -222,7 +223,7 @@ export default {
   }
 
   .childrenbox {
-    width: 1605px;
+    width: 98%;
     height: 115px;
     border-bottom: 1px solid #eee;
     position: relative;

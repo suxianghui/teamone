@@ -2,6 +2,8 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import getters from './getters'
 
+import addQuestions from './modules/test/addQuestions'
+import getTypeExam from './modules/test/getTypeExam'
 Vue.use(Vuex)
 
 // https://webpack.js.org/guides/dependency-management/#requirecontext
@@ -19,7 +21,9 @@ const modules = modulesFiles.keys().reduce((modules, modulePath) => {
 
 const store = new Vuex.Store({
   modules,
-  getters
+  getters,
+  addQuestions,
+  getTypeExam
 })
 
 export default store

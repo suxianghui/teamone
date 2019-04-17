@@ -48,6 +48,7 @@ export default {
         width: 100%;
         height: calc(100vh - 84px);
         background: #f0f2f5;
+        padding-top:66px;
     }
 
     .tittle {

@@ -22,7 +22,7 @@
             <span class="typelist">操作</span>
           </div>
           <div class="count">
-            <div class="count-text" v-for="(item,index) in list" :key="index">
+            <div v-for="(item,index) in list" class="count-text" :key="index">
               <span class="typeid">{{item.exam_id}}</span>
               <span class="typeid">{{item.exam_name}}</span>
               <span class="typeid"></span>
@@ -71,6 +71,7 @@ export default {
     position: relative;
     width: 100%;
     height: calc(100vh - 84px);
+    padding-top:66px;
   }
 
   .box {
