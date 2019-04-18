@@ -3,10 +3,7 @@
     
     <!-- el-form表单,  :rules="loginRules" 指的是下边制定的一些规则 -->
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
-<<<<<<< HEAD
-=======
 <!-- 系统登录四个大字 -->
->>>>>>> 9c10ea3ba27baa5e7bca8462c2c6667478bd121f
       <div class="title-container">
         <h3 class="title">
           {{ $t('login.title') }}
@@ -69,8 +66,6 @@ import { validUsername } from '@/utils/validate'
 import LangSelect from '@/components/LangSelect'
 import SocialSign from './socialSignin'
 import {mapActions} from 'vuex'
-
-import { mapActions } from "vuex";
 
 export default {
   name: 'Login',
