@@ -9,11 +9,12 @@
           <p>考试时间：1小时30分钟 监考人：刘于 开始考试时间：2018.9.10 10:00 阅卷人：刘于</p>
         </div>
         <div class="list">
-          <div class="content-list-style">
-            <h4>1：微信分享后地址发生改变，根据地址获取get传递参数 <a href="javascript:;" style="float: right;color:#0139FD">删除</a></h4>
+          <div v-for="(val, ind) in getCreateExam" :key="ind" class="content-list-style">
+            <h4>{{ind+1}}：{{val.title}} <a href="javascript:;" style="float: right;color:#0139FD">删除</a></h4>
             <div class="react-markdown">
               <pre>
-                <code>var url = 'http://test6m.wukonglicai.com/act/bfe/wk-op/jf-forest/index.html?from=singlemessage&amp;isappinstalled=0#/transfer?shareId=9fwkZUWBURLF65AL544MFOXDFSBBGI'var get = function (url, key) {}console.log(get(url, 'shareId')) //  9fwkZUWBURLF65AL544MFOXDFSBBGI
+                <code>
+                  {{val.questions_stem}}
                 </code>
               </pre>
             </div>
@@ -37,12 +38,26 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
+
+
 export default {
   data() {
     return {
       flag: false
     }
   },
+
+  computed: {
+    ...mapState({
+      getCreateExam: state => state.exam.getCreateExam.questions    //.getCreateExam
+    })
+  },
+
+  mounted() {
+    console.log(this.getCreateExam,'getCreateExam')
+  },
+
   methods: {
     showDialog() {
       this.flag = !this.flag

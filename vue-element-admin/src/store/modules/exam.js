@@ -17,7 +17,8 @@ const mutations = {
     state.allExamSubjects = payload;
   },
   createExam(state, payload){
-    state.getCreateExam = payload;
+    // console.log(payload,'.....')
+    state.getCreateExam = { ...payload };
   },
   listAll(state, payload) {
     state.allExamList = payload;

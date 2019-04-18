@@ -19,7 +19,6 @@ export const examSubject = () => {
 
 // 创建试卷
 export const submitExam = params => {
-  console.log(params,'params')
   return request({
     url: '/exam/exam',
     method: 'POST',

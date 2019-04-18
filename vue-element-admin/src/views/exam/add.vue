@@ -86,16 +86,19 @@ export default {
       }
     }
   },
+
   created() {
     this.getExamType();
     this.getExamSubject();
   },
+
   computed: {
     ...mapState({
       allExamTypes: state => state.exam.allExamTypes,
       allExamSubjects: state => state.exam.allExamSubjects
     })
   },
+
   methods: {
     ...mapActions({
       getExamType: 'exam/getExamType',
@@ -116,8 +119,8 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           // 获取创建试卷响应数据
-          this.getSubmitExam(params)
-          
+          this.getSubmitExam(params);
+          this.$router.push({ path: '/exam/addexam' });
         } else {
           console.log('error submit!!')
           return false
