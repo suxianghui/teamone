@@ -78,7 +78,7 @@ const mutations = {
 
 const actions = {
     //展示用户数据
-    setUserData({ commit } ,payload){
+    async setUserData({ commit } ,payload){
         // console.log(payload);
         let result = await userData(payload);
         return result
@@ -90,7 +90,7 @@ const actions = {
         // })  
     },
     //展示身份数据
-    setidentity({ commit }, payload) {
+    async setidentity({ commit }, payload) {
         // console.log(payload);
         let result = await identity(payload);
         return result
@@ -102,7 +102,7 @@ const actions = {
         // })
     },
     //展示api接口数据
-    setApiAuthority({ commit }, payload) {
+    async setApiAuthority({ commit }, payload) {
         // console.log(payload);
         let result = await apiAuthority(payload);
         return result
@@ -114,7 +114,7 @@ const actions = {
         // })
     },
     //展示身份和api权限关系
-    setIdentityApiAuthorityRelation({ commit }, payload) {
+    async setIdentityApiAuthorityRelation({ commit }, payload) {
         // console.log(payload);
         let result = await identityApiAuthorityRelation(payload);
         return result
@@ -126,7 +126,7 @@ const actions = {
         // })
     },
     //获取视图权限
-    setViewAuthority({ commit }, payload) {
+    async setViewAuthority({ commit }, payload) {
         // console.log(payload);
         let result = await viewAuthority(payload);
         return result
@@ -138,7 +138,7 @@ const actions = {
         // })
     },
     //展示身份和视图权限关系
-    setidentityViewAuthorityRelation({ commit }, payload) {
+    async setidentityViewAuthorityRelation({ commit }, payload) {
         // console.log(payload);
         let result = await identityViewAuthorityRelation(payload);
         return result

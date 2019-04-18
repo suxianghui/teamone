@@ -59,7 +59,7 @@ const mustations = {
 
 const actions = {
   //添加用户
-  setAddUserData({ commit }, payload) {
+  async setAddUserData({ commit }, payload) {
     console.log(payload);
     const result = await addUsers(payload)
     return result
