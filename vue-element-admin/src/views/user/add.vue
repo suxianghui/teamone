@@ -158,13 +158,17 @@ export default {
       userName: '',//输入用户名
       userId: '',//用户id
       pwd: '',//密码
+
       identityId: '',//选择身份id_1
       identityId_api: '',//api接口选择身份id_2
       identityId_view: '',//视图选择身份id_3
+
       identityName: '',//添加身份名称
+
       apiJurisdictionName: '',//api接口权限名称
       apiJurisdictionUrl: '',//api接口权限url
       apiJurisdictionMethod: '',//api接口权限方法
+
       existingView: '',//选择已有视图
       apiJurisdictionId: '',//选择api接口权限id
       viewJurisdictionId: '',//选择视图权限id
@@ -260,14 +264,10 @@ export default {
     created() {
       // this.getAddUserData()
     },
-    // 点击事件
-    jurisdiction() {
-      console.log(1)
-    },
     //添加用户
     async addUsersInfo() {
       if(!this.userName && !this.pwd && !this.identityId){
-        alert('请添加用户名')
+        alert('请完善用户信息')
         return false
       }
       const res = await this.setAddUserData({
@@ -281,6 +281,10 @@ export default {
         this.pwd = '',
         this.identityId = ''
       }
+    },
+    // //更新用户
+    async addUsersInfo(){
+
     },
     //添加身份
     async identity() {
@@ -299,13 +303,32 @@ export default {
         this.identityName = ''
       }
     },
-
+    //添加 api 接口权限
+    async jurisdiction(){
+      if (!this.apiJurisdictionName && !this.apiJurisdictionUrl && !this.apiJurisdictionMethod) {
+        alert('请添加api接口权限')
+        return false
+      }
+      var res = await this.setAddAuthorityApi({ 
+        api_authority_text: this.apiJurisdictionName,
+        api_authority_url: this.apiJurisdictionUrl,
+        api_authority_method: this.apiJurisdictionMethod
+      })
+      if (res.code === 1) {
+        alert(res.msg)
+        this.apiJurisdictionName = '',
+        this.apiJurisdictionUrl = '',
+        this.apiJurisdictionMethod = ''
+      }
+    },
     api() {
       console.log(4)
     },
-    view() {
-      console.log(5)
+    //添加视图接口权限
+    async view() {
+      console.log(11111111111)
     },
+    //给身份设置api接口权限
     set(){
       console.log(66)
     },

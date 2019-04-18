@@ -31,13 +31,12 @@ export function addIdentity (data) {
 
 // 添加 api 接口权限
 export function addAuthorityApi (data) {
+  console.log(data,'111111111')
   return request({
     url: '/user/authorityApi/edit',
     method: 'get',
     params:{
-      api_authority_text: data.api_authority_text,
-      api_authority_url: data.api_authority_url,
-      api_authority_mehtod: data.api_authority_mehtod
+      ...data
     }
   })
 }
@@ -80,7 +79,6 @@ export function userData() {
   return request({
     url: '/user/user',
     method: 'get',
-    // data
   })
 }
 
@@ -89,7 +87,7 @@ export function identity() {
   return request({
     url: '/user/identity',
     method: 'get',
-    // data
+
   })
 }
 
@@ -98,7 +96,7 @@ export function apiAuthority() {
   return request({
     url: '/user/api_authority',
     method: 'get',
-    // data
+
   })
 }
 
@@ -107,7 +105,7 @@ export function identityApiAuthorityRelation() {
   return request({
     url: '/user/identity_api_authority_relation',
     method: 'get',
-    // data
+
   })
 }
 
@@ -116,7 +114,7 @@ export function viewAuthority() {
   return request({
     url: '/user/view_authority',
     method: 'get',
-    // data
+
   })
 }
 
@@ -125,6 +123,6 @@ export function identityViewAuthorityRelation() {
   return request({
     url: '/user/identity_view_authority_relation',
     method: 'get',
-    // data
+
   })
 }
