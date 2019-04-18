@@ -155,32 +155,33 @@ import { mapState, mapActions, mapMutations } from 'vuex'
 export default {
   data() {
     return {
-      userName: '',
-      userId: '',
-      pwd: '',
-      identityId: '',
-      identityId_api: '',
-      identityId_view: '',
-      identityName: '',
-      apiJurisdictionName: '',
-      apiJurisdictionUrl: '',
-      apiJurisdictionMethod: '',
-      existingView: '',
-      apiJurisdictionId: '',
-      viewJurisdictionId: '',
+      userName: '',//输入用户名
+      userId: '',//用户id
+      pwd: '',//密码
+      identityId: '',//选择身份id_1
+      identityId_api: '',//api接口选择身份id_2
+      identityId_view: '',//视图选择身份id_3
+      identityName: '',//添加身份名称
+      apiJurisdictionName: '',//api接口权限名称
+      apiJurisdictionUrl: '',//api接口权限url
+      apiJurisdictionMethod: '',//api接口权限方法
+      existingView: '',//选择已有视图
+      apiJurisdictionId: '',//选择api接口权限id
+      viewJurisdictionId: '',//选择视图权限id
+
       idx: 0,
       identityId_viewValue:[
         {
           value:'选项1',
           label:'视图'
         }
-      ],
+      ],//视图身份选择
       identityId_apiValue:[
         {
           value:'选项1',
           label:'123456'
         }
-      ],
+      ],//api接口身份选择
       userIdValue: [
         {
           value: '选项1',
@@ -194,7 +195,7 @@ export default {
           value: '选项3',
           label: '黄金酥'
         }
-      ],
+      ],//用户id选择
       viewJurisdictionIdValue: [
         {
           value: '选项1',
@@ -266,13 +267,24 @@ export default {
     set() {
       console.log(2)
     },
-    identity() {
-      let params = {
-        identity_text: this.identityName
-      }
-      this.setAddIdentity(params);
+    async identity() {
+      // let params = {
+      //   identity_text: this.identityName
+      // }
+      // this.setAddIdentity(params);
       // console.log(this.setAddIdentity())
+
+      if (!this.identityName) {
+        alert('身份信息不能为空')
+        return false
+      }
+      var res = await this.setAddIdentity({ identity_text: this.identityName })
+      if (res.code === 1) {
+        alert(res.msg)
+        this.identityName = ''
+      }
     },
+
     api() {
       console.log(4)
     },

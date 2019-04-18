@@ -1,3 +1,4 @@
+
 import { 
   addUsers,
   updataUserInfo,
@@ -81,13 +82,15 @@ const actions = {
   },
   //添加身份
   async setAddIdentity({ commit }, payload) {
-    console.log(payload, '添加身份');
-    return new Promise(async (resolve, reject) => {
-      let result = await addIdentity(payload);
-      commit('addIdentityData', result)
-      console.log(result)
-      resolve(result)
-    })
+    console.log(payload, '添加身份1111');
+    let result = await addIdentity(payload)
+    return result
+    // return new Promise(async (resolve, reject) => {
+    //   let result = await addIdentity(payload);
+    //   commit('addIdentityData', result)
+    //   console.log(result)
+    //   resolve(result)
+    // })
     // let result = await addIdentity(payload);
     // return result;
   },

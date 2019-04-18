@@ -20,10 +20,13 @@ export function updataUserInfo (data) {
 
 // 添加身份
 export function addIdentity (data) {
+  console.log(data,'sadasdasf12525885496')
   return request({
     url: '/user/identity/edit',
     method: 'get',
-    data
+    params:{
+      identity_text: data.identity_text
+    }
   })
 }
 
