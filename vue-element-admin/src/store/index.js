@@ -8,6 +8,8 @@ import gettingLesson from './modules/gettingLesson'
 import getTypeQuestion from './modules/getTypeQuestion'
 import addQuestions from './modules/addQuestions'
 import conditionalTests from './modules/conditionalTests'
+import updateQuestion from './modules/updateQuestion'
+import getpush from './modules/getpush'
 Vue.use(Vuex)
 
 // https://webpack.js.org/guides/dependency-management/#requirecontext
@@ -30,7 +32,9 @@ const store = new Vuex.Store({
   gettingLesson,
   getTypeQuestion,
   addQuestions,
-  conditionalTests
+  conditionalTests,
+  getpush,
+  updateQuestion
 })
 
 export default store

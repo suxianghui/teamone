@@ -31,15 +31,7 @@ export function updateQuestions(data) {
     return request({
         url: '/exam/questions/update',
         method: 'put',
-        data: {
-            questions_type_id: data.questions_type_id,
-            questions_stem: data.questions_stem,
-            subject_id: data.subject_id,
-            exam_id: data.exam_id,
-            user_id: data.user_id,
-            questions_answer: data.questions_answer,
-            title: data.title
-        }
+        data
     })
 }
 
@@ -89,10 +81,6 @@ export function getTypeQuestions() {
 }
 
 //按条件获取试题
-export function conditionalTest(params) {
-    return request({
-        url: '/exam/questions/condition',
-        method: 'get',
-        params
-    })
+export let conditionalTest = params =>{
+    return request.get('/exam/questions/condition',{params})
 }

@@ -11,10 +11,8 @@ const mutations ={
 const actions ={
    conditional({commit,state},payload){
        return new Promise(async(resolve,reject)=>{
-        console.log(payload,'asdas')
            let data = await conditionalTest(payload)
-           
-           resolve(data)
+           resolve(data.data)
        })
    }
 }

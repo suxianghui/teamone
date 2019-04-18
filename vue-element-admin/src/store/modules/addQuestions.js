@@ -12,6 +12,7 @@ const actions={
    addQuestionStudy({commit,state},payload){
        return new Promise(async(resolve,reject)=>{
         let data = await addQuestions(payload)
+        console.log(data)
         resolve(data)
        })
    },

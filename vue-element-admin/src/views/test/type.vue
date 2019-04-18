@@ -23,8 +23,8 @@
           </div>
           <div class="count">
             <div v-for="(item,index) in list" class="count-text" :key="index">
-              <span class="typeid">{{item.exam_id}}</span>
-              <span class="typeid">{{item.exam_name}}</span>
+              <span class="typeid">{{item.questions_type_id}}</span>
+              <span class="typeid">{{item.questions_type_text}}</span>
               <span class="typeid"></span>
             </div>
           </div>
@@ -35,6 +35,7 @@
 </template>
 
 <script>
+import {mapActions} from 'vuex'
 export default {
   data() {
     return {
@@ -52,15 +53,16 @@ export default {
         desc: ''
       },
       formLabelWidth: '120px',
-      list:[{
-            exam_id: "8sc5d7-7p5f9e-cb2zii-ahe5i",
-            exam_name: "周考1"
-        },
-        {
-            exam_id: "jpg8y9-zbzt7o-jpvuhf-fwnjvr",
-            exam_name: "周考2"
-        }]
+      list:[]
     }
+  },
+  methods:{
+    ...mapActions({
+      question :'getTypeQuestion/getTypeQuestions'
+    })
+  },
+  async created(){
+    this.list = await this.question()
   }
 }
 
