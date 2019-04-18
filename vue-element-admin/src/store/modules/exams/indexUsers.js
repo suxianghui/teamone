@@ -33,7 +33,7 @@ const mustations = {
   //添加身份
   addIdentityData(state,payload){
     state.addIdentityD = payload;
-    console.log(payload,'mustations添加身份');
+    console.log(state.addIdentityD,'mustations添加身份');
   },
   //添加 api 接口权限
   addApiAuthorityData(state,payload){
@@ -61,22 +61,26 @@ const actions = {
   //添加用户
   setAddUserData({ commit }, payload) {
     console.log(payload);
-    return new Promise(async(resolve, reject) => {
-      const result = await addUsers(payload)
-      commit('addUsersData', result)
-      console.log(result)
-      resolve(result)
-    })
+    const result = await addUsers(payload)
+    return result
+    // return new Promise(async(resolve, reject) => {
+    //   const result = await addUsers(payload)
+    //   commit('addUsersData', result)
+    //   console.log(result)
+    //   resolve(result)
+    // })
   },
   //更新用户信息（用户名，用户密码，用户身份）
   async setUpdataUserInfo({ commit }, payload) {
     // console.log(payload);
-    return new Promise(async (resolve, reject) => {
-      let result = await updataUserInfo(payload);
-      commit('updateUsersData', result)
-      console.log(result)
-      resolve(result)
-    })
+    let result = await updataUserInfo(payload);
+    return result
+    // return new Promise(async (resolve, reject) => {
+    //   let result = await updataUserInfo(payload);
+    //   commit('updateUsersData', result)
+    //   console.log(result)
+    //   resolve(result)
+    // })
     // let result = await updataUserInfo(payload);
     // return result;
   },
@@ -91,56 +95,54 @@ const actions = {
     //   console.log(result)
     //   resolve(result)
     // })
-    // let result = await addIdentity(payload);
-    // return result;
   },
   //添加api接口权限
   async setAddAuthorityApi({ commit }, payload) {
     // console.log(payload);
-    return new Promise(async (resolve, reject) => {
-      let result = await addAuthorityApi(payload);
-      commit('addApiAuthorityData', result)
-      console.log(result)
-      resolve(result)
-    })
-    // let result = await addAuthorityApi(payload);
-    // return result;
+    let result = await addAuthorityApi(payload);
+    return result
+    // return new Promise(async (resolve, reject) => {
+    //   let result = await addAuthorityApi(payload);
+    //   commit('addApiAuthorityData', result)
+    //   console.log(result)
+    //   resolve(result)
+    // })
   },
   //添加视图权限
   async setAddAuthorityView({ commit }, payload) {
     // console.log(payload);
-    return new Promise(async (resolve, reject) => {
-      let result = await addAuthorityView(payload);
-      commit('addViewAuthorityData', result)
-      console.log(result)
-      resolve(result)
-    })
-    // let result = await addAuthorityView(payload);
-    // return result;
+    let result = await addAuthorityView(payload);
+    return result
+    // return new Promise(async (resolve, reject) => {
+    //   let result = await addAuthorityView(payload);
+    //   commit('addViewAuthorityData', result)
+    //   console.log(result)
+    //   resolve(result)
+    // })
   },
   //给身份设定api接口权限
   async setIdentityApi({ commit }, payload) {
     // console.log(payload);
-    return new Promise(async (resolve, reject) => {
-      let result = await identityApi(payload);
-      commit('addIdentityApiData', result)
-      console.log(result)
-      resolve(result)
-    })
-    // let result = await identityApi(payload);
-    // return result;
+    let result = await identityApi(payload);
+    return result
+    // return new Promise(async (resolve, reject) => {
+    //   let result = await identityApi(payload);
+    //   commit('addIdentityApiData', result)
+    //   console.log(result)
+    //   resolve(result)
+    // })
   },
   //给身份设定视图权限
   async setIdentityView({ commit }, payload) {
     // console.log(payload);
-    return new Promise(async (resolve, reject) => {
-      let result = await identityView(payload);
-      commit('addIdentityViewData', result)
-      console.log(result)
-      resolve(result)
-    })
-    // let result = await identityView(payload);
-    // return result;
+    let result = await identityView(payload);
+    return result
+    // return new Promise(async (resolve, reject) => {
+    //   let result = await identityView(payload);
+    //   commit('addIdentityViewData', result)
+    //   console.log(result)
+    //   resolve(result)
+    // })
   },
 }
 

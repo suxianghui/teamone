@@ -20,7 +20,6 @@ export function updataUserInfo (data) {
 
 // 添加身份
 export function addIdentity (data) {
-  console.log(data,'sadasdasf12525885496')
   return request({
     url: '/user/identity/edit',
     method: 'get',
@@ -35,7 +34,11 @@ export function addAuthorityApi (data) {
   return request({
     url: '/user/authorityApi/edit',
     method: 'get',
-    data
+    params:{
+      api_authority_text: data.api_authority_text,
+      api_authority_url: data.api_authority_url,
+      api_authority_mehtod: data.api_authority_mehtod
+    }
   })
 }
 
@@ -44,7 +47,10 @@ export function addAuthorityView (data) {
   return request({
     url: '/user/anthorityView/edit',
     method: 'get',
-    data
+    params:{
+      view_authority_text: data.view_authority_text,
+      view_id: data.view_id
+    }
   })
 }
 

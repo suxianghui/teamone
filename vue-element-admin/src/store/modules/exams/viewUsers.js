@@ -80,62 +80,74 @@ const actions = {
     //展示用户数据
     setUserData({ commit } ,payload){
         // console.log(payload);
-        return new Promise(async (resolve,reject) => {
-            let result = await userData(payload);
-            commit('getUserData', result)
-            console.log(result,'用户展示')
-            resolve(result);
-        })  
+        let result = await userData(payload);
+        return result
+        // return new Promise(async (resolve,reject) => {
+        //     let result = await userData(payload);
+        //     commit('getUserData', result)
+        //     console.log(result,'用户展示')
+        //     resolve(result);
+        // })  
     },
     //展示身份数据
     setidentity({ commit }, payload) {
         // console.log(payload);
-        return new Promise(async (resolve, reject) => {
-            let result = await identity(payload);
-            console.log(result, '身份')
-            commit('getIdentity', result)
-            resolve(result);
-        })
+        let result = await identity(payload);
+        return result
+        // return new Promise(async (resolve, reject) => {
+        //     let result = await identity(payload);
+        //     console.log(result, '身份')
+        //     commit('getIdentity', result)
+        //     resolve(result);
+        // })
     },
     //展示api接口数据
     setApiAuthority({ commit }, payload) {
         // console.log(payload);
-        return new Promise(async (resolve, reject) => {
-            let result = await apiAuthority(payload);
-            commit('getApiAuthoritys', result)
-            console.log(result,'展示api')
-            resolve(result);
-        })
+        let result = await apiAuthority(payload);
+        return result
+        // return new Promise(async (resolve, reject) => {
+        //     let result = await apiAuthority(payload);
+        //     commit('getApiAuthoritys', result)
+        //     console.log(result,'展示api')
+        //     resolve(result);
+        // })
     },
     //展示身份和api权限关系
     setIdentityApiAuthorityRelation({ commit }, payload) {
         // console.log(payload);
-        return new Promise(async (resolve, reject) => {
-            let result = await identityApiAuthorityRelation(payload);
-            commit('getIdentityApiAuthorityRelations', result)
-            console.log(result,'展示身份和api')
-            resolve(result);
-        })
+        let result = await identityApiAuthorityRelation(payload);
+        return result
+        // return new Promise(async (resolve, reject) => {
+        //     let result = await identityApiAuthorityRelation(payload);
+        //     commit('getIdentityApiAuthorityRelations', result)
+        //     console.log(result,'展示身份和api')
+        //     resolve(result);
+        // })
     },
     //获取视图权限
     setViewAuthority({ commit }, payload) {
         // console.log(payload);
-        return new Promise(async (resolve, reject) => {
-            let result = await viewAuthority(payload);
-            commit('getViewAuthoritys', result)
-            console.log(result,'展示视图权限')
-            resolve(result);
-        })
+        let result = await viewAuthority(payload);
+        return result
+        // return new Promise(async (resolve, reject) => {
+        //     let result = await viewAuthority(payload);
+        //     commit('getViewAuthoritys', result)
+        //     console.log(result,'展示视图权限')
+        //     resolve(result);
+        // })
     },
     //展示身份和视图权限关系
     setidentityViewAuthorityRelation({ commit }, payload) {
         // console.log(payload);
-        return new Promise(async (resolve, reject) => {
-            let result = await identityViewAuthorityRelation(payload);
-            commit('getIdentityViewAuthorityRelations', result)
-            console.log(result,'展示身份和视图')
-            resolve(result);
-        })
+        let result = await identityViewAuthorityRelation(payload);
+        return result
+        // return new Promise(async (resolve, reject) => {
+        //     let result = await identityViewAuthorityRelation(payload);
+        //     commit('getIdentityViewAuthorityRelations', result)
+        //     console.log(result,'展示身份和视图')
+        //     resolve(result);
+        // })
     },
 }
 
