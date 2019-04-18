@@ -46,7 +46,7 @@
           </el-select>
         </div>
         <div class="btn">
-          <el-button type="primary" @click="set">确定</el-button>
+          <el-button type="primary" @click="addUsersInfo">确定</el-button>
           <el-button plain>重置</el-button>
         </div>
       </div>
@@ -264,16 +264,31 @@ export default {
     jurisdiction() {
       console.log(1)
     },
-    set() {
-      console.log(2)
+    //添加用户
+    async addUsersInfo() {
+      if(!this.userName && !this.pwd && !this.identityId){
+        alert('请添加用户名')
+        return false
+      }
+      const res = await this.setAddUserData({
+        user_name:this.userName,
+        user_pwd:this.pwd,
+        identity_id:this.identityId
+      })
+      if(res.code === 1){
+        alert(res.msg)
+        this.userName = '',
+        this.pwd = '',
+        this.identityId = ''
+      }
     },
+    //添加身份
     async identity() {
       // let params = {
       //   identity_text: this.identityName
       // }
       // this.setAddIdentity(params);
       // console.log(this.setAddIdentity())
-
       if (!this.identityName) {
         alert('身份信息不能为空')
         return false
@@ -290,6 +305,9 @@ export default {
     },
     view() {
       console.log(5)
+    },
+    set(){
+      console.log(66)
     },
     change(idx) {
       this.idx = idx

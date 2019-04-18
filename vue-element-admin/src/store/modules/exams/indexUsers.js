@@ -23,37 +23,37 @@ const mustations = {
   // 添加用户
   addUsersData(state,payload){
     state.addUsersD = payload;
-    console.log(payload, 'mustations添加用户');
+    // console.log(payload, 'mustations添加用户');
   },
   //更新用户信息
   updateUsersData(state,payload){
     state.updataUserInfoD = payload;
-    console.log(payload, 'mustations更新用户');
+    // console.log(payload, 'mustations更新用户');
   },
   //添加身份
   addIdentityData(state,payload){
     state.addIdentityD = payload;
-    console.log(state.addIdentityD,'mustations添加身份');
+    // console.log(state.addIdentityD,'mustations添加身份');
   },
   //添加 api 接口权限
   addApiAuthorityData(state,payload){
     state.addAuthorityApiD = payload;
-    console.log(payload, 'mustations添加接口');
+    // console.log(payload, 'mustations添加接口');
   },
   //添加视图权限
   addViewAuthorityData(state,payload){
     state.addAuthorityViewD = payload;
-    console.log(payload, 'mustations添加视图');
+    // console.log(payload, 'mustations添加视图');
   },
   //给身份设定 api 接口权限
   addIdentityApiData(state,payload){
     state.identityApiD = payload;
-    console.log(payload, 'mustations设定api');
+    // console.log(payload, 'mustations设定api');
   },
   //给身份设定视图权限
   addIdentityViewData(state,payload){
     state.identityViewD = payload;
-    console.log(payload, 'mustations设定视图');
+    // console.log(payload, 'mustations设定视图');
   }
 }
 
