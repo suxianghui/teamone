@@ -10,7 +10,7 @@
                 <i class="el-icon-arrow-down el-icon--right" />
               </span>
             </div>
-            <el-dropdown-menu slot="dropdown">
+            <el-dropdown-menu slot="dropdown" class="dropdown1">
               <el-dropdown-item icon="el-icon-plus">黄金糕</el-dropdown-item>
               <el-dropdown-item icon="el-icon-circle-plus">狮子头</el-dropdown-item>
               <el-dropdown-item icon="el-icon-circle-plus-outline">螺蛳粉</el-dropdown-item>
@@ -29,8 +29,7 @@
                 <i class="el-icon-arrow-down el-icon--right" />
               </span>
             </div>
-
-            <el-dropdown-menu slot="dropdown">
+            <el-dropdown-menu slot="dropdown" class="dropdown1">
               <el-dropdown-item icon="el-icon-plus">黄金糕</el-dropdown-item>
               <el-dropdown-item icon="el-icon-circle-plus">狮子头</el-dropdown-item>
               <el-dropdown-item icon="el-icon-circle-plus-outline">螺蛳粉</el-dropdown-item>
@@ -80,11 +79,14 @@
           </template>
         </el-table-column>
       </el-table>
-      <el-pagination class="page" background layout="prev, pager, next" :total="1000" />
+      <div class="page">
+      <el-pagination class="nav" background layout="prev, pager, next" :total="1000" />
+      </div>
     </div>
   </div>
 </template>
 <script>
+import {mapActions,mapState} from 'vuex'
 export default {
   data() {
     return {
@@ -109,25 +111,53 @@ export default {
           name: '王小虎',
           address: '上海市普陀区金沙江路 1516 弄'
         }
-      ]
+      ],
+      //计算属性
+      computed:{
+    ...mapState({
+      // getList: state => state
+    }),
+  },
+  created(){
+    this.gitList({score:99})
+  },
+  methods: {
+    handleEdit(index, row) {
+      console.log(index, row);
+    },
+    ...mapActions({
+      detail:'examinations/detail',
+    })
+  }
     }
   }
 }
 </script>
-<style>
+<style scoped>
+.wrap{
+  width:100%;
+  height:auto;
+  padding: 0px 24px 24px;
+  box-sizing: border-box;
+}
 .search{
   width:100%;
   height:121px;
   display: flex;
   align-items: center;
 }
-.ma{
-  margin-left: 80px;
+.list{
+  width:100%;
+  height:auto;
+  padding:24px;
+  box-sizing: border-box;
+  background: #ffffff;
+  border-radius: 10px;
 }
 .box{
   display: flex;
   align-items: center;
-  margin-bottom: 30px;
+  /* margin-bottom: 30px; */
 }
 .text{
   width:40px;
@@ -141,11 +171,27 @@ export default {
   padding-right: 8px;
   border: 1px solid #d9d9d9;
 }
-.but{
-  margin-left: 80px;
-  margin-bottom: 30px;
-}
+
 .page{
-  margin: right;
+  width:100%;
+  height:auto;
+  background: #fff;
+  padding: 16px 10px 24px;
 }
 </style>
+<style>
+.ma{
+  margin-left: 80px;
+}
+.but{
+  margin-left: 80px;
+  /* margin-bottom: 30px; */
+}
+.nav{
+  float: right;
+}
+.dropdown1{
+  width:200px;
+}
+</style>
+
