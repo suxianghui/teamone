@@ -6,27 +6,27 @@
         <span>课程类型: </span>
         <span :class="isTrue?'all backblue':'all'" @click="tapAll">All</span>
         <div style="display: inline-block" v-if="isTrue===false">
-          <span v-for="(item,index) in currtype" :key="index" :class="clickindex==index?'currsps backblue':'currsps'" @click="bindtap(item,index)">{{ item }}</span>
+          <span v-for="(item,index) in currtype" :key="index" :class="clickindex==index?'currsps backblue':'currsps'" @click="bindtap(item,index)">{{ item.subject_text }}</span>
         </div>
         <div style="display: inline-block" v-if="isTrue">
-          <span v-for="(item,index) in currtype" :key="index" class="currsps backblue" @click="bindtap(item,index)">{{ item }}</span>
+          <span v-for="(item,index) in currtype" :key="index" class="currsps backblue" @click="bindtap(item,index)">{{ item.subject_text }}</span>
         </div>
       </div>
       <div class="studytype">
         <div class="select">
           <span>考试类型 : </span>
-          <el-select slot="prepend" v-model="studytypevalue" placeholder="" class="sel">
-            <el-option v-for="item in studyType" :key="item.value" :label="item.label" :value="item.value" />
+          <el-select slot="prepend" v-model="studytypevalue" placeholder="" class="sel" @change="examstudy">
+            <el-option v-for="(item,index) in studyType" :key="index" :label="item.exam_name" :value="item.exam_id" />
           </el-select>
         </div>
         <div class="select">
           <span>题目类型 : </span>
-          <el-select slot="prepend" v-model="messtypevalue" placeholder="" class="sel">
-            <el-option v-for="item in messType" :key="item.value" :label="item.label" :value="item.value" />
+          <el-select slot="prepend" v-model="messtypevalue" placeholder="" class="sel" @change="subjectstudy">
+            <el-option v-for="(item,index) in messType" :key="index" :label="item.questions_type_text" :value="item.questions_type_id" />
           </el-select>
         </div>
         <div>
-          <el-button type="primary" class="btn" icon="el-icon-search">查询</el-button>
+          <el-button type="primary" class="btn" icon="el-icon-search" @click="clicktap">查询</el-button>
         </div>
       </div>
     </div>
@@ -52,41 +52,21 @@
 </template>
 
 <script>
+import {mapActions} from 'vuex'
 export default {
   data() {
     return {
       clickindex: null,
-      currtype: ['JavaScript上', 'JavaScript下', '模块化开发', '移动端开发', 'node基础', '组件化开发(vue)'],
+      currtype: [],
       currType: '',
       isTrue: false,
       studytypevalue: '',
       messtypevalue: '',
-      studyType: [{
-        value: '选项1',
-        label: '周考1'
-      }, {
-        value: '选项2',
-        label: '周考2'
-      }, {
-        value: '选项3',
-        label: '周考3'
-      }, {
-        value: '选项4',
-        label: '月考'
-      }],
-      messType: [{
-        value: '选项1',
-        label: '简答题'
-      }, {
-        value: '选项2',
-        label: '代码阅读题'
-      }, {
-        value: '选项3',
-        label: '代码补全'
-      }, {
-        value: '选项4',
-        label: '修改bug'
-      }],
+      studyType: [],
+      messType: [],
+      studyid:'',
+      examid:'',
+      subjectid:'',
       options: [{
         subject_text: 'javaScript上',
         exam_name: '周考1',
@@ -112,16 +92,43 @@ export default {
     }
   },
   methods: {
+    ...mapActions({
+      studyTypes : 'getTypeExam/getTypeStudy',
+      curriculums: 'gettingLesson/getTypeCurriculum',
+      subjects: 'getTypeQuestion/getTypeQuestions',
+      conditionals:'conditionalTests/conditional'
+    }),
+    //subject
     bindtap(item, index) {
-      this.currType = item
+      this.currType = item.subject_id
       this.clickindex = index
+    },
+    //exam
+    examstudy(e){
+      this.examid = e
+    },
+    //questions_type
+    subjectstudy(e){
+      this.subjectid = e;
     },
     tapAll(e) {
       this.currType = e.target.innerHTML
       this.isTrue = !this.isTrue
+    },
+    clicktap(){
+      this.conditionals({
+        questinos_type_id : this.subjectid,
+        subject_id : this.currType,
+        exam_id : this.examid
+      })
     }
+  },
+  async created(){
+    this.currtype = await this.curriculums();
+    this.studyType = await this.studyTypes();
+    this.messType = await this.subjects();
   }
-}
+} 
 </script>
 
 <style scoped>

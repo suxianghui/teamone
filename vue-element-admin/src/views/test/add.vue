@@ -17,10 +17,10 @@
         <P>请选择考试类型</P>
         <el-select slot="prepend" v-model="exam_id" placeholder="请选择" class="sel">
           <el-option
-            v-for="item in study"
-            :key="item.value"
+            v-for="(item,index) in study"
+            :key="index"
             :label="item.label"
-            :value="item.value"
+            :value="item.exam_name"
           />
         </el-select>
       </div>
@@ -28,10 +28,10 @@
         <P>选择课程类型</P>
         <el-select slot="prepend" v-model="subject_id" placeholder="请选择" class="sel">
           <el-option
-            v-for="item in curriculum"
-            :key="item.value"
+            v-for="(item,index) in curriculum"
+            :key="index"
             :label="item.label"
-            :value="item.value"
+            :value="item.subject_text"
           />
         </el-select>
       </div>
@@ -39,10 +39,10 @@
         <P>选择题目类型</P>
         <el-select slot="prepend" v-model="questions_type_id" placeholder="请选择" class="sel">
           <el-option
-            v-for="item in subject"
-            :key="item.value"
+            v-for="(item,index) in subject"
+            :key="index"
             :label="item.label"
-            :value="item.value"
+            :value="item.questions_type_text"
           />
         </el-select>
       </div>
@@ -53,7 +53,7 @@
         </div>
       </div>
       <div class="btn">
-        <el-button type="primary">提交</el-button>
+        <el-button type="primary" @click="bindtap">提交</el-button>
       </div>
     </div>
   </div>
@@ -61,7 +61,7 @@
 
 <script>
 import MarkdownEditor from '@/components/MarkdownEditor'
-import {mapState} from 'vuex'
+import { mapActions } from 'vuex'
 export default {
   name: 'MarkdownDemo',
   components: { MarkdownEditor },
@@ -73,60 +73,44 @@ export default {
       subject_id: '',
       questions_type_id: '',
       questions_answer: '',
-      study: [{
-        value: '选项1',
-        label: '周考1'
-      }, {
-        value: '选项2',
-        label: '周考2'
-      }, {
-        value: '选项3',
-        label: '周考3'
-      }, {
-        value: '选项4',
-        label: '月考'
-      }],
-      curriculum: [{
-        value: '选项1',
-        label: '周考1'
-      }, {
-        value: '选项2',
-        label: '周考2'
-      }, {
-        value: '选项3',
-        label: '周考3'
-      }, {
-        value: '选项4',
-        label: '月考'
-      }],
-      subject: [{
-        value: '选项1',
-        label: '周考1'
-      }, {
-        value: '选项2',
-        label: '周考2'
-      }, {
-        value: '选项3',
-        label: '周考3'
-      }, {
-        value: '选项4',
-        label: '月考'
-      }]
+      study: [],
+      curriculum: [],
+      subject: [],
+      user_id:''
     }
   },
   computed: {
-    language() {
-      return this.languageTypeList[this.$store.getters.language]
-    },
-    // ...mapState({
-    //   studyType : state=>state.index.
-    // })
   },
   methods: {
-    getHtml() {
-      this.html = this.$refs.markdownEditor.getHtml()
-      console.log(this.html)
+    ...mapActions({
+      studyType : 'getTypeExam/getTypeStudy',
+      curriculums: 'gettingLesson/getTypeCurriculum',
+      subjects: 'getTypeQuestion/getTypeQuestions',
+      clickaddQuestions:'addQuestions/addQuestionStudy',
+      CurrentUser:'addQuestions/CurrentUserInfor'
+    }),
+    bindtap(){
+      if(this.title == '' && this.questions_stem == '' && this.exam_id == '' && this.subject_id == '' && this.questions_type_id == '' && this.questions_answer == '' && this.user_id == ''){
+         return console.log('缺少参数')
+      }else{
+        this.clickaddQuestions({
+            title : this.title,
+            questions_stem : this.questions_stem,
+            exam_id : this.exam_id,
+            subject_id : this.subject_id,
+            questions_type_id : this.questions_type_id,
+            questions_answer : this.questions_answer,
+            user_id : this.user_id
+        })
+      }
+      
     }
+  },
+  async created(){
+  this.study = await this.studyType()
+  this.curriculum = await this.curriculums()
+  this.subject = await this.subjects()
+  this.user_id = await this.CurrentUser()
   }
 }
 </script>

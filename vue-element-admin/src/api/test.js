@@ -5,15 +5,7 @@ export function addQuestions(data) {
     return request({
         url: '/exam/questions',
         method: 'post',
-        data: {
-            questions_type_id: data.questions_type_id,
-            questions_stem: data.questions_stem,
-            subject_id: data.subject_id,
-            exam_id: data.exam_id,
-            user_id: data.user_id,
-            questions_answer: data.questions_answer,
-            title: data.title
-        }
+        data
     })
 }
 
@@ -21,6 +13,15 @@ export function addQuestions(data) {
 export function gettingQuestions() {
     return request({
         url: '/exam/questions/new',
+        method: 'get'
+    })
+}
+
+
+//获取当前用户信息
+export function CurrentUserInformation() {
+    return request({
+        url: '/user/userInfo',
         method: 'get'
     })
 }
@@ -92,11 +93,6 @@ export function conditionalTest(params) {
     return request({
         url: '/exam/questions/condition',
         method: 'get',
-        params:{
-            questions_id: data.questions_id,
-            questions_type_id: data.questions_type_id,
-            subject_id: data.subject_id,
-            exam_id: data.exam_id
-        }
+        params
     })
 }

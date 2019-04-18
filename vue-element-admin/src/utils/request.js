@@ -4,15 +4,9 @@ import { getToken } from '@/utils/auth'
 
 // create an axios instance
 const service = axios.create({
-<<<<<<< HEAD
   // baseURL: 'http://169.254.12.55:7001', // api 的 base_url
 
   baseURL: '/api',
-=======
-  //axios 可以创建实例，也可以直接使用
-  baseURL:'/api',
-  // baseURL: process.env.VUE_APP_BASE_API, // api 的 base_url
->>>>>>> 9c10ea3ba27baa5e7bca8462c2c6667478bd121f
   // withCredentials: true, // 跨域请求时发送 cookies
   timeout: 5000 // request timeout
 })
@@ -52,7 +46,6 @@ service.interceptors.response.use(//响应拦截器
 //响应拦截器,所以响应回来的 拦截器都需要走这里走
   response => {
     const res = response.data
-<<<<<<< HEAD
     if (res.code == 1){
       return res;
     }
@@ -60,11 +53,6 @@ service.interceptors.response.use(//响应拦截器
     // if (res.code !== 20000) {
     //   Message({
     //     message: res.msg || 'error',
-=======
-    // if (res.code !== 20000) {
-    //   Message({
-    //     message: res.message || 'error',
->>>>>>> 9c10ea3ba27baa5e7bca8462c2c6667478bd121f
     //     type: 'error',
     //     duration: 5 * 1000
     //   })
