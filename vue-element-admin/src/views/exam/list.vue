@@ -41,12 +41,12 @@
               <span>已结束</span>
             </div>
           </div>
-          <el-table :data="tableData" style="width: 100%">
-            <el-table-column fit="true" prop="info" label="试卷信息" width="240" />
-            <el-table-column prop="grade" label="班级" width="200" />
-            <el-table-column prop="user" label="创建人" />
-            <el-table-column prop="start" label="开始时间" width="180" />
-            <el-table-column prop="end" label="结束时间" width="180" />
+          <el-table :data="allExamList" style="width: 100%">
+            <el-table-column prop="title" label="试卷信息" width="240" />
+            <el-table-column prop="grade_name[0]" label="班级" width="200" />
+            <el-table-column prop="user_name" label="创建人" />
+            <el-table-column prop="start_time" label="开始时间" width="180" />
+            <el-table-column prop="end_time" label="结束时间" width="180" />
             <el-table-column style="color: #0139FD;" prop="update" align="center" label="操作">
               <template>
                 <el-button type="text" size="small">详情</el-button>
@@ -60,7 +60,7 @@
 </template>
 
 <script>
-import { mapActions, mapMutations} from 'vuex'
+import { mapActions, mapState} from 'vuex'
 
 
 export default {
@@ -170,11 +170,15 @@ export default {
     }
   },
   mounted() {
+    this.getExamList()
   },
   computed: {
-    ...mapMutations({
-      allExamList: state => state.allExamList
+    ...mapState({
+      allExamList: state => state.exam.allExamList
     }),
+  },
+  created() {
+    console.log(this.allExamList)
   },
   methods: {
     ...mapActions({
@@ -197,7 +201,7 @@ export default {
 .wrapper {
   margin-top:66px;
   width: 100%;
-  height: 750px;
+  height: 1150px;
   background: #f0f2f5;
   display: flex;
   flex-direction: column;

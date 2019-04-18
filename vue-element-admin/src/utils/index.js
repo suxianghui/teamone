@@ -1,3 +1,5 @@
+
+import moment from 'moment'
 /**
  * Created by jiachenpan on 16/11/18.
  */
@@ -8,8 +10,8 @@
  * @param {string} cFormat
  * @returns {string}
  */
-export function momentTime(str) {
-  return moment().add(2,'hours').format(str)
+export function momentTime(time) {
+  return moment(time).valueOf();
 }
 
 export function parseTime(time, cFormat) {

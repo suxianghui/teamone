@@ -7,28 +7,18 @@
           <br>
           <el-input v-model="ruleForm.name" class="name" />
         </el-form-item>
-        <el-form-item class="babels" label="选择考试类型" prop="region1">
+        <el-form-item class="babels" label="选择考试类型" prop="exam_id">
           <br>
-          <el-select v-model="ruleForm.region1" class="select" style="width: 120px;">
-            <el-option label="周考1" value="zhoukao1" />
-            <el-option label="周考2" value="zhoukao2" />
-            <el-option label="周考3" value="zhoukao3" />
-            <el-option label="月考" value="yuekao" />
+          <el-select v-model="ruleForm.exam_id" class="select" style="width: 120px;">
+            <!-- 类型列表渲染 -->
+            <el-option v-for="(val,ind) in allExamTypes" :key="ind" :label="val.exam_name" :value="val.exam_id" />
           </el-select>
         </el-form-item>
-        <el-form-item class="babels" label="选择课程" prop="region2">
+        <el-form-item class="babels" label="选择课程" prop="subject_id">
           <br>
-          <el-select v-model="ruleForm.region2" class="select" style="width: 120px;">
-            <el-option label="javaScript上" value="javaScript上" />
-            <el-option label="javaScript下" value="javaScript下" />
-            <el-option label="模块化开发" value="模块化开发" />
-            <el-option label="移动端开发" value="移动端开发" />
-            <el-option label="node基础" value="node基础" />
-            <el-option label="组件化开发(vue)" value="组件化开发(vue)" />
-            <el-option label="渐进式开发(react)" value="渐进式开发(react)" />
-            <el-option label="项目实战" value="项目实战" />
-            <el-option label="javaScript高级" value="javaScript高级" />
-            <el-option label="node高级" value="node高级" />
+          <el-select v-model="ruleForm.subject_id" class="select" style="width: 120px;">
+            <!-- 课程列表渲染 -->
+            <el-option v-for="(val,ind) in allExamSubjects" :key="ind" :label="val.subject_text" :value="val.subject_id" />
           </el-select>
         </el-form-item>
         <el-form-item class="babels" label="设置题量" prop="num">
@@ -57,7 +47,7 @@
 
 <script>
 import {momentTime} from '@/utils/index'
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 
 
 export default {
@@ -67,8 +57,8 @@ export default {
       ruleForm: {
         num: 3,
         name: '',
-        region1: '',
-        region2: '',
+        exam_id: '',
+        subject_id: '',
         starttime: '',
         endtime: '',
         delivery: false
@@ -96,25 +86,38 @@ export default {
       }
     }
   },
+  created() {
+    this.getExamType();
+    this.getExamSubject();
+  },
+  computed: {
+    ...mapState({
+      allExamTypes: state => state.exam.allExamTypes,
+      allExamSubjects: state => state.exam.allExamSubjects
+    })
+  },
   methods: {
     ...mapActions({
+      getExamType: 'exam/getExamType',
+      getExamSubject: 'exam/getExamSubject',
       getSubmitExam:'exam/getSubmitExam'
     }),
     submitForm(formName) {
       // 创建试卷接口所需信息
-      let req = {
-        subject_id: 1,
-        exam_id: this.ruleForm.region1,
-        tite: this.ruleForm.name,
+      let params = {
+        subject_id: this.ruleForm.subject_id,
+        exam_id: this.ruleForm.exam_id,
+        title: this.ruleForm.name,
         number: 4,
-        start_time: 1555470592, //this.ruleForm.starttime
-        end_time: 1555470550    //this.ruleForm.endtime
+        start_time: momentTime(this.ruleForm.starttime),
+        end_time: momentTime(this.ruleForm.endtime)
       }
 
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          this.getSubmitExam(req)
-          // console.log(this.ruleForm,'vaild')
+          // 获取创建试卷响应数据
+          this.getSubmitExam(params)
+          
         } else {
           console.log('error submit!!')
           return false

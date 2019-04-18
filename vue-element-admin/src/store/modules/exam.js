@@ -1,31 +1,51 @@
-import { submitExam, examList } from "../../api/exam";
+import { examType, examSubject, submitExam, examList } from "../../api/exam";
 
-// import { submitExam } from '@/api/exam'
 
 const state = {
   submitExamTest: '',
-  allExamList:''
+  allExamTypes: [],
+  allExamSubjects: [],
+  getCreateExam:{},
+  allExamList:[]
 }
 
 const mutations = {
+  allExamType(state, payload) {
+    state.allExamTypes = payload;
+  },
+  allExamSubject(state, payload) {
+    state.allExamSubjects = payload;
+  },
+  createExam(state, payload){
+    state.getCreateExam = payload;
+  },
   listAll(state, payload) {
-    console.log(payload,'...')
     state.allExamList = payload;
   }
 }
 
 const actions = {
+  // 获取考试类型
+  async getExamType({commit}, payload) {
+    let res = await examType(payload);
+    commit('allExamType', res.data);
+  },
+
+  // 获取所有课程
+  async getExamSubject({commit}, payload) {
+    let res = await examSubject();
+    commit('allExamSubject', res.data);
+  },
+
   // 创建试卷
   async getSubmitExam({ commit }, payload) {
-    console.log(payload,'store')
     let res = await submitExam(payload);
-    // console.log(res,'res...')
+    commit('createExam',res.data);
   },
 
   // 获取试卷列表
   async getExamList({commit}, payload) {
     let res = await examList();
-    console.log(res,'res...')
     commit('listAll', res.exam);
   }
 }
