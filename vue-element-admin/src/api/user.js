@@ -8,11 +8,12 @@ export function login(data) {
   })
 }
 
-export function getInfo(token) {
+//导航守卫 获取用户信息(路由)
+export function getInfo() {
   return request({
-    url: '/user/info',
+    url: '/user/userInfo',
     method: 'get',
-    params: { token }
+    // params: { token }
   })
 }
 

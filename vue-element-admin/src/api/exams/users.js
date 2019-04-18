@@ -81,7 +81,7 @@ export function identity() {
   })
 }
 
-//展示 api 接口权限数据
+//展示 api 接口权限数据 
 export function apiAuthority() {
   return request({
     url: '/user/api_authority',
@@ -90,7 +90,7 @@ export function apiAuthority() {
   })
 }
 
-//展示身份和 api 权限关系
+//展示身份和 api 权限关系 1
 export function identityApiAuthorityRelation() {
   return request({
     url: '/user/identity_api_authority_relation',
@@ -99,7 +99,7 @@ export function identityApiAuthorityRelation() {
   })
 }
 
-//获取视图权限数据
+//获取视图权限数据 1
 export function viewAuthority() {
   return request({
     url: '/user/view_authority',
@@ -108,7 +108,7 @@ export function viewAuthority() {
   })
 }
 
-//展示身份和视图权限关系
+//展示身份和视图权限关系 1
 export function identityViewAuthorityRelation() {
   return request({
     url: '/user/identity_view_authority_relation',

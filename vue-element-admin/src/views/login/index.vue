@@ -161,7 +161,7 @@ export default {
   methods: {
     ...mapActions({
       login:'user/login',
-      generateRoutes:'permission/generateRoutes'
+      // generateRoutes:'permission/generateRoutes'//放入导航守卫中调用
     }),
     // checkCapslock({ shiftKey, key } = {}) {
     //   if (key && key.length === 1) {
@@ -197,7 +197,7 @@ export default {
           let res = await this.login(this.loginForm);
           console.log('login res...',res)
           if(res.code == 1){
-            await this.generateRoutes([])
+            // await this.generateRoutes([])  //放到 permission 导航守卫中
             this.$router.push({ path: this.redirect || '/' })
           }
           this.loading = false;

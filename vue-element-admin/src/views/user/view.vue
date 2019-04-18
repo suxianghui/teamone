@@ -48,21 +48,14 @@
             :style="{ width:'100%'/tabNav.length }"
           />
           <!-- <el-table-column
+          v-for = "(item,index) in tabName" :key = "index"
             prop="name"
-            label="姓名"
-            width="180"
-          />
-          <el-table-column
+            :label=item
+            :style="{ width:'100%'/tabName.length } "
+          /> -->
+          <!-- <el-table-column
             prop="address"
             label="地址"
-          />
-          <el-table-column
-            prop="age"
-            label="18"
-          />
-          <el-table-column
-            prop="sex"
-            label="男"
           /> -->
         </el-table>
       </div>
