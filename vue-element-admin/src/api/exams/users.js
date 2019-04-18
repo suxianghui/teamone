@@ -30,7 +30,7 @@ export function addIdentity (data) {
 // 添加 api 接口权限
 export function addAuthorityApi (data) {
   return request({
-    url: '/user/anthorityApi/edit',
+    url: '/user/authorityApi/edit',
     method: 'get',
     data
   })
@@ -39,7 +39,7 @@ export function addAuthorityApi (data) {
 // 添加视图权限
 export function addAuthorityView (data) {
   return request({
-    url: '/user/anthorityApi/edit',
+    url: '/user/anthorityView/edit',
     method: 'get',
     data
   })
@@ -63,6 +63,9 @@ export function identityView(data){
   })
 }
 
+
+
+//第二页面接口
 //展示用户数据
 export function userData() {
   return request({

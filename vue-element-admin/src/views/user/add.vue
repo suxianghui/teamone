@@ -223,19 +223,42 @@ export default {
   },
   computed: {
     ...mapState({
-      // addUserlist: state => state.addUsers.addUserlist
+      // 添加用户
+      addUsersD:state => state.indexUsers.addUsersD,
+      //更新用户信息
+      updataUserInfoD:state => state.indexUsers.updataUserInfoD,
+      //添加身份
+      addIdentityD:state => state.indexUsers.addIdentityD,
+      //添加 api 接口权限
+      addAuthorityApiD:state => state.indexUsers.addAuthorityApiD,
+      //添加视图权限
+      addAuthorityViewD:state => state.indexUsers.addAuthorityViewD,
+      //给身份设定 api 接口权限
+      identityApiD:state => state.indexUsers.identityApiD,
+      //给身份设定视图权限
+      identityViewD:state => state.indexUsers.identityViewD
     })
   },
   methods: {
-    // ...mapMutations({
-    //   updateUser: 'addUsers/updateUser'
-    // }),
-    // ...mapActions({
-    //   getAddUserData: 'addUsers/getAddUserData'
-    // }),
-    // created() {
-    //   this.getAddUserData()
-    // },
+    ...mapActions({
+      // 添加用户
+      setAddUserData:'indexUsers/setAddUserData',
+      //更新用户信息
+      setUpdataUserInfo:'indexUsers/setUpdataUserInfo',
+      //添加身份
+      setAddIdentity: 'indexUsers/setAddIdentity',
+      //添加 api 接口权限
+      setAddAuthorityApi:'indexUsers/setAddAuthorityApi',
+      //添加视图权限
+      setAddAuthorityView:'indexUsers/setAddAuthorityView',
+      //给身份设定 api 接口权限
+      setIdentityApi:'indexUsers/setIdentityApi',
+      //给身份设定视图权限
+      setIdentityView:'indexUsers/setIdentityView'
+    }),
+    created() {
+      // this.getAddUserData()
+    },
     // 点击事件
     jurisdiction() {
       console.log(1)
@@ -244,7 +267,11 @@ export default {
       console.log(2)
     },
     identity() {
-      console.log(3)
+      let params = {
+        identity_text: this.identityName
+      }
+      this.setAddIdentity(params);
+      // console.log(this.setAddIdentity())
     },
     api() {
       console.log(4)
