@@ -1,11 +1,12 @@
 import request from '@/utils/request'
 
-//批改试卷
-export function examination(data) {
+//获取学生试卷列表
+export function examination(params) {
+  // return request.get('/exam/student',data)
   return request({
     url: '/exam/student',
     method: 'GET',
-    data
+    params
   })
 }
 
@@ -13,16 +14,16 @@ export function examination(data) {
 export function studentExaminationPapers(data) {
   return request({
     url: '/exam/student/t27znv-gu7azm-qpq9ai-laaf9m',
-    method: 'PUT',
+    method: 'GET',
     data
   })
 }
 
-//获取学生试卷列表
-// export function studentPapers(params) {
-//   return request({
-//     url: '/exam/student',
-//     method: 'get',
-//     params
-//   })
-// }
+//批卷
+export function studentPapers(data) {
+  return request({
+    url: '/manger/grade',
+    method: 'GET',
+    params:data
+  })
+}

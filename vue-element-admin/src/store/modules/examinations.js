@@ -2,24 +2,31 @@ import { examination } from '@/api/examination'
 
 const state = {
   examList:[],
+  // eaamList:[]
 }
 
 const mutations = {
-  getList(state, payload) {
-    console.log('payload',payload)
-    state.examList = { ...state.examList, ...payload }
+  // List(state, payload) {
+  //   console.log('payload',payload)
+  //   state.examList = { ...state.examList, ...payload }
+  // }
+  getExaminationData(state, payload) {
+    state.examList = payload
   }
 }
 
 const actions = {
-  async gitList({ commit, state }, payload) {
-    console.log('payload...',payload)
-    return new Promise(async(resolve, reject) => {
-      const result = await getList(payload)
-      console.log(result)
-      commit('examination', result)
-      resolve(result)//成功
-    })
+  // getListData({ state }, payload) {
+  //   return new Promise(async (resolve, reject) => {
+  //     let data = await examination(payload)
+  //     console('data',data)
+  //     resolve(data.data)
+  //   })
+  // },
+  async getExamination({commit}, payload){
+    let result= await examination(payload)
+    commit('getExaminationData', result);
+    // console.log(result)
   }
 }
 

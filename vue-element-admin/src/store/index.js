@@ -6,12 +6,12 @@ import addQuestions from './modules/test/addQuestions'
 import getTypeExam from './modules/test/getTypeExam'
 import examination from './modules/examinations'
 import examDetail from './modules/examDetail'
+import examList from './modules/examList'
 
 Vue.use(Vuex)
 
 // https://webpack.js.org/guides/dependency-management/#requirecontext
 const modulesFiles = require.context('./modules', false, /\.js$/)
-
 // you do not need `import app from './modules/app'`
 // it will auto require all vuex module from modules file
 const modules = modulesFiles.keys().reduce((modules, modulePath) => {
@@ -29,6 +29,7 @@ const store = new Vuex.Store({
   getTypeExam,
   examination,
   examDetail,
+  examList
 })
 
 export default store

@@ -19,10 +19,15 @@ const papersRouter = {
       meta: { title: 'awaitClass' }
     },
     {
-      path: 'await1',
+      path: 'paperList',
       component: () => import('@/views/paper/paperList'),
       name: 'KeyboardChart',
-      meta: { title: '123' }
+      meta: { title: '' }
+    },{
+      path: 'detail',
+      component: () => import('@/views/paper/detail'),
+      name: 'KeyboardChart',
+      meta: { title: '' }
     }
   ]
 }
