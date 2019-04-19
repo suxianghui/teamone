@@ -46,7 +46,9 @@ service.interceptors.response.use(//响应拦截器
 //响应拦截器,所以响应回来的 拦截器都需要走这里走
   response => {
     const res = response.data
-    if (res.code == 1){
+    // const res = response;
+    // console.log('...res',res,response);
+    if(res.code == 1){
       return res;
     }
 
@@ -78,7 +80,7 @@ service.interceptors.response.use(//响应拦截器
   error => {
     console.log('err' + error) // for debug
     Message({
-      message: error.message,
+      message: error.msg,
       type: 'error',
       duration: 5 * 1000
     })

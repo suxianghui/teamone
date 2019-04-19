@@ -46,7 +46,7 @@
           </el-select>
         </div>
         <div class="btn">
-          <el-button type="primary" @click="set">确定</el-button>
+          <el-button type="primary" @click="addUsersInfo">确定</el-button>
           <el-button plain>重置</el-button>
         </div>
       </div>
@@ -155,32 +155,37 @@ import { mapState, mapActions, mapMutations } from 'vuex'
 export default {
   data() {
     return {
-      userName: '',
-      userId: '',
-      pwd: '',
-      identityId: '',
-      identityId_api: '',
-      identityId_view: '',
-      identityName: '',
-      apiJurisdictionName: '',
-      apiJurisdictionUrl: '',
-      apiJurisdictionMethod: '',
-      existingView: '',
-      apiJurisdictionId: '',
-      viewJurisdictionId: '',
+      userName: '',//输入用户名
+      userId: '',//用户id
+      pwd: '',//密码
+
+      identityId: '',//选择身份id_1
+      identityId_api: '',//api接口选择身份id_2
+      identityId_view: '',//视图选择身份id_3
+
+      identityName: '',//添加身份名称
+
+      apiJurisdictionName: '',//api接口权限名称
+      apiJurisdictionUrl: '',//api接口权限url
+      apiJurisdictionMethod: '',//api接口权限方法
+
+      existingView: '',//选择已有视图
+      apiJurisdictionId: '',//选择api接口权限id
+      viewJurisdictionId: '',//选择视图权限id
+
       idx: 0,
       identityId_viewValue:[
         {
           value:'选项1',
           label:'视图'
         }
-      ],
+      ],//视图身份选择
       identityId_apiValue:[
         {
           value:'选项1',
           label:'123456'
         }
-      ],
+      ],//api接口身份选择
       userIdValue: [
         {
           value: '选项1',
@@ -194,7 +199,7 @@ export default {
           value: '选项3',
           label: '黄金酥'
         }
-      ],
+      ],//用户id选择
       viewJurisdictionIdValue: [
         {
           value: '选项1',
@@ -223,34 +228,109 @@ export default {
   },
   computed: {
     ...mapState({
-      // addUserlist: state => state.addUsers.addUserlist
+      // 添加用户
+      addUsersD:state => state.indexUsers.addUsersD,
+      //更新用户信息
+      updataUserInfoD:state => state.indexUsers.updataUserInfoD,
+      //添加身份
+      addIdentityD:state => state.indexUsers.addIdentityD,
+      //添加 api 接口权限
+      addAuthorityApiD:state => state.indexUsers.addAuthorityApiD,
+      //添加视图权限
+      addAuthorityViewD:state => state.indexUsers.addAuthorityViewD,
+      //给身份设定 api 接口权限
+      identityApiD:state => state.indexUsers.identityApiD,
+      //给身份设定视图权限
+      identityViewD:state => state.indexUsers.identityViewD
     })
   },
   methods: {
-    // ...mapMutations({
-    //   updateUser: 'addUsers/updateUser'
-    // }),
-    // ...mapActions({
-    //   getAddUserData: 'addUsers/getAddUserData'
-    // }),
-    // created() {
-    //   this.getAddUserData()
-    // },
-    // 点击事件
-    jurisdiction() {
-      console.log(1)
+    ...mapActions({
+      // 添加用户
+      setAddUserData:'indexUsers/setAddUserData',
+      //更新用户信息
+      setUpdataUserInfo:'indexUsers/setUpdataUserInfo',
+      //添加身份
+      setAddIdentity: 'indexUsers/setAddIdentity',
+      //添加 api 接口权限
+      setAddAuthorityApi:'indexUsers/setAddAuthorityApi',
+      //添加视图权限
+      setAddAuthorityView:'indexUsers/setAddAuthorityView',
+      //给身份设定 api 接口权限
+      setIdentityApi:'indexUsers/setIdentityApi',
+      //给身份设定视图权限
+      setIdentityView:'indexUsers/setIdentityView'
+    }),
+    created() {
+      // this.getAddUserData()
     },
-    set() {
-      console.log(2)
+    //添加用户
+    async addUsersInfo() {
+      if(!this.userName && !this.pwd && !this.identityId){
+        alert('请完善用户信息')
+        return false
+      }
+      const res = await this.setAddUserData({
+        user_name:this.userName,
+        user_pwd:this.pwd,
+        identity_id:this.identityId
+      })
+      if(res.code === 1){
+        alert(res.msg)
+        this.userName = '',
+        this.pwd = '',
+        this.identityId = ''
+      }
     },
-    identity() {
-      console.log(3)
+    // //更新用户
+    async addUsersInfo(){
+
+    },
+    //添加身份
+    async identity() {
+      // let params = {
+      //   identity_text: this.identityName
+      // }
+      // this.setAddIdentity(params);
+      // console.log(this.setAddIdentity())
+      if (!this.identityName) {
+        alert('身份信息不能为空')
+        return false
+      }
+      var res = await this.setAddIdentity({ identity_text: this.identityName })
+      if (res.code === 1) {
+        alert(res.msg)
+        this.identityName = ''
+      }
+    },
+    //添加 api 接口权限
+    async jurisdiction(){
+      if (!this.apiJurisdictionName && !this.apiJurisdictionUrl && !this.apiJurisdictionMethod) {
+        alert('请添加api接口权限')
+        return false
+      }
+      var res = await this.setAddAuthorityApi({ 
+        api_authority_text: this.apiJurisdictionName,
+        api_authority_url: this.apiJurisdictionUrl,
+        api_authority_method: this.apiJurisdictionMethod
+      })
+      if (res.code === 1) {
+        alert(res.msg)
+        this.apiJurisdictionName = '',
+        this.apiJurisdictionUrl = '',
+        this.apiJurisdictionMethod = ''
+      }
     },
     api() {
       console.log(4)
     },
-    view() {
-      console.log(5)
+    //添加视图接口权限
+    async view() {
+      console.log(11111111111)
+    },
+    //给身份设置api接口权限
+    set(){
+      console.log(66)
     },
     change(idx) {
       this.idx = idx
