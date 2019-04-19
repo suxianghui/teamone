@@ -26,10 +26,35 @@ export const submitExam = params => {
   })
 }
 
+// 删除试卷
+export const deleteExam = params => {
+  return request({
+    url: '/exam/exam/w5tcy-g2dts',
+    method: 'DELETE'
+  })
+}
+
+// 获取试题列表
+export function renewal(str, data) {
+  return request({
+    url: '/exam/exam' + '/' + str,
+    method: 'PUT',
+    data
+  })
+}
+
 // 获取试卷列表
-export const examList = (query) => {
+export const examList = () => {
   return request({
     url: '/exam/exam',
+    method: 'GET'
+  })
+}
+
+// 获取详情页列表
+export function detailData(str) {
+  return request({
+    url: '/exam/exam' + '/' + str,
     method: 'GET'
   })
 }

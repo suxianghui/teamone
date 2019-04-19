@@ -10,14 +10,14 @@
         </div>
         <div v-for="(item,index) in questionList" :key="index" class="list">
           <div class="style_questionitem__3ETlC" :data-id="item.questions_id">
-            <h4>{{ index+1 }}：{{ item.title }} <a href="javascript:;" style="float: right;">删除</a></h4>
+            <h4>{{ index+1 }}：{{ item.title }} <a @click="deleteExam(index)" href="javascript:;" style="float: right;">删除</a></h4>
             <div class="markdown">
               <pre>{{ item.questions_stem }}</pre>
             </div>
           </div>
         </div>
       </div>
-      <el-button type="primary">创建试卷</el-button>
+      <el-button @click="createExam" type="primary">创建试卷</el-button>
     </div>
     <div v-show="flag" class="add-drawer">
       <div class="mask" @click="showDialog" />
@@ -35,27 +35,70 @@
 
 <script>
 import { timeFormat } from '@/utils/index'
+import { mapActions } from 'vuex'
 
 
 export default {
   data() {
     return {
       flag: false,
+      data: '',
       title: '',
       starttime: '',
       questionList: []
     }
   },
   created() {
+    // 获取add页面本地存储的值
     const data = JSON.parse(window.localStorage.getItem('getSubmitExam'));
-    console.log(data,'..')
+    this.data = data;
+    // 设置此页面的开始时间, 标题
     this.title = data.title;
     this.starttime = timeFormat(data.start_time);
-    this.questionList = data.questions
+    this.questionList = data.questions;
   },
   methods: {
+    ...mapActions({
+      renewal: 'exam/renewal'
+    }),
+    // 添加试题弹出框
     showDialog() {
       this.flag = !this.flag
+    },
+    async createExam() {
+      // 要用exam_exam_id 的字符串
+      let data = {question_ids: this.question_ids}
+
+      // 调用更新试卷接口
+      let res = await this.renewal({header: this.data.exam_exam_id,data })
+      console.log(res,'更新试卷...')
+      this.$router.push({ path:'/exam/list' })
+    },
+    deleteExam(index) {
+      // 获取被删除项
+      // let xLi = this.questionList.filter(item => id===item.questions_id);
+      // console.log(xLi,'...');
+
+      this.$confirm('是否要删除该题目?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+        center: true,
+        customClass:'warning'
+      }).then(() => {
+        this.questionList.splice(index,1)
+        this.getQuestion()
+      }, ()=>{
+        this.questionList
+        this.getQuestion()
+      })
+    },
+    getQuestion(){
+      let arr = [];
+      this.questionList.forEach(item => {
+        arr.push(item.questions_id)
+      });
+      this.question_ids = JSON.stringify(arr);
     }
   },
   mounted() {
@@ -63,6 +106,10 @@ export default {
   }
 }
 </script>
+
+
+
+
 
 <style lang="scss" scoped>
 .add-drawer {
