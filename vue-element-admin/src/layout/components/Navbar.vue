@@ -1,19 +1,10 @@
 <template>
   <div class="navbar">
-    <hamburger id="hamburger-container" :is-active="true" class="hamburger-container" @toggleClick="toggleSideBar" />
-    <img
-      src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1551624718911&di=4a7004f8d71bd8da84d4eadf1b59e689&imgtype=0&src=http%3A%2F%2Fimg105.job1001.com%2Fupload%2Falbum%2F2014-10-15%2F1413365052_95IE3msH.jpg"
-      alt=""
-      style="width:120px;"
-    >
-    <!-- <breadcrumb id="breadcrumb-container" class="breadcrumb-container" /> -->
+    <hamburger id="hamburger-container" :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar" />
+
+    <breadcrumb id="breadcrumb-container" class="breadcrumb-container" />
+
     <div class="right-menu">
-      <!-- <img src="https://cdn.nlark.com/yuque/0/2019/png/anonymous/1547609339813-e4e49227-157c-452d-be7e-408ca8654ffe.png?x-oss-process=image/resize,m_fill,w_48,h_48/format,png" 
-      alt="">
-      <span>chenmanjie</span> -->
-    </div>
-  </div>
-  <!-- <div class="right-menu">
       <template v-if="device!=='mobile'">
         <search id="header-search" class="right-menu-item" />
 
@@ -50,29 +41,28 @@
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
-    </div> -->
-
+    </div>
+  </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
-// import Breadcrumb from '@/components/Breadcrumb'
+import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
-// import ErrorLog from '@/components/ErrorLog'
-// import Screenfull from '@/components/Screenfull'
-// import SizeSelect from '@/components/SizeSelect'
-// import LangSelect from '@/components/LangSelect'
-// import Search from '@/components/HeaderSearch'
-
+import ErrorLog from '@/components/ErrorLog'
+import Screenfull from '@/components/Screenfull'
+import SizeSelect from '@/components/SizeSelect'
+import LangSelect from '@/components/LangSelect'
+import Search from '@/components/HeaderSearch'
 export default {
   components: {
-    // Breadcrumb,
-    Hamburger
-    // ErrorLog,
-    // Screenfull,
-    // SizeSelect,
-    // LangSelect,
-    // Search
+    Breadcrumb,
+    Hamburger,
+    ErrorLog,
+    Screenfull,
+    SizeSelect,
+    LangSelect,
+    Search
   },
   computed: {
     ...mapGetters([
@@ -96,50 +86,36 @@ export default {
 
 <style lang="scss" scoped>
 .navbar {
-  width: 100%;
-  height: 66px;
+  height: 50px;
   overflow: hidden;
   position: relative;
   background: #fff;
   box-shadow: 0 1px 4px rgba(0,21,41,.08);
-
   .hamburger-container {
     line-height: 46px;
     height: 100%;
     float: left;
     cursor: pointer;
-    display: none;
     transition: background .3s;
     -webkit-tap-highlight-color:transparent;
-
     &:hover {
       background: rgba(0, 0, 0, .025)
     }
   }
-
   .breadcrumb-container {
     float: left;
   }
-
   .errLog-container {
     display: inline-block;
     vertical-align: top;
   }
-
   .right-menu {
     float: right;
     height: 100%;
     line-height: 50px;
-    >img{
-      width:66px;
-      height:66px;
-      border-radius:50%;
-    }
-
     &:focus {
       outline: none;
     }
-
     .right-menu-item {
       display: inline-block;
       padding: 0 8px;
@@ -147,31 +123,25 @@ export default {
       font-size: 18px;
       color: #5a5e66;
       vertical-align: text-bottom;
-
       &.hover-effect {
         cursor: pointer;
         transition: background .3s;
-
         &:hover {
           background: rgba(0, 0, 0, .025)
         }
       }
     }
-
     .avatar-container {
       margin-right: 30px;
-
       .avatar-wrapper {
         margin-top: 5px;
         position: relative;
-
         .user-avatar {
           cursor: pointer;
           width: 40px;
           height: 40px;
           border-radius: 10px;
         }
-
         .el-icon-caret-bottom {
           cursor: pointer;
           position: absolute;
