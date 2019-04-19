@@ -1,9 +1,12 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import getters from './getters'
+// import createLogger from "vuex/dist/logger"
 
 import addQuestions from './modules/test/addQuestions'
 import getTypeExam from './modules/test/getTypeExam'
+import indexUsers from "./modules/exams/indexUsers";
+import viewUsers from "./modules/exams/viewUsers";
 import examination from './modules/examinations'
 import examDetail from './modules/examDetail'
 import examList from './modules/examList'
@@ -27,6 +30,16 @@ const store = new Vuex.Store({
   getters,
   addQuestions,
   getTypeExam,
+  modules: {
+    ...modules,
+    indexUsers,
+    viewUsers,
+  },
+  // indexUsers,
+  // viewUsers,
+  // modules:modules,
+  getters,
+  // plugins:[createLogger()]
   examination,
   examDetail,
   examList

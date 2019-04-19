@@ -49,6 +49,24 @@
       <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">
         {{ $t('login.logIn') }}
       </el-button>
+
+      <div style="position:relative">
+<!-- 账号/密码提示 -->
+        <!-- <div class="tips">
+          <span>{{ $t('login.username') }} : admin</span>
+          <span>{{ $t('login.password') }} : {{ $t('login.any') }}</span>
+        </div>
+        <div class="tips">
+          <span style="margin-right:18px;">
+            {{ $t('login.username') }} : editor
+          </span>
+          <span>{{ $t('login.password') }} : {{ $t('login.any') }}</span>
+        </div> -->
+<!-- 第三方登录按钮 -->
+        <!-- <el-button class="thirdparty-button" type="primary" @click="showDialog=true">
+          {{ $t('login.thirdparty') }}
+        </el-button> -->
+      </div>
     </el-form>
 
     <!-- <el-dialog :title="$t('login.thirdparty')" :visible.sync="showDialog">
@@ -71,9 +89,10 @@ export default {
   name: 'Login',
   components: { LangSelect, SocialSign },
   data() {
-    // 用户名的自定义校验
+    //用户名的自定义校验
     const validateUsername = (rule, value, callback) => {
-      if (!value) {
+      if (!value) {//用户名规则，可以自定义
+      // if (!validUsername(value)) {
         callback(new Error('Please enter the correct user name'))
       //不得少于 6 个数字，否则提示报错
       } else {
@@ -88,14 +107,27 @@ export default {
       }
     }
     return {
-      loginForm: {
-        username: 'zhangshi',
-        password: 'Zhangshi123!'
+      // loginForm: {
+      //   username: 'chenmanjie',
+      //   password: 'Chenmanjie123!'
+      // },
+       loginForm: {
+        username: 'yangrenbin',
+        password: 'Yangrenbin123!'
       },
       // 校验，有几个需要校验的就写几条规则
       loginRules: {
-        username: [{ required: true, trigger: 'blur'}, {trigger:'blur', validator: validateUsername }],
-        password: [{ required: true, trigger: 'blur', validator: validatePassword }]
+        //每一项为数组格式，数组里边每一个可以加多个规则，用对象的形式
+        username: [{ required: true,//必填
+         trigger: 'blur'//失去焦点时 触发校验
+         }, 
+         {
+           trigger: 'blur',
+           validator: validateUsername
+         }],
+        password: [{ required: true, trigger: 'blur',validator: validatePassword }]
+        //trigger 表示行为，什么时候触发
+        //validator  表示自定义校验，可以写一个函数，如果校验通过，则直接调用 callback;如果校验不通过，则传一个 newerror 出来
       },
       passwordType: 'password',
       capsTooltip: false,
@@ -143,16 +175,27 @@ export default {
     // 登录按钮
     handleLogin() {
       this.$refs.loginForm.validate(async valid => {
-        if (valid) {
-          console.log(this.loginForm);
-          this.loading = true
+        //validate 有两个参数(boolean，object)是否校验成功和未通过校验的字段，
+        //若不传入回调函数，则会返回 promise
+        if (valid) {//判断校验通过
+        console.log(this.loginForm)
+        //loginForm里边就是 data数据，username和password
+          this.loading = true //loading加载
           let res = await this.login(this.loginForm);
-          console.log('login res...', res);
-          if (res.code == 1){
-            await this.generateRoutes([]);
+          console.log('login res...',res)
+          if(res.code == 1){
+            // await this.generateRoutes([])  //放到 permission 导航守卫中
             this.$router.push({ path: this.redirect || '/' })
           }
-          this.loading = false
+          this.loading = false;
+          // this.$store.dispatch('user/login', this.loginForm)
+          //   .then(() => {
+          //     this.$router.push({ path: this.redirect || '/' })
+          //     this.loading = false
+          //   })
+          //   .catch(() => {
+          //     this.loading = false
+          //   })
         } else {
           console.log('error submit!!')
           return false
