@@ -39,28 +39,9 @@ const actions = {
   // user login
   async login({ commit }, userInfo) {
     const { username, password } = userInfo
-<<<<<<< HEAD
-    let res = await login({ user_name: username,user_pwd:password});
-   //接口携带两个参数
-   console.log('res...',res) 
-    setToken(res.token)
-    return res
-  //  setToken(res.token);
-    // return new Promise((resolve, reject) => {
-    //   login({ username: username.trim(), password: password }).then(response => {
-    //     const { data } = response
-    //     commit('SET_TOKEN', data.token)
-    //     setToken(data.token)
-    //     resolve()
-    //   }).catch(error => {
-    //     reject(error)
-    //   })
-    // })
-=======
     let res = await login({user_name: username, user_pwd: password});
     setToken(res.token);
     return res;
->>>>>>> 93e218ce90df261a94fe774035c19c1747472baa
   },
 
   // get user info

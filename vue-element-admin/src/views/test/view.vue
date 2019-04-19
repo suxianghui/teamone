@@ -53,6 +53,7 @@
 
 <script>
 export default {
+  name: 'Views',
   data() {
     return {
       clickindex: null,

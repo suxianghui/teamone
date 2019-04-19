@@ -5,15 +5,12 @@ import getters from './getters'
 
 import addQuestions from './modules/test/addQuestions'
 import getTypeExam from './modules/test/getTypeExam'
-<<<<<<< HEAD
 import indexUsers from "./modules/exams/indexUsers";
 import viewUsers from "./modules/exams/viewUsers";
-=======
 import examination from './modules/examinations'
 import examDetail from './modules/examDetail'
 import examList from './modules/examList'
 
->>>>>>> 93e218ce90df261a94fe774035c19c1747472baa
 Vue.use(Vuex)
 
 // https://webpack.js.org/guides/dependency-management/#requirecontext
@@ -33,7 +30,6 @@ const store = new Vuex.Store({
   getters,
   addQuestions,
   getTypeExam,
-<<<<<<< HEAD
   modules: {
     ...modules,
     indexUsers,
@@ -44,11 +40,9 @@ const store = new Vuex.Store({
   // modules:modules,
   getters,
   // plugins:[createLogger()]
-=======
   examination,
   examDetail,
   examList
->>>>>>> 93e218ce90df261a94fe774035c19c1747472baa
 })
 
 export default store

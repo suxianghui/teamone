@@ -18,6 +18,16 @@ const examsRouter = {
       name: 'KeyboardChart',
       meta: { title: 'addExams', noCache: true }
     }, {
+      path: 'addexam',
+      component: () => import('@/views/exam/adexam'),
+      name: 'KeyboardChart',
+      meta: { title: 'addExams', noCache: true }
+    }, {
+      path: 'detail',
+      component: () => import('@/views/exam/detail'),
+      name: 'KeyboardChart',
+      meta: { title: 'addExams', noCache: true }
+    }, {
       path: 'list',
       component: () => import('@/views/exam/list'),
       name: 'MixChart',

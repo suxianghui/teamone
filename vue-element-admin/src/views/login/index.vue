@@ -107,7 +107,6 @@ export default {
       }
     }
     return {
-<<<<<<< HEAD
       // loginForm: {
       //   username: 'chenmanjie',
       //   password: 'Chenmanjie123!'
@@ -115,11 +114,6 @@ export default {
        loginForm: {
         username: 'yangrenbin',
         password: 'Yangrenbin123!'
-=======
-      loginForm: {
-        username: 'zhangshi',
-        password: 'Zhangshi123!'
->>>>>>> 93e218ce90df261a94fe774035c19c1747472baa
       },
       // 校验，有几个需要校验的就写几条规则
       loginRules: {
