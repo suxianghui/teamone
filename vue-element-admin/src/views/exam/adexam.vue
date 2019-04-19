@@ -5,8 +5,8 @@
       <el-button plain @click="showDialog">添加新题</el-button>
       <div class="content-list">
         <div class="top-title">
-          <h3>报考院校</h3>
-          <p>考试时间：1小时30分钟 监考人：刘于 开始考试时间：2018.9.10 10:00 阅卷人：刘于</p>
+          <h3>{{title}}</h3>
+          <p>考试时间：1小时30分钟 监考人：刘于 开始考试时间：{{starttime}} 阅卷人：刘于</p>
         </div>
         <div v-for="(item,index) in questionList" :key="index" class="list">
           <div class="style_questionitem__3ETlC" :data-id="item.questions_id">
@@ -20,13 +20,13 @@
       <el-button type="primary">创建试卷</el-button>
     </div>
     <div v-show="flag" class="add-drawer">
-      <div class="mask" />
+      <div class="mask" @click="showDialog" />
       <div class="add-drawer-right">
-        <p>所有试题</p>
+        <h3>添加试题</h3>
         <ul>
-          <li>
-            aaaaa
-          </li>
+          <li>添加新题1...</li>
+          <li>添加新题2...</li>
+          <li>添加新题3...</li>
         </ul>
       </div>
     </div>
@@ -34,16 +34,23 @@
 </template>
 
 <script>
+import { timeFormat } from '@/utils/index'
+
+
 export default {
   data() {
     return {
       flag: false,
+      title: '',
+      starttime: '',
       questionList: []
     }
   },
   created() {
     const data = JSON.parse(window.localStorage.getItem('getSubmitExam'));
     console.log(data,'..')
+    this.title = data.title;
+    this.starttime = timeFormat(data.start_time);
     this.questionList = data.questions
   },
   methods: {
@@ -81,6 +88,26 @@ export default {
   border: 0;
   background-clip: padding-box;
   z-index: 1;
+  h3{
+    width: 100%;
+    height:40px;
+    line-height: 40px;
+  }
+  >ul{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-left:0;
+    padding-left: 0;
+    li{
+      height:30px;
+      line-height: 30px;
+      border-bottom: 1px solid #eee;
+      color:#999;
+      text-indent: 2em;
+      list-style: none;
+    }
+  }
 }
 .add-layout {
   box-sizing: border-box;
