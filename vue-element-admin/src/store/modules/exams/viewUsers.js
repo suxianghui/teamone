@@ -83,9 +83,8 @@ const mutations = {
 const actions = {
     //展示用户数据
     async setUserData({ commit } ,payload){
-        // console.log(payload);
         let result = await userData(payload);
-        console.log(result,'用户展示')
+        // console.log(result,'用户展示')
         commit('getUserData',result)
         return result
         // return new Promise(async (resolve,reject) => {
@@ -97,9 +96,8 @@ const actions = {
     },
     //展示身份数据
     async setidentity({ commit }, payload) {
-        // console.log(payload);
         let result = await identity(payload);
-        console.log(result, '身份')
+        // console.log(result, '身份')
         commit('getIdentity', result)
         return result
     },
@@ -121,7 +119,8 @@ const actions = {
     async setViewAuthority({ commit }, payload) {
         // console.log(payload);
         let result = await viewAuthority(payload);
-        // console.log(result, '展示视图权限')
+        console.log(result, '展示视图权限')
+        commit('getViewAuthoritys',result)
         return result
     },
     //展示身份和视图权限关系

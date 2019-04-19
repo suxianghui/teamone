@@ -81,10 +81,10 @@
         </p>
         <el-select v-model="existingView" placeholder="请选择已有视图">
           <el-option
-            v-for="item in existingViewValue"
-            :key="item.value"
-            :label="item.label"
-            :value="item.label"
+            v-for="item in viewAuthoritysData"
+            :key="item.view_authority_id"
+            :label="item.view_authority_text"
+            :value="item.view_authority_text"
           />
         </el-select>
         <div class="btn">
@@ -193,18 +193,23 @@ export default {
       // //添加视图接口权限_选择已有视图
       apiJurisdictionIdValue: state => state.viewUsers.existingViewValue,
       // //给身份设置api接口权限_请选择api接口权限id
+
       //获取用户数据——id
       userDatas:state => state.viewUsers.userDatas,
       //获取身份数据——id值
-      identitysData:state => state.viewUsers.identitysData
+      identitysData:state => state.viewUsers.identitysData,
+      //获取视图权限
+      viewAuthoritysData:state => state.viewUsers.viewAuthoritysData
     })
   },
   created() {
       // this.getAddUserData()
     this.setidentity()
-     console.log(this.identitysData,'2222')
+    //  console.log(this.identitysData,'2222')
     this.setUserData()
-    console.log(this.userDatas,'55555555')
+    // console.log(this.userDatas,'55555555')
+    this.setViewAuthority()
+    console.log(this.setViewAuthority,222222)
   },
   methods: {
     ...mapActions({
@@ -222,10 +227,13 @@ export default {
       setIdentityApi:'indexUsers/setIdentityApi',
       //给身份设定视图权限
       setIdentityView:'indexUsers/setIdentityView',
+
       //获取用户id
       setUserData:'viewUsers/setUserData',
       //获取身份数据
       setidentity:"viewUsers/setidentity",
+      //视图权限
+      setViewAuthority:'viewUsers/setViewAuthority'
     }),
     
     //添加用户或者更新用户
