@@ -264,35 +264,50 @@ export default {
     created() {
       // this.getAddUserData()
     },
-    //添加用户
+    //添加用户或者更新用户
     async addUsersInfo() {
-      if(!this.userName && !this.pwd && !this.identityId){
-        alert('请完善用户信息')
-        return false
+      //添加用户
+      if( this.idx === 0){
+        //判断信息是否完整
+        if(!this.userName && !this.pwd && !this.identityId){
+          alert('请完善用户信息')
+          return false
+        }
+        //把输入的用户信息 赋给 参数(vuex)
+        const res = await this.setAddUserData({
+          user_name:this.userName,
+          user_pwd:this.pwd,
+          identity_id:this.identityId
+        })
+        //成功添加清空
+        if(res.code === 1){
+          alert(res.msg)
+          this.userName = '',
+          this.pwd = '',
+          this.identityId = ''
+        }
+      }else{
+        //更新用户
+        if(!this.userId){
+          // this.$message({
+          //   showClose:true,
+          //   message:'请填写用户id',
+          //   type:'warning'
+          // });
+          alert('请填写用户id');
+          return false
+        }
+        //赋值给参数
+        const res = await this.setUpdataUserInfo({
+          user_id: this.userId,
+          user_name: this.userName,
+          user_pwd: this.pwd,
+          identity_id: this.identityId
+        });
       }
-      const res = await this.setAddUserData({
-        user_name:this.userName,
-        user_pwd:this.pwd,
-        identity_id:this.identityId
-      })
-      if(res.code === 1){
-        alert(res.msg)
-        this.userName = '',
-        this.pwd = '',
-        this.identityId = ''
-      }
-    },
-    // //更新用户
-    async addUsersInfo(){
-      
     },
     //添加身份
     async identity() {
-      // let params = {
-      //   identity_text: this.identityName
-      // }
-      // this.setAddIdentity(params);
-      // console.log(this.setAddIdentity())
       if (!this.identityName) {
         alert('身份信息不能为空')
         return false
