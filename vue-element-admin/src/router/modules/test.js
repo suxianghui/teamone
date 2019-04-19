@@ -32,6 +32,7 @@ const testsRouter = {
     },
     {
       path: 'details',
+      hidden: true,
       component: () => import('@/views/test/details'),
       meta: { title: '', noCache: true }
     }

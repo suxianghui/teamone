@@ -69,12 +69,22 @@ export default {
     await this.generateRoutes([]);
   },
   methods: {
+    ...mapActions({
+      generateRoutes: 'permission/generateRoutes'
+    }),
     handleClickOutside() {
       this.$store.dispatch('app/closeSideBar', { withoutAnimation: false })
+<<<<<<< HEAD
     },
     ...mapActions({
       generateRoutes: 'permission/generateRoutes'
     })
+=======
+    }
+  },
+  async created(){
+    await this.generateRoutes([]);
+>>>>>>> su
   }
 }
 </script>

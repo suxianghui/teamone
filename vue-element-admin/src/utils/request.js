@@ -4,9 +4,15 @@ import { getToken } from '@/utils/auth'
 
 // create an axios instance
 const service = axios.create({
+<<<<<<< HEAD
   //axios 可以创建实例，也可以直接使用
   baseURL:'/api',
   // baseURL: process.env.VUE_APP_BASE_API, // api 的 base_url
+=======
+  // baseURL: 'http://169.254.12.55:7001', // api 的 base_url
+
+  baseURL: '/api',
+>>>>>>> su
   // withCredentials: true, // 跨域请求时发送 cookies
   timeout: 5000 // request timeout
 })

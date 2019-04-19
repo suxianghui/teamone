@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import getters from './getters'
 // import createLogger from "vuex/dist/logger"
 
+<<<<<<< HEAD
 import addQuestions from './modules/test/addQuestions'
 import getTypeExam from './modules/test/getTypeExam'
 import indexUsers from "./modules/exams/indexUsers";
@@ -11,6 +12,17 @@ import examination from './modules/examinations'
 import examDetail from './modules/examDetail'
 import examList from './modules/examList'
 
+=======
+// import addQuestions from './modules/test/addQuestions'
+import getTypeExam from './modules/getTypeExam'
+import gettingLesson from './modules/gettingLesson'
+import getTypeQuestion from './modules/getTypeQuestion'
+import addQuestions from './modules/addQuestions'
+import conditionalTests from './modules/conditionalTests'
+import updateQuestion from './modules/updateQuestion'
+import getpush from './modules/getpush'
+import addType from './modules/addType'
+>>>>>>> su
 Vue.use(Vuex)
 
 // https://webpack.js.org/guides/dependency-management/#requirecontext
@@ -28,7 +40,11 @@ const modules = modulesFiles.keys().reduce((modules, modulePath) => {
 const store = new Vuex.Store({
   modules,
   getters,
+  getTypeExam,
+  gettingLesson,
+  getTypeQuestion,
   addQuestions,
+<<<<<<< HEAD
   getTypeExam,
   modules: {
     ...modules,
@@ -43,6 +59,12 @@ const store = new Vuex.Store({
   examination,
   examDetail,
   examList
+=======
+  conditionalTests,
+  getpush,
+  updateQuestion,
+  addType
+>>>>>>> su
 })
 
 export default store
