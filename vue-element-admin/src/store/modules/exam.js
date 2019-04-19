@@ -1,4 +1,4 @@
-import { examType, examSubject, submitExam, examList } from "../../api/exam";
+import { examType, examSubject, submitExam, deleteExam, renewal, examList, detailData } from "../../api/exam";
 
 
 const state = {
@@ -6,10 +6,16 @@ const state = {
   allExamTypes: [],
   allExamSubjects: [],
   getCreateExam:{},
-  allExamList:[]
+  allExamList:[],
+  detailDatas: []
 }
 
 const mutations = {
+  updateState(state, payload) {
+    for (var key in payload) {
+      state[key] = payload[key]
+    }
+  },
   allExamType(state, payload) {
     state.allExamTypes = payload;
   },
@@ -23,11 +29,6 @@ const mutations = {
   listAll(state, payload) {
     state.allExamList = payload;
   },
-  updateState(state, payload) {
-    for (var key in payload) {
-      state[key] = payload[key]
-    }
-  }
 }
 
 const actions = {
@@ -50,6 +51,32 @@ const actions = {
     return res;
   },
 
+  // 删除试卷
+  async deleteExam({commit}, payload) {
+    let res = await deleteExam();
+  },
+
+  // 跟新数据
+  async renewal({ commit }, payload) {                          ////
+    console.log(payload)
+    let res = await renewal(payload.header, payload.data)
+    return res
+  },
+  
+  // 查询所有的数据
+  async getExamList({ commit }, payload) {                 ////
+    let res = await examList();
+    console.log(res, '...res')
+    commit('updateState', { allExamList: res.exam });
+    return res;
+  },
+
+  // 获取详情页的数据
+  async detailData({commit}, payload) {
+    let res = await detailData(payload);
+    console.log(res,'detailData...')
+    commit('updateState', { detailDatas: res.data });
+  }
   // 获取试卷列表
 //   async getExamList({commit}, payload) {
 //     let res = await examList();
