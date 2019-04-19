@@ -12,7 +12,7 @@
           </el-form>
           <div slot="footer" class="dialog-footer">
             <el-button @click="dialogFormVisible = false">取 消</el-button>
-            <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+            <el-button type="primary" @click="addTypeStudy">确 定</el-button>
           </div>
         </el-dialog>
         <div class="table">
@@ -58,8 +58,16 @@ export default {
   },
   methods:{
     ...mapActions({
-      question :'getTypeQuestion/getTypeQuestions'
-    })
+      question :'getTypeQuestion/getTypeQuestions',
+      addTestTypes:'addType/addTestType'
+    }),
+    addTypeStudy(){
+      this.dialogFormVisible = false
+      this.addTestTypes({
+        text:this.form.name,
+        sort:Math.random().toString(36).substr(2)
+      })
+    }
   },
   async created(){
     this.list = await this.question()

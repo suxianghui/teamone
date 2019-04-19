@@ -83,9 +83,6 @@
         subjects: 'getTypeQuestion/getTypeQuestions',
         conditionals: 'conditionalTests/conditional'
       }),
-      // ...mapMutations({
-      //   getpushvalue :'getpush/getPush'
-      // }),
       //subject
       bindtap(item, index) {
         this.currTypes = item.subject_id
@@ -126,7 +123,6 @@
             }
           })
         }
-      //  this.getpushvalue(item)
       }
     },
     async created() {
@@ -134,7 +130,6 @@
       this.studyType = await this.studyTypes();
       this.messType = await this.subjects();
       this.options = await this.conditionals()
-      // console.log(this.options)
     }
   } 
 </script>

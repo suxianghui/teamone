@@ -67,7 +67,8 @@
         subject_text: '',
         questions_type_text: '',
         randerStudyExam: [],
-        questions_id: ''
+        questions_id: '',
+        quxiao:'你确定要添加这道试题吗?真的要添加吗'
       }
     },
     methods: {
@@ -93,8 +94,24 @@
         this.questions_type_id = e;
       },
       bindtap() {
+        this.$confirm(this.quxiao, '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.$message({
+            type: 'success',
+            message: '删除成功!',
+            // this.clickaddQuestions()
+          });
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });          
+        });
         if (this.title == '' && this.questions_stem == '' && this.exam_id == '' && this.subject_id == '' && this.questions_type_id == '' && this.questions_answer == '' && this.user_id == '') {
-          return console.log('缺少参数')
+           this.quxiao = '缺少参数'
         } else {
           if (this.randerStudy) {
             this.QuestionStudy({
@@ -106,7 +123,7 @@
               questions_type_id: this.questions_type_id,
               exam_id: this.exam_id
             })
-          } else {
+          } else{
             this.clickaddQuestions({
               title: this.title,
               questions_stem: this.questions_stem,
@@ -116,7 +133,7 @@
               questions_answer: this.questions_answer,
               user_id: this.user_id
             })
-          }
+          } 
         }
       }
     },
@@ -125,18 +142,6 @@
       this.curriculum = await this.curriculums()
       this.subject = await this.subjects()
       this.user_id = await this.CurrentUser()
-      // if (this.randerStudy) {
-      //   this.title = this.randerStudy.title;
-      //   this.questions_stem = this.randerStudy.questions_stem;
-      //   this.questions_answer = this.randerStudy.questions_answer;
-      //   this.exam_name = this.randerStudy.exam_name;
-      //   this.questions_type_text = this.randerStudy.questions_type_text;
-      //   this.subject_text = this.randerStudy.subject_text;
-      //   this.questions_id = this.randerStudy.questions_id;
-      //   this.questions_type_id =  this.randerStudy.questions_type_id;
-      //   this.exam_id = this.randerStudy.exam_id;
-      //   this.subject_id = this.randerStudy.subject_id;
-      // }
       let quesId = this.$route.query.id
       let arr = await this.randerStudy();
       arr.data.forEach((v, i) => {

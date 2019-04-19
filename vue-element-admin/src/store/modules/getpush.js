@@ -5,9 +5,7 @@ const state={
 }
 
 const mutations={
-    // getPush(state,payload){
-    //   state.list=payload
-    // }
+  
 }
 
 const actions={
