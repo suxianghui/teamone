@@ -270,7 +270,11 @@ export default {
       if( this.idx === 0){
         //判断信息是否完整
         if(!this.userName && !this.pwd && !this.identityId){
-          alert('请完善用户信息')
+          this.message({
+            showClose:true,
+            message:'请完善用户信息',
+            type:'warning'
+          })
           return false
         }
         //把输入的用户信息 赋给 参数(vuex)
@@ -280,21 +284,18 @@ export default {
           identity_id:this.identityId
         })
         //成功添加清空
-        if(res.code === 1){
-          alert(res.msg)
-          this.userName = '',
-          this.pwd = '',
-          this.identityId = ''
-        }
+        this.hint(res);
+        this.userName = '',
+        this.pwd = '',
+        this.identityId = ''
       }else{
         //更新用户
         if(!this.userId){
-          // this.$message({
-          //   showClose:true,
-          //   message:'请填写用户id',
-          //   type:'warning'
-          // });
-          alert('请填写用户id');
+          this.$message({
+            showClose:true,
+            message:'请填写用户id',
+            type:'warning'
+          });
           return false
         }
         //赋值给参数
@@ -305,54 +306,105 @@ export default {
           identity_id: this.identityId
         });
       }
+      this.hint(res);
+      //清空
+      this.userId = " ",
+      this.userName = " ",
+      this.pwd = " ",
+      this.identityId = " "
     },
     //添加身份
     async identity() {
       if (!this.identityName) {
-        alert('身份信息不能为空')
+        this.$message({
+            showClose:true,
+            message:'身份信息有误!',
+            type:'warning'
+          })
         return false
       }
-      var res = await this.setAddIdentity({ identity_text: this.identityName })
-      if (res.code === 1) {
-        alert(res.msg)
-        this.identityName = ''
-      }
+      var res = await this.setAddIdentity({ identity_text: this.identityName });
+      // console.log(res,'res.....')
+      this.hint(res);
+      this.identityName = " "
     },
     //添加 api 接口权限
     async jurisdiction(){
       if (!this.apiJurisdictionName && !this.apiJurisdictionUrl && !this.apiJurisdictionMethod) {
-        alert('请添加api接口权限')
+        this.$message({
+          showClose:true,
+            message:'请完善api接口信息!',
+            type:'warning'
+        })
         return false
       }
       var res = await this.setAddAuthorityApi({ 
         api_authority_text: this.apiJurisdictionName,
         api_authority_url: this.apiJurisdictionUrl,
         api_authority_method: this.apiJurisdictionMethod
-      })
-      if (res.code === 1) {
-        alert(res.msg)
-        this.apiJurisdictionName = '',
-        this.apiJurisdictionUrl = '',
-        this.apiJurisdictionMethod = ''
-      }
+      });
+      this.hint(res);
+      this.apiJurisdictionName = '',
+      this.apiJurisdictionUrl = '',
+      this.apiJurisdictionMethod = ''
     },
-    api() {
-      console.log(4)
+    //给身份设置api接口权限
+    async api() {
+      if(!this.identityId_api){
+        this.$message({
+          showClose:true,
+          message:'请完善身份设置api接口权限信息',
+          type:'warning'
+        });
+        return false
+      }
+      await this.setIdentityApi({
+        identity_id:this.identityId_api,
+        api_authority_id:this.apiJurisdictionId,
+      })
+      this.hint(res);
+      this.identityId_api = " ",
+      this.apiJurisdictionId = " "
     },
     //添加视图接口权限
     async view() {
-      console.log(11111111111)
+      let obj = {};
+      console.log(1111111111111)
     },
-    //给身份设置api接口权限
-    set(){
-      console.log(66)
+    //给身份设置视图权限
+    async set(){
+      if(!this.identityId_view && !this.viewJurisdictionId){
+        this.$message({
+          showClose:true,
+          message:'请完善身份设置视图权限信息',
+          type:'warning'
+        });
+        return false;
+      }
+      await this.setIdentityView({
+        identity_id:this.identityId_view,
+        view_authority_id:this.viewJurisdictionId
+      });
+      this.hint(res);
+      this.identityId_view = " ",
+      this.viewJurisdictionId = " "
     },
+    //tab切换
     change(idx) {
       this.idx = idx
-      if (this.idx === 0) {
-
-      } else if (this.idx === 1) {
-
+    },
+    //弹框提示
+    hint(res){
+      if( res.code === 1 ){
+        this.$message({
+          message:res.msg,
+          type:'success'
+        })
+      }else{
+        this.$message({
+          message:res.msg,
+          type:'error'
+        })
       }
     }
   }
