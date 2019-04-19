@@ -56,6 +56,7 @@ export default {
     this.title = data.title;
     this.starttime = timeFormat(data.start_time);
     this.questionList = data.questions;
+    this.getQuestion()
   },
   methods: {
     ...mapActions({
@@ -68,7 +69,7 @@ export default {
     async createExam() {
       // 要用exam_exam_id 的字符串
       let data = {question_ids: this.question_ids}
-
+      console.log(data,'data')
       // 调用更新试卷接口
       let res = await this.renewal({header: this.data.exam_exam_id,data })
       console.log(res,'更新试卷...')
@@ -89,8 +90,8 @@ export default {
         this.questionList.splice(index,1)
         this.getQuestion()
       }, ()=>{
-        this.questionList
-        this.getQuestion()
+        // this.questionList
+        // this.getQuestion()
       })
     },
     getQuestion(){
