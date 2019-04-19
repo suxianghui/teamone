@@ -1,20 +1,20 @@
 import { studentExaminationPapers } from '@/api/examination'
 
 const state = {
-  // detail:[],
+  List:[],
 }
 
 const mutations = {
-  // getstudentPapersData(state, payload) {
-  //   state.detail = payload
-  // }
+  getstudentPapersData(state, payload) {
+    state.List = payload
+  }
 }
 
 const actions = {
   async students({commit}, payload){
     let result= await studentExaminationPapers(payload)
     console.log("studentExaminationPapers",result)
-    // commit('getstudentPapersData', result);
+    commit('getstudentPapersData', result);
   }
 }
 

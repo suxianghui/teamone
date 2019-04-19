@@ -81,11 +81,11 @@ export default {
   },
   mounted() {
     // 在页面打印看是否获取到值
-    console.log(this.detail, ".......");
+    // console.log(this.detail, ".......");
   },
   methods: {
     handleEdit(index, row) {
-      console.log(index, row);
+      console.log(index, row, '......');
       this.grade = this.userList[index];
       this.$router.push({
         path: "/paper/paperList",query:{grade:this.grade},

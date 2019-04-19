@@ -144,8 +144,9 @@ export default {
     },
     handleEdit(index, row) {
       console.log(index, row);
+      this.grades = this.userLists[index];
       this.$router.push({
-        path: "/paper/detail",
+        path: "/paper/detail",query:{grades:this.grades}
       });
     },
     // 引入store中的方法， 在页面使用

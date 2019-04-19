@@ -13,7 +13,7 @@ export function examination(params) {
 // 获取学生试卷详情
 export function studentExaminationPapers(data) {
   return request({
-    url: '/exam/student/t27znv-gu7azm-qpq9ai-laaf9m',
+    url: '/exam/student/4edl4i-k0rr7a-b3yna-f87a9w',
     method: 'GET',
     data
   })
