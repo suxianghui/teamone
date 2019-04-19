@@ -83,9 +83,9 @@
         subjects: 'getTypeQuestion/getTypeQuestions',
         conditionals: 'conditionalTests/conditional'
       }),
-      ...mapMutations({
-        getpushvalue :'getpush/getPush'
-      }),
+      // ...mapMutations({
+      //   getpushvalue :'getpush/getPush'
+      // }),
       //subject
       bindtap(item, index) {
         this.currTypes = item.subject_id
@@ -113,14 +113,20 @@
       DetailedRouting(e, item) {
         if (e.target.tagName == 'I') {
           this.$router.push({
-            path: '/test/add'
+            path: '/test/add',
+            query:{
+             id: item.questions_id
+            }
           })
         }else{
           this.$router.push({
-            path: '/test/details'
+            path: '/test/details',
+            query:{
+             id: item.questions_id
+            }
           })
         }
-       this.getpushvalue(item)
+      //  this.getpushvalue(item)
       }
     },
     async created() {

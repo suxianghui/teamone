@@ -67,13 +67,8 @@
         subject_text: '',
         questions_type_text: '',
         randerStudyExam: [],
-        questions_id:''
+        questions_id: ''
       }
-    },
-    computed: {
-      ...mapState({
-        randerStudy: store => store.getpush.list
-      })
     },
     methods: {
       ...mapActions({
@@ -82,7 +77,8 @@
         subjects: 'getTypeQuestion/getTypeQuestions',
         clickaddQuestions: 'addQuestions/addQuestionStudy',
         CurrentUser: 'addQuestions/CurrentUserInfor',
-        QuestionStudy: 'updateQuestion/updateQuestionStudy'
+        QuestionStudy: 'updateQuestion/updateQuestionStudy',
+        randerStudy: 'getpush/getQuestions'
       }),
       //考试
       exam(e) {
@@ -101,15 +97,15 @@
           return console.log('缺少参数')
         } else {
           if (this.randerStudy) {
-             this.QuestionStudy({
-               questions_id:this.questions_id,
-               title:this.title,
-               questions_stem:this.questions_stem,
-               questions_answer:this.questions_answer,
-               subject_id:this.subject_id,
-               questions_type_id:this.questions_type_id,
-               exam_id:this.exam_id
-             })
+            this.QuestionStudy({
+              questions_id: this.questions_id,
+              title: this.title,
+              questions_stem: this.questions_stem,
+              questions_answer: this.questions_answer,
+              subject_id: this.subject_id,
+              questions_type_id: this.questions_type_id,
+              exam_id: this.exam_id
+            })
           } else {
             this.clickaddQuestions({
               title: this.title,
@@ -129,18 +125,36 @@
       this.curriculum = await this.curriculums()
       this.subject = await this.subjects()
       this.user_id = await this.CurrentUser()
-      if (this.randerStudy) {
-        this.title = this.randerStudy.title;
-        this.questions_stem = this.randerStudy.questions_stem;
-        this.questions_answer = this.randerStudy.questions_answer;
-        this.exam_name = this.randerStudy.exam_name;
-        this.questions_type_text = this.randerStudy.questions_type_text;
-        this.subject_text = this.randerStudy.subject_text;
-        this.questions_id = this.randerStudy.questions_id;
-        this.questions_type_id =  this.randerStudy.questions_type_id;
-        this.exam_id = this.randerStudy.exam_id;
-        this.subject_id = this.randerStudy.subject_id;
-      }
+      // if (this.randerStudy) {
+      //   this.title = this.randerStudy.title;
+      //   this.questions_stem = this.randerStudy.questions_stem;
+      //   this.questions_answer = this.randerStudy.questions_answer;
+      //   this.exam_name = this.randerStudy.exam_name;
+      //   this.questions_type_text = this.randerStudy.questions_type_text;
+      //   this.subject_text = this.randerStudy.subject_text;
+      //   this.questions_id = this.randerStudy.questions_id;
+      //   this.questions_type_id =  this.randerStudy.questions_type_id;
+      //   this.exam_id = this.randerStudy.exam_id;
+      //   this.subject_id = this.randerStudy.subject_id;
+      // }
+      let quesId = this.$route.query.id
+      let arr = await this.randerStudy();
+      arr.data.forEach((v, i) => {
+        if (quesId == v.questions_id) {
+          this.item = v;
+          this.title = v.title;
+          this.questions_stem = v.questions_stem;
+          this.questions_answer = v.questions_answer;
+          this.exam_name = v.exam_name;
+          this.questions_type_text = v.questions_type_text;
+          this.subject_text = v.subject_text;
+          this.questions_id = v.questions_id;
+          this.questions_type_id = v.questions_type_id;
+          this.exam_id = v.exam_id;
+          this.subject_id = v.subject_id;
+        }
+      })
+
     }
   }
 </script>
