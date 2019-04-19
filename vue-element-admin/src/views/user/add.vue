@@ -99,18 +99,18 @@
         </p>
         <el-select v-model="identityId_api" placeholder="请选择身份id">
           <el-option
-            v-for="item in identityId_apiValue"
-            :key="item.value"
-            :label="item.label"
-            :value="item.label"
+            v-for="item in identitysData"
+            :key="item.identity_api_authority_relation_id"
+            :label="item.identity_text"
+            :value="item.identity_text"
           />
         </el-select>
         <el-select v-model="apiJurisdictionId" placeholder="请选择api接口权限id">
           <el-option
-            v-for="item in apiJurisdictionIdValue"
-            :key="item.value"
-            :label="item.label"
-            :value="item.label"
+            v-for="item in identityApiAuthorityRelationsData"
+            :key="item.identity_api_authority_relation_id"
+            :label="item.api_authority_text"
+            :value="item.api_authority_text"
           />
         </el-select>
         <div class="btn">
@@ -125,18 +125,18 @@
         </p>
         <el-select v-model="identityId_view" placeholder="请选择身份id">
           <el-option
-            v-for="item in identityId_viewValue"
-            :key="item.value"
-            :label="item.label"
-            :value="item.label"
+            v-for="item in identitysData"
+            :key="item.identity_view_authority_relation_id"
+            :label="item.identity_text"
+            :value="item.identity_text"
           />
         </el-select>
         <el-select v-model="viewJurisdictionId" placeholder="请选择视图权限id">
           <el-option
-            v-for="item in viewJurisdictionIdValue"
-            :key="item.value"
-            :label="item.label"
-            :value="item.label"
+            v-for="item in viewAuthoritysData"
+            :key="item.identity_view_authority_relation_id"
+            :label="item.view_authority_text"
+            :value="item.view_authority_text"
           />
         </el-select>
         <div class="btn">
@@ -199,7 +199,11 @@ export default {
       //获取身份数据——id值
       identitysData:state => state.viewUsers.identitysData,
       //获取视图权限
-      viewAuthoritysData:state => state.viewUsers.viewAuthoritysData
+      viewAuthoritysData:state => state.viewUsers.viewAuthoritysData,
+      //身份和api权限
+      identityApiAuthorityRelationsData:state => state.viewUsers.identityApiAuthorityRelationsData,
+      //身份设置试图
+      identityApiAuthorityRelationsData:state => state.viewUsers.identityApiAuthorityRelationsData
     })
   },
   created() {
@@ -209,7 +213,13 @@ export default {
     this.setUserData()
     // console.log(this.userDatas,'55555555')
     this.setViewAuthority()
-    console.log(this.setViewAuthority,222222)
+    // console.log(this.setViewAuthority,222222)
+
+    this.setIdentityApiAuthorityRelation()
+    // console.log(this.setIdentityApiAuthorityRelation,'6666')
+
+    this.setidentityViewAuthorityRelation()
+    // console.log(this.setidentityViewAuthorityRelation,'555555')
   },
   methods: {
     ...mapActions({
@@ -233,7 +243,11 @@ export default {
       //获取身份数据
       setidentity:"viewUsers/setidentity",
       //视图权限
-      setViewAuthority:'viewUsers/setViewAuthority'
+      setViewAuthority:'viewUsers/setViewAuthority',
+      //身份和api权限
+      setIdentityApiAuthorityRelation:'viewUsers/setIdentityApiAuthorityRelation',
+      //身份设置视图
+      setidentityViewAuthorityRelation:'viewUsers/setidentityViewAuthorityRelation'
     }),
     
     //添加用户或者更新用户

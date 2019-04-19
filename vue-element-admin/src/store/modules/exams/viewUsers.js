@@ -112,14 +112,15 @@ const actions = {
     async setIdentityApiAuthorityRelation({ commit }, payload) {
         // console.log(payload);
         let result = await identityApiAuthorityRelation(payload);
-        // console.log(result, '展示身份和api')
+        // console.log(new Set(result.data), '展示身份和api')
+        commit('getIdentityApiAuthorityRelations',result)
         return result
     },
     //获取视图权限
     async setViewAuthority({ commit }, payload) {
         // console.log(payload);
         let result = await viewAuthority(payload);
-        console.log(result, '展示视图权限')
+        // console.log(result, '展示视图权限')
         commit('getViewAuthoritys',result)
         return result
     },
@@ -128,6 +129,7 @@ const actions = {
         // console.log(payload);
         let result = await identityViewAuthorityRelation(payload);
         // console.log(result, '展示身份和视图')
+        commit('getIdentityViewAuthorityRelations',result)
         return result
     },
 }
