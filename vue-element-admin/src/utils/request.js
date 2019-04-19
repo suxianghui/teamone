@@ -46,9 +46,13 @@ service.interceptors.response.use(//响应拦截器
 //响应拦截器,所以响应回来的 拦截器都需要走这里走
   response => {
     const res = response.data
+<<<<<<< HEAD
     // const res = response;
     // console.log('...res',res,response);
     if(res.code == 1){
+=======
+    if (res.code == 1){
+>>>>>>> 93e218ce90df261a94fe774035c19c1747472baa
       return res;
     }
 

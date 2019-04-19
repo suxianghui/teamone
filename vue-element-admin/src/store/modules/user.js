@@ -39,6 +39,7 @@ const actions = {
   // user login
   async login({ commit }, userInfo) {
     const { username, password } = userInfo
+<<<<<<< HEAD
     let res = await login({ user_name: username,user_pwd:password});
    //接口携带两个参数
    console.log('res...',res) 
@@ -55,6 +56,11 @@ const actions = {
     //     reject(error)
     //   })
     // })
+=======
+    let res = await login({user_name: username, user_pwd: password});
+    setToken(res.token);
+    return res;
+>>>>>>> 93e218ce90df261a94fe774035c19c1747472baa
   },
 
   // get user info
