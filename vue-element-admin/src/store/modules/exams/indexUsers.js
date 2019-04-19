@@ -16,7 +16,14 @@ const state = {
   addAuthorityApiD:[],//添加 api 接口权限
   addAuthorityViewD:[],//添加视图权限
   identityApiD:[],//给身份设定 api 接口权限
-  identityViewD:[]//给身份设定视图权限
+  identityViewD:[],//给身份设定视图权限
+
+  identityId_viewValue: [],
+  //身份设置视图权限_身份id选择
+  identityId_apiValue: [],
+  //身份设置api接口权限——身份id选择
+
+
 }
 
 const mustations = {
@@ -60,8 +67,9 @@ const mustations = {
 const actions = {
   //添加用户
   async setAddUserData({ commit }, payload) {
-    console.log(payload);
+    // console.log(payload,'111111');
     const result = await addUsers(payload)
+    // console.log()
     return result
     // return new Promise(async(resolve, reject) => {
     //   const result = await addUsers(payload)
@@ -86,7 +94,7 @@ const actions = {
   },
   //添加身份
   async setAddIdentity({ commit }, payload) {
-    console.log(payload, '添加身份1111');
+    // console.log(payload, '添加身份1111');
     let result = await addIdentity(payload)
     return result
     // return new Promise(async (resolve, reject) => {

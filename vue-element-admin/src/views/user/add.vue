@@ -17,10 +17,10 @@
           <el-input v-model="pwd" placeholder="请输入密码" show-password />
           <el-select v-model="identityId" placeholder="请选择身份id">
             <el-option
-              v-for="item in identityIdValue"
-              :key="item.value"
-              :label="item.label"
-              :value="item.label"
+              v-for="item in identitysData"
+              :key="item.identity_id"
+              :label="item.identity_text"
+              :value="item.identity_text"
             />
           </el-select>
         </div>
@@ -28,20 +28,20 @@
         <div v-if="idx === 1">
           <el-select v-model="userId" placeholder="请选择用户id">
             <el-option
-              v-for="item in userIdValue"
-              :key="item.value"
-              :label="item.label"
-              :value="item.label"
+              v-for="item in userDatas"
+              :key="item.user_id"
+              :label="item.user_name"
+              :value="item.user_name"
             />
           </el-select>
           <el-input v-model="userName" placeholder="请输入用户名" />
           <el-input v-model="pwd" placeholder="请输入密码" show-password />
           <el-select v-model="identityId" placeholder="请选择身份id">
             <el-option
-              v-for="item in identityIdValue"
-              :key="item.value"
-              :label="item.label"
-              :value="item.label"
+              v-for="item in identitysData"
+              :key="item.identity_id"
+              :label="item.identity_text"
+              :value="item.identity_text"
             />
           </el-select>
         </div>
@@ -173,76 +173,38 @@ export default {
       apiJurisdictionId: '',//选择api接口权限id
       viewJurisdictionId: '',//选择视图权限id
 
-      idx: 0,
-      identityId_viewValue:[
-        {
-          value:'选项1',
-          label:'视图'
-        }
-      ],//视图身份选择
-      identityId_apiValue:[
-        {
-          value:'选项1',
-          label:'123456'
-        }
-      ],//api接口身份选择
-      userIdValue: [
-        {
-          value: '选项1',
-          label: '黄金糕'
-        },
-        {
-          value: '选项2',
-          label: '狮子头'
-        },
-        {
-          value: '选项3',
-          label: '黄金酥'
-        }
-      ],//用户id选择
-      viewJurisdictionIdValue: [
-        {
-          value: '选项1',
-          label: '黄金糕'
-        }
-      ],
-      existingViewValue: [
-        {
-          value: '选项1',
-          label: '黄金糕'
-        }
-      ],
-      apiJurisdictionIdValue: [
-        {
-          value: '选项1',
-          label: '黄金糕'
-        }
-      ],
-      identityIdValue: [
-        {
-          value: '选项1',
-          label: '黄金糕'
-        }
-      ]
+      idx: 0,//用于切换 添加用户和 更新用户
+
     }
   },
   computed: {
     ...mapState({
-      // 添加用户
-      addUsersD:state => state.indexUsers.addUsersD,
-      //更新用户信息
-      updataUserInfoD:state => state.indexUsers.updataUserInfoD,
-      //添加身份
-      addIdentityD:state => state.indexUsers.addIdentityD,
-      //添加 api 接口权限
-      addAuthorityApiD:state => state.indexUsers.addAuthorityApiD,
-      //添加视图权限
-      addAuthorityViewD:state => state.indexUsers.addAuthorityViewD,
-      //给身份设定 api 接口权限
-      identityApiD:state => state.indexUsers.identityApiD,
-      //给身份设定视图权限
-      identityViewD:state => state.indexUsers.identityViewD
+      identityId_viewValue:state => state.indexUsers.identityId_viewValue,
+      // //身份设置视图权限_身份id选择
+      identityId_apiValue:state => state.indexUsers.identityId_apiValue,
+      // //身份设置api接口权限——身份id选择
+      userIdValue:state => state.viewUsers.userIdValue,
+      // //添加/更新_用户id 选择
+      identityIdValue: state => state.viewUsers.identityIdValue,
+      // 添加/更新用户_身份id选择
+      viewJurisdictionIdValue: state =>state.viewUsers.viewJurisdictionIdValue,
+      // //给身份设置视图权限_权限id选择
+      existingViewValue: state => state.viewUsers.existingViewValue,
+      // //添加视图接口权限_选择已有视图
+      apiJurisdictionIdValue: state => state.viewUsers.existingViewValue,
+      // //给身份设置api接口权限_请选择api接口权限id
+      //获取用户数据——id
+      userDatas:state => state.viewUsers.userDatas,
+      //获取身份数据——id值
+      identitysData:state => state.viewUsers.identitysData
     })
+  },
+  created() {
+      // this.getAddUserData()
+    this.setidentity()
+     console.log(this.identitysData,'2222')
+    this.setUserData()
+    console.log(this.userDatas,'55555555')
   },
   methods: {
     ...mapActions({
@@ -259,18 +221,20 @@ export default {
       //给身份设定 api 接口权限
       setIdentityApi:'indexUsers/setIdentityApi',
       //给身份设定视图权限
-      setIdentityView:'indexUsers/setIdentityView'
+      setIdentityView:'indexUsers/setIdentityView',
+      //获取用户id
+      setUserData:'viewUsers/setUserData',
+      //获取身份数据
+      setidentity:"viewUsers/setidentity",
     }),
-    created() {
-      // this.getAddUserData()
-    },
+    
     //添加用户或者更新用户
     async addUsersInfo() {
       //添加用户
       if( this.idx === 0){
         //判断信息是否完整
         if(!this.userName && !this.pwd && !this.identityId){
-          this.message({
+          this.$message({
             showClose:true,
             message:'请完善用户信息',
             type:'warning'
@@ -358,7 +322,7 @@ export default {
         });
         return false
       }
-      await this.setIdentityApi({
+      const res = await this.setIdentityApi({
         identity_id:this.identityId_api,
         api_authority_id:this.apiJurisdictionId,
       })
@@ -369,7 +333,24 @@ export default {
     //添加视图接口权限
     async view() {
       let obj = {};
-      console.log(1111111111111)
+      obj = this.existingViewValue.find((item,index)=>{
+        return item.label === this.existingView;
+      });
+      if(!this.existingView){
+        this.$message({
+          showClose:true,
+          message:'请选择已有视图',
+          type:'warning'
+        })
+        return false;
+      }
+      const res = await setAddAuthorityView({
+        view_authority_text:this.existingView,
+        view_id:obj.view_id //视图id  字符串
+      })
+      this.hint();
+      this.existingView = " ",
+      obj.view_id = " "
     },
     //给身份设置视图权限
     async set(){
@@ -381,7 +362,7 @@ export default {
         });
         return false;
       }
-      await this.setIdentityView({
+      const res = await this.setIdentityView({
         identity_id:this.identityId_view,
         view_authority_id:this.viewJurisdictionId
       });
