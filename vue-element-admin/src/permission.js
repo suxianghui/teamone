@@ -18,57 +18,57 @@ NProgress.configure({ showSpinner: false }) // NProgress Configuration
 const whiteList = ['/login', '/auth-redirect'] // no redirect whitelist
 
 // 导航守卫的运用
- 
+
 //路由跳转之前
-router.beforeEach(async(to, from, next) => {
-    //三个参数(to: 去哪from: 到哪next:下一个)
+router.beforeEach(async (to, from, next) => {
+  //三个参数(to: 去哪from: 到哪next:下一个)
   // start progress bar
   NProgress.start()  //进度条开始加载
 
-//   // determine whether the user has logged in
-//   const hasToken = getToken()
+  // determine whether the user has logged in
+  const hasToken = getToken()
 
   if (hasToken) { //已经拿到登录态
     if (to.path === '/login') {
       // if is logged in, redirect to the home page
-      next({ path: '/' })  
+      next({ path: '/' })
       //next  一定要 调用，否则会跳转不过去，卡到当前页面
 
       NProgress.done()  //加载完成进度条关闭
     } else {
       // determine whether the user has obtained his permission roles through getInfo
-    //   const hasRoles = store.getters.roles && store.getters.roles.length > 0
-      
-    //判断有没有 userInfo
+      //   const hasRoles = store.getters.roles && store.getters.roles.length > 0
+
+      //判断有没有 userInfo
       const userInfo = store.getters.userInfo;
       //判断是否获取过用户信息，如果有就不在获取，如果没有就第一次获取
-      if ( userInfo.user_name ) {
-        next()   
+      if (userInfo.user_name) {
+        next()
       } else {
         try {
           // get user info
           // note: roles must be a object array! such as: ['admin'] or ,['developer','editor']
-        //   const { roles } = await store.dispatch('user/getInfo')
-            
-        //1.如果没有用户信息，就去获取用户信息
-        const userInfo = await store.dispatch('user/getInfo')
-            console.log('userInfo',userInfo);
-        //2.通过身份获取权限
+          //   const { roles } = await store.dispatch('user/getInfo')
 
-        
-        //3.通过权限生成动态路由
-        await store.dispatch('permission/generateRoutes',[])
+          //1.如果没有用户信息，就去获取用户信息
+          const userInfo = await store.dispatch('user/getInfo')
+          console.log('userInfo', userInfo);
+          //2.通过身份获取权限
+
+
+          //3.通过权限生成动态路由
+          await store.dispatch('permission/generateRoutes', [])
           // generate accessible routes map based on roles
-        //   const accessRoutes = await store.dispatch('permission/generateRoutes', roles)
+          //   const accessRoutes = await store.dispatch('permission/generateRoutes', roles)
 
-        //   // dynamically add accessible routes
-        //   router.addRoutes(accessRoutes)
+          //   // dynamically add accessible routes
+          //   router.addRoutes(accessRoutes)
 
-        //   // hack method to ensure that addRoutes is complete
-        //   // set the replace: true, so the navigation will not leave a history record
-          next({ ...to, replace: true }) 
+          //   // hack method to ensure that addRoutes is complete
+          //   // set the replace: true, so the navigation will not leave a history record
+          next({ ...to, replace: true })
         } catch (error) {
-            console.log('error',error)
+          console.log('error', error)
           // remove token and go to login page to re-login
           await store.dispatch('user/resetToken')
           Message.error(error || 'Has Error')
@@ -81,11 +81,11 @@ router.beforeEach(async(to, from, next) => {
     /* has no token*/
 
 
-//没有登录态的情况
+    //没有登录态的情况
     if (whiteList.indexOf(to.path) !== -1) {  //没有拿到登录态，判断白名单中有没有这一项
-        //如果在白名单中， 则不重定义项到登录页，没有则跳转
+      //如果在白名单中， 则不重定义项到登录页，没有则跳转
       // in the free login whitelist, go directly
-      next() 
+      next()
     } else {
       // other pages that do not have permission to access are redirected to the login page.
       next(`/login?redirect=${to.path}`)
@@ -95,7 +95,7 @@ router.beforeEach(async(to, from, next) => {
   }
 })
 
-// router.afterEach(() => {
-//   // finish progress bar
-//   NProgress.done()
-// })
+router.afterEach(() => {
+  // finish progress bar
+  NProgress.done()
+})

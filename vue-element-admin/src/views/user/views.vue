@@ -79,17 +79,11 @@ export default {
   data() {
     return {
       nav:[
-        "用户数据",
-        "身份数据",
-        "api接口权限",
-        "身份和api接口关系",
-        "视图接口权限",
-        "身份和视图权限关系"
-      ],
+        "用户数据","身份数据","api接口权限","身份和api接口关系","视图接口权限","身份和视图权限关系"
+        ],
       tabNav:[
         "用户名","密码","身份"
       ],
-      // tabPosition: 'top',
       tableData: [{
         date: '2016-05-02',
         name: '王小虎',
@@ -228,33 +222,15 @@ export default {
       display: inline-block;
       height: 30px;
       line-height: 30px;
-      // span:hover {
-      //   color: #0139fd;
-      // }
     } 
     .blue {
         border: 1px solid #0139fd;
         color: #0139fd;
-      }
+    }
   }
   .pagination{
     position: absolute;
     right:0;
   }
  }
-
-// .title{
-//     margin-top: 0;
-//     margin-bottom: 0.5em;
-//     color: rgba(0, 0, 0, 0.85);
-//     font-weight: 500;
-//     display: block;
-//     font-size: 2em;
-//     margin-block-start: 0.67em;
-//     margin-block-end: 0.67em;
-//     margin-inline-start: 0px;
-//     margin-inline-end: 0px;
-
-// }
-
 </style>
