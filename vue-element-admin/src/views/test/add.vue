@@ -1,6 +1,6 @@
 <template>
   <div class="chart-container">
-    <div class="tittle">编辑试题</div>
+    <div class="tittle">{{checktitles}}</div>
     <div class="box">
       <div class="inp">
         <p>题目信息</p>
@@ -39,7 +39,16 @@
         </div>
       </div>
       <div class="btn">
-        <el-button type="primary" @click="bindtap">提交</el-button>
+        <!-- <el-button type="primary" @click="bindtap">提交</el-button> -->
+        <el-button type="primary" class="btn" @click="dialogFormVisible = true">提交</el-button>
+        <el-dialog title="添加类型" class="tan" :visible.sync="dialogFormVisible">
+            <p>{{modificationAdds}}</p>
+            <p>{{Addmodifications}}</p>
+          <div slot="footer" class="dialog-footer">
+            <el-button @click="dialogFormVisible = false">取 消</el-button>
+            <el-button type="primary" @click="bindtap">确 定</el-button>
+          </div>
+        </el-dialog>
       </div>
     </div>
   </div>
@@ -53,6 +62,7 @@
     components: { MarkdownEditor },
     data() {
       return {
+        dialogFormVisible:false,
         title: '',
         questions_stem: '',
         exam_id: '',
@@ -68,7 +78,11 @@
         questions_type_text: '',
         randerStudyExam: [],
         questions_id: '',
-        quxiao:'你确定要添加这道试题吗?真的要添加吗'
+        checktitles:'添加试题',
+        modificationAdds:'您确定要添加这道试题吗？',
+        Addmodifications:'真的要添加吗？',
+        arr:[],
+        quesId:''
       }
     },
     methods: {
@@ -94,36 +108,11 @@
         this.questions_type_id = e;
       },
       bindtap() {
-        this.$confirm(this.quxiao, '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-          this.$message({
-            type: 'success',
-            message: '删除成功!',
-            // this.clickaddQuestions()
-          });
-        }).catch(() => {
-          this.$message({
-            type: 'info',
-            message: '已取消删除'
-          });          
-        });
+        this.dialogFormVisible = false;
         if (this.title == '' && this.questions_stem == '' && this.exam_id == '' && this.subject_id == '' && this.questions_type_id == '' && this.questions_answer == '' && this.user_id == '') {
-           this.quxiao = '缺少参数'
+            alert('缺少参数')
         } else {
-          if (this.randerStudy) {
-            this.QuestionStudy({
-              questions_id: this.questions_id,
-              title: this.title,
-              questions_stem: this.questions_stem,
-              questions_answer: this.questions_answer,
-              subject_id: this.subject_id,
-              questions_type_id: this.questions_type_id,
-              exam_id: this.exam_id
-            })
-          } else{
+          if (this.checktitles ==='添加试题') {
             this.clickaddQuestions({
               title: this.title,
               questions_stem: this.questions_stem,
@@ -132,6 +121,16 @@
               questions_type_id: this.questions_type_id,
               questions_answer: this.questions_answer,
               user_id: this.user_id
+            })
+          } else{
+            this.QuestionStudy({
+              questions_id: this.questions_id,
+              title: this.title,
+              questions_stem: this.questions_stem,
+              questions_answer: this.questions_answer,
+              subject_id: this.subject_id,
+              questions_type_id: this.questions_type_id,
+              exam_id: this.exam_id
             })
           } 
         }
@@ -142,10 +141,11 @@
       this.curriculum = await this.curriculums()
       this.subject = await this.subjects()
       this.user_id = await this.CurrentUser()
-      let quesId = this.$route.query.id
-      let arr = await this.randerStudy();
-      arr.data.forEach((v, i) => {
-        if (quesId == v.questions_id) {
+      this.quesId = this.$route.query.id
+      this.arr = await this.randerStudy();
+      // console.log(this.arr)
+      this.arr.data.forEach((v, i) => {
+        if (this.quesId == v.questions_id) {
           this.item = v;
           this.title = v.title;
           this.questions_stem = v.questions_stem;
@@ -157,6 +157,9 @@
           this.questions_type_id = v.questions_type_id;
           this.exam_id = v.exam_id;
           this.subject_id = v.subject_id;
+          this.checktitles = '编辑试题';
+          this.Addmodifications = '确定要修改这道题吗？';
+          this.modificationAdds = '您要修改吗？';
         }
       })
 
