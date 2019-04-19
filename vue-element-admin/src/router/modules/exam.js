@@ -19,7 +19,7 @@ const examsRouter = {
       meta: { title: 'addExams', noCache: true }
     }, {
       path: 'addexam',
-      component: () => import('@/views/exam/addexam'),
+      component: () => import('@/views/exam/adexam'),
       name: 'KeyboardChart',
       meta: { title: 'addExams', noCache: true }
     }, {

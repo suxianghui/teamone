@@ -33,3 +33,5 @@ export const examList = (query) => {
     method: 'GET'
   })
 }
+
+

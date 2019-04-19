@@ -6,10 +6,10 @@
       <div class="content-list">
         <div class="top-title">
           <h3>报考院校</h3>
-          <p>考试时间：1小时30分钟 监考人：刘于 开始考试时间：2018.9.10 10:00 阅卷人：刘于</p>
+          <p>考试时间：1小时30分钟 监考人：刘于 开始考试时间：{{starttime}}  结束考试时间：{{endtime}} 阅卷人：刘于</p>
         </div>
         <div class="list">
-          <div v-for="(val, ind) in getCreateExam" :key="ind" class="content-list-style">
+          <div v-for="(val, ind) in getCreateExam.questions" :key="ind" class="content-list-style">
             <h4>{{ind+1}}：{{val.title}} <a href="javascript:;" style="float: right;color:#0139FD">删除</a></h4>
             <div class="react-markdown">
               <pre>
@@ -21,7 +21,7 @@
           </div>
         </div>
       </div>
-      <el-button type="primary">创建试卷</el-button>
+      <el-button @click="createExam" type="primary">创建试卷</el-button>
     </div>
     <div v-show="flag" class="add-drawer">
       <div class="mask" />
@@ -39,28 +39,37 @@
 
 <script>
 import { mapState } from 'vuex';
-
+import { timeFormat } from '@/utils/index'
 
 export default {
   data() {
     return {
-      flag: false
+      flag: false,
+      starttime: '',
+      endtime: ''
     }
   },
 
   computed: {
     ...mapState({
-      getCreateExam: state => state.exam.getCreateExam.questions    //.getCreateExam
+      getCreateExam: state => state.exam.getCreateExam   //.getCreateExam
     })
   },
 
   mounted() {
-    console.log(this.getCreateExam,'getCreateExam')
+    console.log(this.getCreateExam,'//')
+    this.starttime = timeFormat(this.getCreateExam.start_time)
+    this.endtime = timeFormat(this.getCreateExam.end_time)
   },
 
   methods: {
     showDialog() {
       this.flag = !this.flag
+    },
+    createExam() {
+      this.$router.push({
+        path: '/exam/list'
+      })
     }
   }
 }

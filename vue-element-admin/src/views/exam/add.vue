@@ -106,20 +106,22 @@ export default {
       getSubmitExam:'exam/getSubmitExam'
     }),
     submitForm(formName) {
-      // 创建试卷接口所需信息
-      let params = {
-        subject_id: this.ruleForm.subject_id,
-        exam_id: this.ruleForm.exam_id,
-        title: this.ruleForm.name,
-        number: 4,
-        start_time: momentTime(this.ruleForm.starttime),
-        end_time: momentTime(this.ruleForm.endtime)
-      }
-
-      this.$refs[formName].validate((valid) => {
+      this.$refs[formName].validate(async (valid) => {
         if (valid) {
+          // 创建试卷接口所需信息
+          let params = {
+            subject_id: this.ruleForm.subject_id,
+            exam_id: this.ruleForm.exam_id,
+            title: this.ruleForm.name,
+            number: 4,
+            start_time: momentTime(this.ruleForm.starttime),
+            end_time: momentTime(this.ruleForm.endtime)
+          }
           // 获取创建试卷响应数据
-          this.getSubmitExam(params);
+          let res = await this.getSubmitExam(params);
+          // 把数据存储在本地
+          window.localStorage.setItem('getSubmitExam',JSON.stringify(res.data));
+          // 跳转路由到创建试卷页面
           this.$router.push({ path: '/exam/addexam' });
         } else {
           console.log('error submit!!')

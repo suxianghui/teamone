@@ -16,12 +16,17 @@ const mutations = {
   allExamSubject(state, payload) {
     state.allExamSubjects = payload;
   },
-  createExam(state, payload){
-    // console.log(payload,'.....')
-    state.getCreateExam = { ...payload };
-  },
+  // createExam(state, payload){
+  //   // console.log(payload,'.....')
+  //   state.getCreateExam = { ...payload };
+  // },
   listAll(state, payload) {
     state.allExamList = payload;
+  },
+  updateState(state, payload) {
+    for (var key in payload) {
+      state[key] = payload[key]
+    }
   }
 }
 
@@ -41,14 +46,15 @@ const actions = {
   // 创建试卷
   async getSubmitExam({ commit }, payload) {
     let res = await submitExam(payload);
-    commit('createExam',res.data);
+    // commit('createExam',res.data);
+    return res;
   },
 
   // 获取试卷列表
-  async getExamList({commit}, payload) {
-    let res = await examList();
-    commit('listAll', res.exam);
-  }
+//   async getExamList({commit}, payload) {
+//     let res = await examList();
+//     commit('updateState', {allExamList: res.exam});
+//   }
 }
 
 export default {
