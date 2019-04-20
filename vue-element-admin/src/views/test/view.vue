@@ -58,72 +58,6 @@
 </template>
 
 <script>
-<<<<<<< HEAD
-export default {
-  name: 'Views',
-  data() {
-    return {
-      clickindex: null,
-      currtype: ['JavaScript上', 'JavaScript下', '模块化开发', '移动端开发', 'node基础', '组件化开发(vue)'],
-      currType: '',
-      isTrue: false,
-      studytypevalue: '',
-      messtypevalue: '',
-      studyType: [{
-        value: '选项1',
-        label: '周考1'
-      }, {
-        value: '选项2',
-        label: '周考2'
-      }, {
-        value: '选项3',
-        label: '周考3'
-      }, {
-        value: '选项4',
-        label: '月考'
-      }],
-      messType: [{
-        value: '选项1',
-        label: '简答题'
-      }, {
-        value: '选项2',
-        label: '代码阅读题'
-      }, {
-        value: '选项3',
-        label: '代码补全'
-      }, {
-        value: '选项4',
-        label: '修改bug'
-      }],
-      options: [{
-        subject_text: 'javaScript上',
-        exam_name: '周考1',
-        user_name: 'w916peach',
-        questions_type_text: '简答题',
-        questions_stem: '什么是闭包？',
-        questions_answer: '声明在函数内部的函数'
-      }, {
-        subject_text: 'javaScript上',
-        exam_name: '月考',
-        user_name: 'w916peach',
-        questions_type_text: '代码补全',
-        questions_stem: '机器人归为',
-        questions_answer: '声明在函数内部的函数'
-      }, {
-        subject_text: 'node基础',
-        exam_name: '周考1',
-        user_name: 'dingshaoshan',
-        questions_type_text: '代码补全',
-        questions_stem: '解构赋值和数组的map方法',
-        questions_answer: '声明在函数内部的函数'
-      }]
-    }
-  },
-  methods: {
-    bindtap(item, index) {
-      this.currType = item
-      this.clickindex = index
-=======
   import { mapActions,mapMutations } from 'vuex'
   export default {
     data() {
@@ -190,7 +124,6 @@ export default {
           })
         }
       }
->>>>>>> su
     },
     async created() {
       this.currtype = await this.curriculums();
