@@ -11,6 +11,9 @@ import conditionalTests from './modules/conditionalTests'
 import updateQuestion from './modules/updateQuestion'
 import getpush from './modules/getpush'
 import addType from './modules/addType'
+import classManger from './modules/class'
+import room from './modules/room'
+import student from './modules/student'
 Vue.use(Vuex)
 
 // https://webpack.js.org/guides/dependency-management/#requirecontext
@@ -36,7 +39,10 @@ const store = new Vuex.Store({
   conditionalTests,
   getpush,
   updateQuestion,
-  addType
+  addType,
+  classManger,
+  room,
+  student
 })
 
 export default store

@@ -4,57 +4,89 @@
     <div class="main">
       <el-button class="class-btn" type="primary">
         <i class="add-icon">+</i>
-        <span class="add-class">添加班级</span>
+        <span class="add-class" @click="changeClass">添加班级</span>
       </el-button>
       <el-table
-        :data="tableData"
+        :data="data.classData"
         style="width: 100%"
       >
         <el-table-column
-          prop="date"
+          prop="grade_name"
           label="班级名"
         />
         <el-table-column
-          prop="courseName"
-          label="班级名"
+          prop="subject_text"
+          label="课程名"
         />
         <el-table-column
-          prop="classroom"
+          prop="room_text"
           label="教室号"
         />
         <el-table-column
           label="操作"
         >
-          <!-- <template slot-scope="scope"> scope.row-->
-          <template>
-            <el-button size="small" type="text" @click="handleClick">修改|</el-button>
-            <el-button type="text" size="small" class="del-btn">删除</el-button>
+          <template  slot-scope="scope">
+            <el-button
+              size="small"
+              type="text"
+              @click.native.prevent="editRow(scope.$index)">修改</el-button>
+            <el-button
+              type="text"
+              size="small"
+              class="del-btn"
+              @click.native.prevent="deleteRow(scope.$index)" >| 删除</el-button>
           </template>
         </el-table-column>
       </el-table>
-      <div />
-      <div v-if="diaIsshow" class="dialog-wrap" @click="cancelFn">
+      <div v-if="diaIsshow" class="dialog-wrap">
         <div class="dialog">
           <div class="header">
             <span class="left">添加班级</span>
             <b class="cancel-btn" @click="cancelFn">X</b>
           </div>
-          <div class="list">
-            <label><span>*</span>班级名：</label><br>
-            <input v-model="className" type="text" class="first">
-          </div>
-          <div class="list">
-            <label><span>*</span>教室号：</label><br>
-            <input v-model="roomName" type="text">
-          </div>
-          <div class="list last">
-            <label><span>*</span>课程名：</label><br>
-            <input v-model="courseName" type="text">
-          </div>
-          <div class="bottom">
-            <button @click="cancelFn">取消</button>
-            <button @click="submitFn">提交</button>
-          </div>
+          <el-form
+            ref="ruleForm"
+            :model="ruleForm"
+            :rules="rules"
+            label-width="100px"
+            class="demo-ruleForm">
+            <el-form-item prop="className">
+              <div class="list first">
+                <label><span>*</span>班级名：</label><br>
+                <el-input v-model="ruleForm.className" :disabled="editclick"/>
+              </div>
+            </el-form-item>
+            <el-form-item prop="roomName">
+              <div class="list">
+                <label><span>*</span>教室号：</label><br>
+                <el-select v-model="ruleForm.roomName" size="medium" placeholder="请选择">
+                  <el-option
+                    v-for="item in data.roomMsg"
+                    :key="item.room_id"
+                    :label="item.room_text"
+                    :value="item.room_id"
+                  />
+                </el-select>
+              </div>
+            </el-form-item>
+            <el-form-item prop="subjectName">
+              <div class="list">
+                <label><span>*</span>课程名：</label><br>
+                <el-select v-model="ruleForm.subjectName" size="medium" placeholder="请选择">
+                  <el-option
+                    v-for="item in data.subjectMsg"
+                    :key="item.subjectvalue"
+                    :label="item.subjectName"
+                    :value="item.subjectvalue"
+                  />
+                </el-select>
+              </div>
+            </el-form-item>
+            <el-form-item class="form-btn">
+              <el-button>取消</el-button>
+              <el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
+            </el-form-item>
+          </el-form>
         </div>
       </div>
     </div>
@@ -62,57 +94,112 @@
 </template>
 
 <script>
+import { mapState, mapMutations, mapActions } from 'vuex'
 
 export default {
   data() {
     return {
-      className: '1610A',
-      roomName: '34310',
-      courseName: '渐进式开发',
+      ruleForm: {
+        className: '',
+        roomName: '',
+        subjectName: ''
+      },
+      rules: {
+        className: [
+          { required: true, message: '班级名', trigger: 'blur' }
+        ],
+        roomName: [
+          { required: false, message: '请选择教室号', trigger: 'change' }
+        ],
+        subjectName: [
+          { required: true, message: '请选择课程', trigger: 'change' }
+        ]
+      },
+      value: '',
+      subjectvalue: '',
+      classInfo: {},
       diaIsshow: false,
-      tableData: [
-        {
-          date: '1610C',
-          courseName: '渐进式开发',
-          classroom: '34308'
-        },
-        {
-          date: '1610C',
-          courseName: '渐进式开发',
-          classroom: '34308'
-        },
-        {
-          date: '1610C',
-          courseName: '渐进式开发',
-          classroom: '34308'
-        },
-        {
-          date: '1610C',
-          courseName: '渐进式开发',
-          classroom: '34308'
-        },
-        {
-          date: '1610C',
-          courseName: '渐进式开发',
-          classroom: '34308'
-        },
-        {
-          date: '1610C',
-          courseName: '渐进式开发',
-          classroom: '34308'
-        }
-      ]
+      editclick: false
     }
   },
+  computed: {
+    ...mapState({
+      data: state => state.class
+    })
+  },
+  created() {
+    this.getMangerGrade()
+    this.getMangerRoom()
+  },
   methods: {
-    handleClick(e) {
+    ...mapMutations({
+      updateState: 'class/updateState'
+    }),
+    ...mapActions({
+      getMangerGrade: 'class/getMangerGrade',
+      AddMangerGrade: 'class/AddMangerGrade',
+      getMangerRoom: 'class/getMangerRoom',
+      editMangerGrade: 'class/editMangerGrade',
+      deleteMangerGrade: 'class/deleteMangerGrade'
+    }),
+    changeClass() {
       this.diaIsshow = !this.diaIsshow
+      this.ruleForm = {
+        className: '',
+        roomName: '',
+        subjectName: ''
+      }
     },
-    cancelFn(e) {
+    submitForm(formName) {
+      this.$refs[formName].validate((valid) => {
+        console.log('valid', this.ruleForm)
+        if (valid) {
+          // 用此来判断点击的是添加还是编辑：true为编辑，false为添加
+          if (this.editclick) {
+            this.editMangerGrade({
+              grade_id: this.classInfo.grade_id,
+              grade_name: this.classInfo.grade_name,
+              subject_id: this.ruleForm.subjectName,
+              room_id: this.ruleForm.roomName
+            })
+          } else {
+            this.AddMangerGrade(this.ruleForm)
+          }
+          this.getMangerGrade()
+          this.diaIsshow = !this.diaIsshow
+        } else {
+          console.log('error submit!!')
+          return false
+        }
+      })
+    },
+    // 编辑班级信息
+    editRow(index, rows) {
       this.diaIsshow = !this.diaIsshow
+      this.editclick = true
+      const result = this.data.classData.find((item, ind) => {
+        return index === ind
+      })
+      console.log('result', result)
+      this.classInfo = result
+      this.ruleForm.className = result.grade_name
+      this.ruleForm.roomName = result.room_text
+      this.ruleForm.subjectName = result.subject_text
     },
-    submitFn(e) {
-      console.log(2)
+    // 删除班级信息
+    deleteRow(index, rows) {
+      const result = this.data.classData.find((item, ind) => {
+        return index === ind
+      })
+      console.log('result', result)
+      this.deleteMangerGrade({
+        grade_id: result.grade_id
+      })
+      this.getMangerGrade()
+    },
+    // 关闭弹窗
+    cancelFn() {
+      this.diaIsshow = !this.diaIsshow
     }
   }
 }
@@ -155,9 +242,6 @@ export default {
   el-table-column{
     width: 25%;
   }
-  .el-table{
-    /* background: red; */
-  }
   /*修改弹窗*/
   .dialog-wrap{
     width: 100%;
@@ -166,16 +250,14 @@ export default {
     background: rgba(0, 0, 0, .3);
     top:0;
     left: 0;
-    z-index: 9999;
+    z-index: 999;
   }
   .dialog{
     width: 524px;
     background: #fff;
-    padding-bottom: 40px;
     position: relative;
-    top:100px;
-    left: 50%;
-    margin-left: -262px;
+    margin: 0 auto;
+    padding-bottom: 50px;
   }
   .dialog .header{
     width: 100%;
@@ -192,10 +274,14 @@ export default {
     font-weight: 300;
   }
   .dialog .list{
-    width: 100%;
-    margin-top: 40px;
+    width:520px;
     padding: 0 22px;
     box-sizing: border-box;
+    position: relative;
+    left:-100px;
+  }
+  .first{
+    margin-top: 20px;
   }
   .dialog .list label{
     font-weight: 400;
@@ -208,23 +294,20 @@ export default {
     padding-right:3px;
     font-size: 16px;
   }
-  .dialog .list input{
+  .list .el-select{
+    width:480px;
+  }
+  .el-select-dropdown{
     width: 100%;
-    height: 30px;
-    line-height: 30px;
-    padding-left: 12px;
-    box-sizing: border-box;
-    font-size: 14px;
-    color: #ccc;
-    outline:none;
-    border: solid 1px #ccc;
-    margin-top: 12px;
+    z-index: 9999;
   }
-  .first{
-    background: #eee;
+  .el-form-item{
+    margin-top: 10px;
   }
-  .last{
-    padding-bottom: 100px!important;
+  .form-btn{
+    position: relative;
+    left:80px;
+    top:50px;
   }
   .bottom{
     display: inline-block;
