@@ -15,14 +15,13 @@
     <h2>{{txt}}</h2>
     <!-- 表格 -->
     <div>
-      <el-table :data="data" style="width: 100%">
+      <el-table :data="data" style="width: 100%;">
         <el-table-column
           v-for="(item,index) in tableData[idx]"
           :key="index"
           :prop="item"
           :label="tabNav[idx][index]"
-          
-          :style="{width:'100%'/tabNav[idx].length }"
+          :style="{width:'100%'/tabNav[idx].length}"
         />
         <!-- label : 头部导航 -->
         <!-- prop : 每一项的数据 -->
@@ -32,9 +31,10 @@
     <div class="pagination">
       <el-pagination
         @current-change="handleChangePage"
-        background
+        :current-page.sync="defaultPage"
+        background=""
         layout="prev, pager, next"
-        :total="data.length"
+        :total="totals"
         :page-size="10"
       />
     </div>
@@ -81,7 +81,7 @@ export default {
       page: 1, //第几页
       // totals:0,
       pageTit: [
-        "userData",
+        "userDatas",
         "identitysData",
         "apiAuthoritysData",
         "identityApiAuthorityRelationsData",
@@ -107,7 +107,6 @@ export default {
       //获取身份和api权限关系
       identityApiAuthorityRelationsData: state =>
         state.viewUsers.identityApiAuthorityRelationsData,
-
       totals: state => state.viewUsers.total,
       data: state => state.viewUsers.data,
       pageSize: state => state.viewUsers.pageSize,
@@ -116,13 +115,10 @@ export default {
   },
   created() {
     this.setUserData();
-    // console.log(this.data,'set')
     this.setidentity();
     this.setApiAuthority();
     this.setIdentityApiAuthorityRelation();
-
     this.setViewAuthority();
-
     this.setidentityViewAuthorityRelation();
   },
   methods: {
@@ -149,24 +145,23 @@ export default {
 
     //分页
     handleChangePage(val) {
-      this.defaultPage = val;
+      this.page = val;
       this.tableList({
-        data: this.pageTit[this.idx],
+        data: this[this.pageTit[this.idx]],
         pages: this.page
       });
     },
 
     //点击切换标题
     changeTitle(idx) {
-      // console.log(this.pageTit[idx], 787878);
       this.defaultPage = 1;
       this.tableList({
         idx,
-        data: this.pageTit[idx],
+        data: this[this.pageTit[idx]],
         pages: this.page
       });
       this.idx = idx;
-      this.tit = this.nav[idx];
+      this.txt = this.nav[idx];
     }
   }
 };
