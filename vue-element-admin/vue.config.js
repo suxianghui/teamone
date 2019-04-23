@@ -30,7 +30,7 @@ module.exports = {
       warnings: false,
       errors: true
     },
-    //跨域代理
+    //跨域代理  vuecli3.0 webpack配置
     proxy: {
       '/api': {
         target: `http://169.254.18.69:7001/`,

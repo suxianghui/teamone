@@ -6,14 +6,14 @@ import { getToken } from '@/utils/auth'
 const service = axios.create({
   // baseURL: 'http://169.254.12.55:7001', // api 的 base_url
 
-  baseURL: '/api',
+  baseURL: '/api',   //请求基地址 (域名)
   // withCredentials: true, // 跨域请求时发送 cookies
-  timeout: 5000 // request timeout
+//  timeout: 5000 // request timeout
 })
 
 // request interceptor
 
-//请求拦截器,所有请求都需要走这里过一遍
+//请求拦截器,所有请求都需要走这里过一遍, 可以带一些非业务逻辑(如:登录态)
 service.interceptors.request.use(
   config => {
     // Do something before request is sent

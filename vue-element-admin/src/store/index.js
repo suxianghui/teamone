@@ -2,6 +2,8 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import getters from './getters'
 
+// import createLogger from 'vuex/dist/logger'
+
 import addQuestions from './modules/test/addQuestions'
 import getTypeExam from './modules/test/getTypeExam'
 import exam from './modules/exam'
@@ -25,7 +27,9 @@ const store = new Vuex.Store({
   getters,
   addQuestions,
   getTypeExam,
-  exam
+  exam,
+
+  // plugins:[createLogger()]
 })
 
 export default store

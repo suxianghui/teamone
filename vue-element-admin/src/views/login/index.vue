@@ -111,7 +111,7 @@ export default {
         username: 'guhuilin',
         password: 'Guhuilin123!'
       },
-      // 校验，有几个需要校验的就写几条规则
+      // 校验，有几个需要校验的就写几条规则,
       loginRules: {
         username: [{ required: true, trigger: 'blur'}, {trigger:'blur', validator: validateUsername }],
         password: [{ required: true, trigger: 'blur', validator: validatePassword }]
@@ -168,7 +168,6 @@ export default {
           let res = await this.login(this.loginForm);
           console.log('login res...', res);
           if (res.code == 1){
-            await this.generateRoutes([]);
             this.$router.push({ path: this.redirect || '/' })
           }
           this.loading = false
