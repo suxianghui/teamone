@@ -1,4 +1,4 @@
-import { examType, examSubject, submitExam, deleteExam, renewal, examList, detailData } from "../../api/exam";
+import { examType, examSubject, submitExam, deleteExam, renewal, examList, detailData, allQuestion } from "../../api/exam";
 
 
 const state = {
@@ -76,12 +76,14 @@ const actions = {
     let res = await detailData(payload);
     console.log(res,'detailData...')
     commit('updateState', { detailDatas: res.data });
+  },
+  
+  // 获取所有考试题
+  async allQuestion({commit}, payload) {
+    let result = await allQuestion();
+    console.log(result.data,'...result')
+    return result.data;
   }
-  // 获取试卷列表
-//   async getExamList({commit}, payload) {
-//     let res = await examList();
-//     commit('updateState', {allExamList: res.exam});
-//   }
 }
 
 export default {

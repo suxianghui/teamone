@@ -24,9 +24,7 @@
       <div class="add-drawer-right">
         <h3>添加试题</h3>
         <ul>
-          <li>添加新题1...</li>
-          <li>添加新题2...</li>
-          <li>添加新题3...</li>
+          <li v-for="(val, ind) in allQuestions" :key="ind">{{val.title}}</li>
         </ul>
       </div>
     </div>
@@ -45,7 +43,8 @@ export default {
       data: '',
       title: '',
       starttime: '',
-      questionList: []
+      questionList: [],
+      allQuestions:[]
     }
   },
   created() {
@@ -60,11 +59,15 @@ export default {
   },
   methods: {
     ...mapActions({
-      renewal: 'exam/renewal'
+      renewal: 'exam/renewal',
+      allQuestion: 'exam/allQuestion'
     }),
     // 添加试题弹出框
-    showDialog() {
+    async showDialog() {
       this.flag = !this.flag
+      if(this.flag) {
+        this.allQuestions = await this.allQuestion();
+      }
     },
     async createExam() {
       // 要用exam_exam_id 的字符串
@@ -136,6 +139,7 @@ export default {
   border: 0;
   background-clip: padding-box;
   z-index: 1;
+  overflow-y: scroll;
   h3{
     width: 100%;
     height:40px;
@@ -148,12 +152,15 @@ export default {
     margin-left:0;
     padding-left: 0;
     li{
-      height:30px;
-      line-height: 30px;
+      height:40px;
+      line-height: 40px;
       border-bottom: 1px solid #eee;
       color:#999;
       text-indent: 2em;
       list-style: none;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
   }
 }
