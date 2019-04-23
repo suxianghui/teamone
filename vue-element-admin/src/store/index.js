@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import getters from './getters'
 
-// import addQuestions from './modules/test/addQuestions'
+import createLogger from 'vuex/dist/logger'
 import getTypeExam from './modules/getTypeExam'
 import gettingLesson from './modules/gettingLesson'
 import getTypeQuestion from './modules/getTypeQuestion'
@@ -42,7 +42,8 @@ const store = new Vuex.Store({
   addType,
   classManger,
   room,
-  student
+  student,
+  // piugins:[createLogger()]
 })
 
 export default store

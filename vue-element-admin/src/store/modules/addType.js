@@ -11,6 +11,7 @@ const mutations={
 const actions={
     addTestType({commit,state},payload){
         return new Promise(async(resolve,reject)=>{
+            console.log(payload)
             let data = await addTestTypes(payload)
             resolve(data)
         })

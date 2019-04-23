@@ -7,12 +7,11 @@ export function login(data) {
     data
   })
 }
-
-export function getInfo(token) {
+ 
+export function getInfo() {
   return request({
-    url: '/user/info',
-    method: 'get',
-    params: { token }
+    url: '/user/userInfo',
+    method: 'get'
   })
 }
 
@@ -20,6 +19,13 @@ export function logout() {
   return request({
     url: '/user/logout',
     method: 'post'
+  })
+}
+
+export function getViewAuthority(){
+  return request({
+    url: '/user/view_authority',
+    method: 'get'
   })
 }
 
