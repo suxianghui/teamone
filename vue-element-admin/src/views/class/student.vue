@@ -98,7 +98,7 @@ export default {
       studentInfo: [],
       pagenationData: [],
       pageChose: [5, 30, 50, 80, 100, 150, 200],
-      pageSize: 5,
+      pageSize: 30,
       current: 1
     }
   },
@@ -124,12 +124,26 @@ export default {
     }),
     search() {
       // 按条件搜索
-      const result = this.data.studentData.filter(item => {
-        return item.student_name === this.input && item.room_text === this.roomValue && item.grade_name === this.classValue
-      })
-      console.log('result', result)
+      let result=[];
+      if(this.input&&this.classValue&&this.roomValue){
+        result = this.data.studentData.filter(item => {
+          return item.student_name === this.input && item.room_text === this.roomValue && item.grade_name === this.classValue
+        })
+      }else if((this.input && this.classValue)||(this.input && this.roomValue)||(this.roomValue && this.classValue)) {
+        result = this.data.studentData.filter(item => {
+          return (item.student_name === this.input && item.room_text === this.roomValue) || (item.student_name === this.input && item.grade_name === this.classValue) || (item.room_text === this.roomValue && item.grade_name === this.classValue)
+        })
+      }else {
+        result = this.data.studentData.filter(item => {
+          return item.student_name === this.input || item.room_text === this.roomValue || item.grade_name === this.classValue
+        })
+      }
       this.studentInfo = result
       this.pagenationData = this.studentInfo
+      if(result.length==0){
+        alert('没有查到您要的信息')
+      }
+      
     },
     reset() {
       this.input = ''
@@ -233,6 +247,9 @@ export default {
     border: solid 1px #ddd;
     border-radius: 4px;
     color: #fff;
+  }
+  .el-pagination{
+    margin-top: 25px;
   }
   /*
   敏捷开发：工作进度，站立会议/晨会
