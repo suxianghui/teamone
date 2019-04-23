@@ -246,6 +246,8 @@ export default {
   .dialog-wrap{
     width: 100%;
     height: 100%;
+    padding-top: 70px;
+    box-sizing: border-box;
     position: fixed;
     background: rgba(0, 0, 0, .3);
     top:0;
