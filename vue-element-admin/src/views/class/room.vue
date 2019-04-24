@@ -60,7 +60,7 @@ export default {
       },
       rules: {
         roomName: [
-          { required: true, message: '请选择教室号', trigger: 'change' }
+          { required: true, message: '请输入教室号', trigger: 'change' }
         ]
       }
     }

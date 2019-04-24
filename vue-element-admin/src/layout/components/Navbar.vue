@@ -22,7 +22,7 @@
 
       <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
         <div class="avatar-wrapper">
-          <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
+          <img :src="avatar" class="user-avatar">
           <i class="el-icon-caret-bottom" />
         </div>
         <el-dropdown-menu slot="dropdown">
@@ -36,17 +36,32 @@
               {{ $t('navbar.github') }}
             </el-dropdown-item>
           </a>
+          <a href="#" @click="imagecropperShow=true">
+            <el-dropdown-item>
+              切换头像
+            </el-dropdown-item>
+          </a>
           <el-dropdown-item divided>
             <span style="display:block;" @click="logout">{{ $t('navbar.logOut') }}</span>
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
     </div>
+    <image-cropper
+    v-show="imagecropperShow"
+    :key="imagecropperKey"
+    :width="300"
+    :height="300"
+    url="http://123.206.55.50:11000/upload"
+    lang-type="en"
+    @close="close"
+    @crop-upload-success="cropSuccess"
+    />
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapMutations, mapActions, mapGetters } from 'vuex'
 import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
 import ErrorLog from '@/components/ErrorLog'
@@ -54,7 +69,15 @@ import Screenfull from '@/components/Screenfull'
 import SizeSelect from '@/components/SizeSelect'
 import LangSelect from '@/components/LangSelect'
 import Search from '@/components/HeaderSearch'
+import ImageCropper from '@/components/ImageCropper'
 export default {
+  data(){
+    return {
+      imagecropperShow: false,
+      imagecropperKey: 0,
+      image: 'https://wpimg.wallstcn.com/577965b9-bb9e-4e02-9f0c-095b41417191'
+    }
+  },
   components: {
     Breadcrumb,
     Hamburger,
@@ -62,23 +85,49 @@ export default {
     Screenfull,
     SizeSelect,
     LangSelect,
-    Search
+    Search,
+    ImageCropper
   },
   computed: {
     ...mapGetters([
       'sidebar',
       'name',
       'avatar',
-      'device'
+      'device',
+      'userInfo'
     ])
   },
+  created(){
+    this.setAvatar(this.image)
+    this.getInfo()
+    console.log('avatar',this.avatar)
+  },
   methods: {
+    ...mapMutations({
+      setAvatar:'user/SET_AVATAR',
+    }),
+    ...mapActions({
+      getInfo:'user/getInfo',
+      changePic:'user/changePic'
+    }),
     toggleSideBar() {
       this.$store.dispatch('app/toggleSideBar')
     },
     async logout() {
       await this.$store.dispatch('user/logout')
       this.$router.push(`/login?redirect=${this.$route.fullPath}`)
+    },
+    cropSuccess(resData) {
+      console.log('resData',resData)
+      this.image=resData[0].path;
+      this.changePic({
+        user_id:this.userInfo.user_id,
+        avatar:this.image
+      })
+      this.imagecropperShow = false
+    },
+    close() {
+      this.imagecropperShow = false
     }
   }
 }

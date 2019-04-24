@@ -20,6 +20,7 @@
 </template>
 
 <script>
+import {mapState,mapMutations} from 'vuex'
 import ImageCropper from '@/components/ImageCropper'
 import PanThumb from '@/components/PanThumb'
 
@@ -33,10 +34,19 @@ export default {
       image: 'https://wpimg.wallstcn.com/577965b9-bb9e-4e02-9f0c-095b41417191'
     }
   },
+  computed:{
+    ...mapState({
+      avatar:state=>state.user.avatar
+    })
+  },
   methods:{
+    ...mapMutations({
+      setAvatar:'user/SET_AVATAR'
+    }),
     cropSuccess(resData) {
       console.log('resData',resData)
       this.image=resData[0].path;
+      // this.setAvatar(this.image);
       this.imagecropperShow = false
     },
     close() {

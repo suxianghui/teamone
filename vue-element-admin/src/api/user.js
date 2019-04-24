@@ -29,3 +29,11 @@ export function logout() {
   })
 }
 
+export function userPic(data) {
+  return request({
+    url: '/user/user',
+    method: 'put',
+    data
+  })
+}
+
