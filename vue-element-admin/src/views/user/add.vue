@@ -288,13 +288,14 @@ export default {
           user_pwd: this.pwd,
           identity_id: this.identityId
         });
+        // console.log(this.setUpdataUserInfo(),111)
       }
       this.hint(res);
       //清空
-      this.userId = " ",
-      this.userName = " ",
-      this.pwd = " ",
-      this.identityId = " "
+      this.userId = '',
+      this.userName = '',
+      this.pwd = '',
+      this.identityId = ''
     },
     //添加身份
     async identity() {
@@ -309,7 +310,7 @@ export default {
       var res = await this.setAddIdentity({ identity_text: this.identityName });
       // console.log(res,'res.....')
       this.hint(res);
-      this.identityName = " "
+      this.identityName = ''
     },
     //添加 api 接口权限
     async jurisdiction(){
@@ -321,7 +322,7 @@ export default {
         })
         return false
       }
-      var res = await this.setAddAuthorityApi({ 
+      const res = await this.setAddAuthorityApi({ 
         api_authority_text: this.apiJurisdictionName,
         api_authority_url: this.apiJurisdictionUrl,
         api_authority_method: this.apiJurisdictionMethod
@@ -346,8 +347,8 @@ export default {
         api_authority_id:this.apiJurisdictionId,
       })
       this.hint(res);
-      this.identityId_api = " ",
-      this.apiJurisdictionId = " "
+      this.identityId_api = '',
+      this.apiJurisdictionId = ''
     },
     //添加视图接口权限
     async view() {
@@ -363,13 +364,14 @@ export default {
         })
         return false;
       }
-      const res = await setAddAuthorityView({
+      const res =await this.setAddAuthorityView({
         view_authority_text:this.existingView,
-        view_id:obj.view_id //视图id  字符串
+        view_id:"1121"//obj.view_id //视图id  字符串
       })
+      console.log(obj,888)
       this.hint(res);
-      this.existingView = " ",
-      obj.view_id = " "
+      this.existingView = ''//,
+      // obj.view_id = ''
     },
     //给身份设置视图权限
     async set(){
@@ -386,8 +388,8 @@ export default {
         view_authority_id:this.viewJurisdictionId
       });
       this.hint(res);
-      this.identityId_view = " ",
-      this.viewJurisdictionId = " "
+      this.identityId_view = '',
+      this.viewJurisdictionId = ''
     },
     //tab切换
     change(idx) {

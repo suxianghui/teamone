@@ -95,6 +95,7 @@ const mutations = {
         })
         // console.log(state.identityViewAuthorityRelationsData,'身份和视图')
         deWeight(state.existingViewValue)
+        console.log(state.existingViewValue,66666666)
         state.existingViewValue = [...new Set(state.existingViewValue)]
     },
 
