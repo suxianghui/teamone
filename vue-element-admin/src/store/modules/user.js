@@ -1,4 +1,4 @@
-import { login, logout, getInfo } from '@/api/user'
+import { login, logout, getInfo, getViewAuthority } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import router, { resetRouter } from '@/router'
 
@@ -8,7 +8,8 @@ const state = {
   avatar: '',
   introduction: '',
   roles: [],
-  userInfo: {}
+  userInfo:{},
+  viewAuthority:[]
 }
 
 const mutations = {
@@ -28,8 +29,12 @@ const mutations = {
     state.roles = roles
   },
   SET_USERINFO: (state,userInfo) => {
-    state.userInfo = userInfo
+    state.userInfo=userInfo
+  },
+  SET_VIEWAUTHORITY: (state,viewAuthority) => {
+    state.viewAuthority = viewAuthority
   }
+
 }
 
 const actions = {
@@ -40,14 +45,22 @@ const actions = {
     setToken(res.token);  //把登录态authorization存储在cookie中
     return res;
   },
-
   // get user info
-  async getInfo({ commit, state }) {
-    let data = await getInfo();
-    commit('SET_USERINFO', data.data);
-    return data.data;
+  async getInfo({ commit }, state ) {
+       let data =await getInfo();
+       commit('SET_USERINFO',data.data)
+       return data.data
   },
-
+  // get user viewAuthority
+  async getViewAuthority({commit}){
+    let data = await getViewAuthority();
+    console.log('userAuthority',data)
+    if(data.code == 1) {
+      commit('SET_VIEWAUTHORITY',data.data)
+      return data.data
+    }
+    return []
+  },
   // user logout
   logout({ commit, state }) {
     return new Promise((resolve, reject) => {

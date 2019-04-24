@@ -1,12 +1,25 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import getters from './getters'
+// import createLogger from "vuex/dist/logger"
 
 // import createLogger from 'vuex/dist/logger'
 
-import addQuestions from './modules/test/addQuestions'
-import getTypeExam from './modules/test/getTypeExam'
 import exam from './modules/exam'
+import createLogger from 'vuex/dist/logger'
+import getTypeExam from './modules/getTypeExam'
+import gettingLesson from './modules/gettingLesson'
+import getTypeQuestion from './modules/getTypeQuestion'
+import addQuestions from './modules/addQuestions'
+import conditionalTests from './modules/conditionalTests'
+import updateQuestion from './modules/updateQuestion'
+import getpush from './modules/getpush'
+import addType from './modules/addType'
+import classManger from './modules/class'
+import room from './modules/room'
+import student from './modules/student'
+import indexUsers from "./modules/exams/indexUsers";
+import viewUsers from "./modules/exams/viewUsers";
 Vue.use(Vuex)
 
 // https://webpack.js.org/guides/dependency-management/#requirecontext
@@ -23,12 +36,25 @@ const modules = modulesFiles.keys().reduce((modules, modulePath) => {
 }, {})
 
 const store = new Vuex.Store({
-  modules,
   getters,
-  addQuestions,
   getTypeExam,
+  gettingLesson,
+  getTypeQuestion,
+  addQuestions,
   exam,
 
+  conditionalTests,
+  getpush,
+  updateQuestion,
+  addType,
+  classManger,
+  room,
+  student,
+  modules: {
+    ...modules,
+    indexUsers,
+    viewUsers,
+  }
   // plugins:[createLogger()]
 })
 

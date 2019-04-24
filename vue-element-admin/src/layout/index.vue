@@ -35,7 +35,7 @@
 // import RightPanel from '@/components/RightPanel'
 import { AppMain, Sidebar, TagsView } from './components' // Navbar, Settings,
 import ResizeMixin from './mixin/ResizeHandler'
-import { mapState } from 'vuex'
+import { mapState , mapActions} from 'vuex'
 
 export default {
   name: 'Layout',
@@ -66,9 +66,15 @@ export default {
     }
   },
   methods: {
+    ...mapActions({
+      generateRoutes: 'permission/generateRoutes'
+    }),
     handleClickOutside() {
       this.$store.dispatch('app/closeSideBar', { withoutAnimation: false })
     }
+  },
+  async created(){
+    await this.generateRoutes([]);
   }
 }
 </script>

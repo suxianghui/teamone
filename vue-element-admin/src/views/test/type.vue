@@ -12,7 +12,7 @@
           </el-form>
           <div slot="footer" class="dialog-footer">
             <el-button @click="dialogFormVisible = false">取 消</el-button>
-            <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+            <el-button type="primary" @click="addTypeStudy">确 定</el-button>
           </div>
         </el-dialog>
         <div class="table">
@@ -23,9 +23,18 @@
           </div>
           <div class="count">
             <div v-for="(item,index) in list" class="count-text" :key="index">
-              <span class="typeid">{{item.exam_id}}</span>
-              <span class="typeid">{{item.exam_name}}</span>
-              <span class="typeid"></span>
+              <span class="typeid">{{item.questions_type_id}}</span>
+              <span class="typeid">{{item.questions_type_text}}</span>
+              <span class="typeid">
+                <el-button type="primary" class="del" @click="dialogFormVisibles = true">删除</el-button>
+                <el-dialog title="删除试题" class="tan" :visible.sync="dialogFormVisibles">
+                    <p>您确定要删除该试题类型吗?</p>
+                  <div slot="footer" class="dialog-footer">
+                    <el-button @click="dialogFormVisibles = false">取 消</el-button>
+                    <el-button type="primarys" @click="clickTap(item.questions_type_id)">确 定</el-button>
+                  </div>
+                </el-dialog>
+              </span>
             </div>
           </div>
         </div>
@@ -35,10 +44,12 @@
 </template>
 
 <script>
+import {mapActions} from 'vuex'
 export default {
   data() {
     return {
       visible: false,
+      dialogFormVisibles:false,
       dialogTableVisible: false,
       dialogFormVisible: false,
       form: {
@@ -52,15 +63,31 @@ export default {
         desc: ''
       },
       formLabelWidth: '120px',
-      list:[{
-            exam_id: "8sc5d7-7p5f9e-cb2zii-ahe5i",
-            exam_name: "周考1"
-        },
-        {
-            exam_id: "jpg8y9-zbzt7o-jpvuhf-fwnjvr",
-            exam_name: "周考2"
-        }]
+      list:[]
     }
+  },
+  methods:{
+    ...mapActions({
+      question :'getTypeQuestion/getTypeQuestions',
+      addTestTypes:'addType/addTestType',
+      delQuestion:'getpush/delQuestion'
+    }),
+    addTypeStudy(){
+      this.dialogFormVisible = false
+      this.addTestTypes({
+        text:this.form.name,
+        sort:Math.random().toString(36).substr(2)
+      })
+    },
+    clickTap(item){
+      this.dialogFormVisibles=false
+      this.delQuestion({
+        id:item
+      })
+    }
+  },
+  async created(){
+    this.list = await this.question()
   }
 }
 
@@ -141,5 +168,15 @@ export default {
 
   .count-text:hover {
     background: #fafafa;;
+  }
+  
+  .del{
+    width: 80px;
+    height: 30px;
+    border-radius: 5px;
+    background: blue;
+    display: inline-block;
+    color:white;
+    cursor: pointer;
   }
 </style>
