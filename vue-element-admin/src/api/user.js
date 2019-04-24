@@ -7,10 +7,16 @@ export function login(data) {
     data
   })
 }
- 
 export function getInfo() {
   return request({
     url: '/user/userInfo',
+    method: 'get'
+  })
+}
+
+export function getViewAuthority() {
+  return request({
+    url: '/user/view_authority',
     method: 'get'
   })
 }
@@ -22,10 +28,10 @@ export function logout() {
   })
 }
 
-export function getViewAuthority(){
-  return request({
-    url: '/user/view_authority',
-    method: 'get'
-  })
-}
+// export function getViewAuthority(){
+//   return request({
+//     url: '/user/view_authority',
+//     method: 'get'
+//   })
+// }
 

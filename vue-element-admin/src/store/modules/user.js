@@ -28,11 +28,11 @@ const mutations = {
   SET_ROLES: (state, roles) => {
     state.roles = roles
   },
-  SET_USERINFO:(state,userInfo)=>{
-    state.userInfo = userInfo;
+  SET_USERINFO: (state,userInfo) => {
+    state.userInfo=userInfo
   },
-  SET_VIEWAUTHORITY:(state,viewAuthority)=>{
-    state.viewAuthority = viewAuthority;
+  SET_VIEWAUTHORITY: (state,viewAuthority) => {
+    state.viewAuthority = viewAuthority
   }
 }
 
@@ -44,22 +44,23 @@ const actions = {
     setToken(res.token);
     return res;
   },
-
   // get user info
-  async getInfo({ commit }) {
-    let data = await getInfo();
-    commit('SET_USERINFO',data.data)
-    return data.data;
+  async getInfo({ commit }, state ) {
+       let data =await getInfo();
+       console.log('userInfo',data)
+       commit('SET_USERINFO',data.data)
+       return data.data
   },
-  async getViewAuthority({commit},payload){
-    let userAuthority = await getViewAuthority()
-    if(userAuthority.code === 1){
-      commit('SET_VIEWAUTHORITY',res.data)
-      return userAuthority.data;
+  // get user viewAuthority
+  async getViewAuthority({commit}){
+    let data = await getViewAuthority();
+    console.log('userAuthority',data)
+    if(data.code == 1) {
+      commit('SET_VIEWAUTHORITY',data.data)
+      return data.data
     }
     return []
   },
-
   // user logout
   logout({ commit, state }) {
     return new Promise((resolve, reject) => {
