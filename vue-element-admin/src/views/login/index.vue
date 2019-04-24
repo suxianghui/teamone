@@ -106,15 +106,11 @@ export default {
       }
     }
     return {
-      // loginForm: {
-      //   username: 'chenmanjie',
-      //   password: 'Chenmanjie123!'
-      // },
        loginForm: {
-        username: 'yangrenbin',
-        password: 'Yangrenbin123!'
+        username: 'guhuilin',
+        password: 'Guhuilin123!'
       },
-      // 校验，有几个需要校验的就写几条规则
+      // 校验，有几个需要校验的就写几条规则,
       loginRules: {
         //每一项为数组格式，数组里边每一个可以加多个规则，用对象的形式
         username: [{ required: true,//必填
@@ -158,21 +154,9 @@ export default {
   },
   methods: {
     ...mapActions({
-      login:'user/login',
-      // generateRoutes:'permission/generateRoutes'//放入导航守卫中调用
+      login: 'user/login',
+      generateRoutes: 'permission/generateRoutes'
     }),
-    // checkCapslock({ shiftKey, key } = {}) {
-    //   if (key && key.length === 1) {
-    //     if (shiftKey && (key >= 'a' && key <= 'z') || !shiftKey && (key >= 'A' && key <= 'Z')) {
-    //       this.capsTooltip = true
-    //     } else {
-     //       this.capsTooltip = false
-    //     }
-    //   }
-    //   if (key === 'CapsLock' && this.capsTooltip === true) {
-    //     this.capsTooltip = false
-    //   }
-    // },
     showPwd() {
       if (this.passwordType === 'password') {
         this.passwordType = ''

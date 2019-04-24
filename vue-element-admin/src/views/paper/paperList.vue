@@ -42,7 +42,6 @@
       <el-button type="primary" class="but">查询</el-button>
     </div>
     <div class="list">
-      <!-- examList.slice((currentPages-1)*pagesizes,currentPages*pagesizes) -->
       <el-table
         :data="userLists.slice((currentPages-1)*pagesizes,currentPages*pagesizes)"
         style="width: 100%"

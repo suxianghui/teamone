@@ -59,4 +59,12 @@ export function detailData(str) {
   })
 }
 
+// 获取所有的考试题
+export const allQuestion = () => {
+  return request({
+    url: '/exam/questions/new',
+    method: 'GET'
+  })
+}
+
 

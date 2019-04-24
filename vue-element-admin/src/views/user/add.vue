@@ -47,7 +47,7 @@
         </div>
         <div class="btn">
           <el-button type="primary" @click="addUsersInfo">确定</el-button>
-          <el-button plain>重置</el-button>
+          <el-button plain @click="reset">重置</el-button>
         </div>
       </div>
       <!-- 二、添加身份-->
@@ -58,7 +58,7 @@
         <el-input v-model="identityName" placeholder="请输入身份名称" />
         <div class="btn">
           <el-button type="primary" @click="identity">确定</el-button>
-          <el-button plain>重置</el-button>
+          <el-button plain @click="reset">重置</el-button>
         </div>
       </div>
       <!-- 三、添加api接口权限-->
@@ -71,7 +71,7 @@
         <el-input v-model="apiJurisdictionMethod" placeholder="请输入api接口权限方法" />
         <div class="btn">
           <el-button type="primary" @click="jurisdiction">确定</el-button>
-          <el-button plain>重置</el-button>
+          <el-button plain @click="reset">重置</el-button>
         </div>
       </div>
       <!-- 四、添加视图接口权限-->
@@ -89,7 +89,7 @@
         </el-select>
         <div class="btn">
           <el-button type="primary" @click="view">确定</el-button>
-          <el-button plain>重置</el-button>
+          <el-button plain @click="reset">重置</el-button>
         </div>
       </div>
       <!-- 五、给身份设置api接口权限-->
@@ -115,7 +115,7 @@
         </el-select>
         <div class="btn">
           <el-button type="primary" @click="api">确定</el-button>
-          <el-button plain>重置</el-button>
+          <el-button plain @click="reset">重置</el-button>
         </div>
       </div>
       <!-- 六、给身份设置视图权限-->
@@ -141,7 +141,7 @@
         </el-select>
         <div class="btn">
           <el-button type="primary" @click="set">确定</el-button>
-          <el-button plain>重置</el-button>
+          <el-button plain @click="reset">重置</el-button>
         </div>
       </div>
 
@@ -207,17 +207,14 @@ export default {
     })
   },
   created() {
-      // this.getAddUserData()
     this.setidentity()
     //  console.log(this.identitysData,'2222')
     this.setUserData()
     // console.log(this.userDatas,'55555555')
     this.setViewAuthority()
     // console.log(this.setViewAuthority,222222)
-
     this.setIdentityApiAuthorityRelation()
     // console.log(this.setIdentityApiAuthorityRelation,'6666')
-
     this.setidentityViewAuthorityRelation()
     // console.log(this.setidentityViewAuthorityRelation,'555555')
   },
@@ -370,7 +367,7 @@ export default {
         view_authority_text:this.existingView,
         view_id:obj.view_id //视图id  字符串
       })
-      this.hint();
+      this.hint(res);
       this.existingView = " ",
       obj.view_id = " "
     },
@@ -409,6 +406,10 @@ export default {
           type:'error'
         })
       }
+    },
+    //重置
+    reset(res){
+      console.log(1111)
     }
   }
 }

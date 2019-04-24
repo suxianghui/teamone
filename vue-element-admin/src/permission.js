@@ -48,49 +48,40 @@ router.beforeEach(async (to, from, next) => {
         try {
           // get user info
           // note: roles must be a object array! such as: ['admin'] or ,['developer','editor']
-          //   const { roles } = await store.dispatch('user/getInfo')
-
-          //1.如果没有用户信息，就去获取用户信息
+          //如果没有用户信息，就去获取用户信息
           const userInfo = await store.dispatch('user/getInfo')
-          console.log('userInfo', userInfo);
-          //2.通过身份获取权限
 
+          //通过用户信息，获取权限
+          const viewAuthority = await store.dispatch('user/getViewAuthority')
 
-          //3.通过权限生成动态路由
-          await store.dispatch('permission/generateRoutes', [])
-          // generate accessible routes map based on roles
-          //   const accessRoutes = await store.dispatch('permission/generateRoutes', roles)
+          //通过权限，生成路由
+          const accessRoutes= await store.dispatch('permission/generateRoutes',viewAuthority)
+          
+          // 动态添加路由到路由表中
+          router.addRoutes(accessRoutes)
 
-          //   // dynamically add accessible routes
-          //   router.addRoutes(accessRoutes)
-
-          //   // hack method to ensure that addRoutes is complete
-          //   // set the replace: true, so the navigation will not leave a history record
+          // hack method to ensure that addRoutes is complete
+          // set the replace: true, so the navigation will not leave a history record
           next({ ...to, replace: true })
         } catch (error) {
-          console.log('error', error)
           // remove token and go to login page to re-login
           await store.dispatch('user/resetToken')
           Message.error(error || 'Has Error')
           next(`/login?redirect=${to.path}`)
-          NProgress.done()  //进度条消失
+          NProgress.done()
         }
       }
     }
   } else {
     /* has no token*/
 
-
-    //没有登录态的情况
-    if (whiteList.indexOf(to.path) !== -1) {  //没有拿到登录态，判断白名单中有没有这一项
-      //如果在白名单中， 则不重定义项到登录页，没有则跳转
+    if (whiteList.indexOf(to.path) !== -1) {
       // in the free login whitelist, go directly
       next()
     } else {
       // other pages that do not have permission to access are redirected to the login page.
       next(`/login?redirect=${to.path}`)
-      //这里的 redirect 指的是：下一步跳转到哪里(记录跳转到哪里)
-      NProgress.done() //关闭进度条
+      NProgress.done()
     }
   }
 })

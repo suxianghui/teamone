@@ -7,15 +7,21 @@ export function login(data) {
     data
   })
 }
-
 //导航守卫 获取用户信息(路由)
 export function getInfo() {
   return request({
     url: '/user/userInfo',
-    method: 'get',
-    // params: { token }
+    method: 'get'
   })
 }
+
+export function getViewAuthority() {
+  return request({
+    url: '/user/view_authority',
+    method: 'get'
+  })
+}
+
 
 export function logout() {
   return request({
@@ -23,4 +29,3 @@ export function logout() {
     method: 'post'
   })
 }
-

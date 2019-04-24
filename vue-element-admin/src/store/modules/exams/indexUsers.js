@@ -18,10 +18,10 @@ const state = {
   identityApiD:[],//给身份设定 api 接口权限
   identityViewD:[],//给身份设定视图权限
 
-  identityId_viewValue: [],
-  //身份设置视图权限_身份id选择
-  identityId_apiValue: [],
-  //身份设置api接口权限——身份id选择
+  // identityId_viewValue: [],
+  // //身份设置视图权限_身份id选择
+  // identityId_apiValue: [],
+  // //身份设置api接口权限——身份id选择
 
 
 }
@@ -69,7 +69,6 @@ const actions = {
   async setAddUserData({ commit }, payload) {
     // console.log(payload,'111111');
     const result = await addUsers(payload)
-    // console.log()
     return result
     // return new Promise(async(resolve, reject) => {
     //   const result = await addUsers(payload)
@@ -80,77 +79,34 @@ const actions = {
   },
   //更新用户信息（用户名，用户密码，用户身份）
   async setUpdataUserInfo({ commit }, payload) {
-    // console.log(payload);
     let result = await updataUserInfo(payload);
     return result
-    // return new Promise(async (resolve, reject) => {
-    //   let result = await updataUserInfo(payload);
-    //   commit('updateUsersData', result)
-    //   console.log(result)
-    //   resolve(result)
-    // })
-    // let result = await updataUserInfo(payload);
-    // return result;
   },
   //添加身份
   async setAddIdentity({ commit }, payload) {
     // console.log(payload, '添加身份1111');
     let result = await addIdentity(payload)
     return result
-    // return new Promise(async (resolve, reject) => {
-    //   let result = await addIdentity(payload);
-    //   commit('addIdentityData', result)
-    //   console.log(result)
-    //   resolve(result)
-    // })
   },
   //添加api接口权限
   async setAddAuthorityApi({ commit }, payload) {
-    // console.log(payload);
     let result = await addAuthorityApi(payload);
     return result
-    // return new Promise(async (resolve, reject) => {
-    //   let result = await addAuthorityApi(payload);
-    //   commit('addApiAuthorityData', result)
-    //   console.log(result)
-    //   resolve(result)
-    // })
   },
   //添加视图权限
   async setAddAuthorityView({ commit }, payload) {
-    // console.log(payload);
     let result = await addAuthorityView(payload);
     return result
-    // return new Promise(async (resolve, reject) => {
-    //   let result = await addAuthorityView(payload);
-    //   commit('addViewAuthorityData', result)
-    //   console.log(result)
-    //   resolve(result)
-    // })
   },
   //给身份设定api接口权限
   async setIdentityApi({ commit }, payload) {
-    // console.log(payload);
     let result = await identityApi(payload);
     return result
-    // return new Promise(async (resolve, reject) => {
-    //   let result = await identityApi(payload);
-    //   commit('addIdentityApiData', result)
-    //   console.log(result)
-    //   resolve(result)
-    // })
   },
   //给身份设定视图权限
   async setIdentityView({ commit }, payload) {
-    // console.log(payload);
     let result = await identityView(payload);
     return result
-    // return new Promise(async (resolve, reject) => {
-    //   let result = await identityView(payload);
-    //   commit('addIdentityViewData', result)
-    //   console.log(result)
-    //   resolve(result)
-    // })
   },
 }
 

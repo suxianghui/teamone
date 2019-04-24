@@ -25,7 +25,16 @@
             <div v-for="(item,index) in list" class="count-text" :key="index">
               <span class="typeid">{{item.questions_type_id}}</span>
               <span class="typeid">{{item.questions_type_text}}</span>
-              <span class="typeid"></span>
+              <span class="typeid">
+                <el-button type="primary" class="del" @click="dialogFormVisibles = true">删除</el-button>
+                <el-dialog title="删除试题" class="tan" :visible.sync="dialogFormVisibles">
+                    <p>您确定要删除该试题类型吗?</p>
+                  <div slot="footer" class="dialog-footer">
+                    <el-button @click="dialogFormVisibles = false">取 消</el-button>
+                    <el-button type="primarys" @click="clickTap(item.questions_type_id)">确 定</el-button>
+                  </div>
+                </el-dialog>
+              </span>
             </div>
           </div>
         </div>
@@ -40,6 +49,7 @@ export default {
   data() {
     return {
       visible: false,
+      dialogFormVisibles:false,
       dialogTableVisible: false,
       dialogFormVisible: false,
       form: {
@@ -59,13 +69,20 @@ export default {
   methods:{
     ...mapActions({
       question :'getTypeQuestion/getTypeQuestions',
-      addTestTypes:'addType/addTestType'
+      addTestTypes:'addType/addTestType',
+      delQuestion:'getpush/delQuestion'
     }),
     addTypeStudy(){
       this.dialogFormVisible = false
       this.addTestTypes({
         text:this.form.name,
         sort:Math.random().toString(36).substr(2)
+      })
+    },
+    clickTap(item){
+      this.dialogFormVisibles=false
+      this.delQuestion({
+        id:item
       })
     }
   },
@@ -151,5 +168,15 @@ export default {
 
   .count-text:hover {
     background: #fafafa;;
+  }
+  
+  .del{
+    width: 80px;
+    height: 30px;
+    border-radius: 5px;
+    background: blue;
+    display: inline-block;
+    color:white;
+    cursor: pointer;
   }
 </style>

@@ -15,12 +15,12 @@ const usersRouter = {
     {
       path: 'add',
       component: () => import('@/views/user/add'),
-      name: 'KeyboardChart',
+      name: 'add',
       meta: { title: 'addUsers', noCache: true }
     }, {
       path: 'view',
       component: () => import('@/views/user/views'),
-      name: 'MixChart',
+      name: 'view',
       meta: { title: 'viewusers', noCache: true }
     }
   ]
