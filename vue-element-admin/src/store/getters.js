@@ -13,6 +13,7 @@ const getters = {
   permission_routes: state => state.permission.routes,
   addRoutes: state => state.permission.addRoutes,
   errorLogs: state => state.errorLog.logs,
-  userInfo: state => state.user.userInfo
+  //获取用户信息
+  userInfo:state => state.user.userInfo //加工数据
 }
 export default getters

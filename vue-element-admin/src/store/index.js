@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import getters from './getters'
+// import createLogger from "vuex/dist/logger"
 
 import createLogger from 'vuex/dist/logger'
 import getTypeExam from './modules/getTypeExam'
@@ -14,6 +15,8 @@ import addType from './modules/addType'
 import classManger from './modules/class'
 import room from './modules/room'
 import student from './modules/student'
+import indexUsers from "./modules/exams/indexUsers";
+import viewUsers from "./modules/exams/viewUsers";
 Vue.use(Vuex)
 
 // https://webpack.js.org/guides/dependency-management/#requirecontext
@@ -30,7 +33,6 @@ const modules = modulesFiles.keys().reduce((modules, modulePath) => {
 }, {})
 
 const store = new Vuex.Store({
-  modules,
   getters,
   getTypeExam,
   gettingLesson,
@@ -43,7 +45,12 @@ const store = new Vuex.Store({
   classManger,
   room,
   student,
-  // piugins:[createLogger()]
+  modules: {
+    ...modules,
+    indexUsers,
+    viewUsers,
+  }
+  // plugins:[createLogger()]
 })
 
 export default store

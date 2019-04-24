@@ -34,6 +34,7 @@ const mutations = {
   SET_VIEWAUTHORITY: (state,viewAuthority) => {
     state.viewAuthority = viewAuthority
   }
+
 }
 
 const actions = {
