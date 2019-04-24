@@ -38,7 +38,6 @@ const testsRouter = {
     },
     {
       path: 'update',
-      hidden: true,
       component: () => import('@/views/test/date'),
       meta: { title: 'update', noCache: true, view_id:'main-student'}
     }
