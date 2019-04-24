@@ -20,7 +20,7 @@
     <div :class="{hasTagsView:needTagsView}" class="main-container">
       <!-- 导航 -->
       <div :class="{'fixed-header':fixedHeader}">
-        <!-- <navbar /> -->
+        <navbar />
         <tags-view v-if="needTagsView" />
       </div>
       <app-main />
@@ -33,7 +33,7 @@
 
 <script>
 // import RightPanel from '@/components/RightPanel'
-import { AppMain, Sidebar, TagsView } from './components' // Navbar, Settings,
+import { AppMain, Sidebar, Navbar, TagsView } from './components' //  Settings,
 import ResizeMixin from './mixin/ResizeHandler'
 import { mapState , mapActions} from 'vuex'
 
@@ -41,7 +41,7 @@ export default {
   name: 'Layout',
   components: {
     // RightPanel,
-    // Navbar,
+    Navbar,
     Sidebar,
     AppMain,
     TagsView,

@@ -15,17 +15,17 @@ const classesRouter = {
     {
       path: 'class',
       component: () => import('@/views/class/class'),
-      name: 'KeyboardChart',
+      name: 'class',
       meta: { title: 'classesAdmin', noCache: true, view_id: 'main-grade'}
     }, {
       path: 'room',
       component: () => import('@/views/class/room'),
-      name: 'MixChart',
+      name: 'room',
       meta: { title: 'roomAdmin', noCache: true, view_id: 'main-room'}
     }, {
       path: 'student',
       component: () => import('@/views/class/student'),
-      name: 'MixChart',
+      name: 'student',
       meta: {
         title: 'studentAdmin',
         noCache: true,
@@ -34,7 +34,7 @@ const classesRouter = {
     }, {
       path: 'update',
       component: () => import('@/views/class/upload'),
-      name: 'MixChart',
+      name: 'update',
       meta: {
         title: 'update',
         noCache: true,

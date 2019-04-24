@@ -15,13 +15,13 @@ const papersRouter = {
     {
       path: 'await',
       component: () => import('@/views/paper/awaits'),
-      name: 'KeyboardChart',
+      name: 'await',
       meta: { title: 'awaitClass' }
     },
     {
       path: 'await1',
       component: () => import('@/views/paper/paperList'),
-      name: 'KeyboardChart',
+      name: 'await1',
       meta: { title: '123' }
     }
   ]

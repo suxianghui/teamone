@@ -154,21 +154,9 @@ export default {
   },
   methods: {
     ...mapActions({
-      login:'user/login',
-      // generateRoutes:'permission/generateRoutes'//放入导航守卫中调用
+      login: 'user/login',
+      generateRoutes: 'permission/generateRoutes'
     }),
-    // checkCapslock({ shiftKey, key } = {}) {
-    //   if (key && key.length === 1) {
-    //     if (shiftKey && (key >= 'a' && key <= 'z') || !shiftKey && (key >= 'A' && key <= 'Z')) {
-    //       this.capsTooltip = true
-    //     } else {
-     //       this.capsTooltip = false
-    //     }
-    //   }
-    //   if (key === 'CapsLock' && this.capsTooltip === true) {
-    //     this.capsTooltip = false
-    //   }
-    // },
     showPwd() {
       if (this.passwordType === 'password') {
         this.passwordType = ''

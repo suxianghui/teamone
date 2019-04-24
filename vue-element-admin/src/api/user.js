@@ -17,7 +17,7 @@ export function getInfo() {
 
 export function getViewAuthority() {
   return request({
-    url: '/user/userInfo',
+    url: '/user/view_authority',
     method: 'get'
   })
 }
