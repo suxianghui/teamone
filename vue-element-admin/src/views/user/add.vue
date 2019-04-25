@@ -355,11 +355,14 @@ export default {
     //添加视图接口权限
     async view() {
       let obj = {};
-      obj = this.existingViewValue.filter((item,index)=>{
-        // console.log(item,this.existingView,'shitu')
-        if(item.authority === this.existingView){
-           return item
-        }
+      // obj = this.existingViewValue.find((item,index)=>{
+      //   // console.log(item,this.existingView,'shitu')
+      //   if(item.authority === this.existingView){
+      //      return item
+      //   }
+      // });
+       obj = this.existingViewValue.find(item => {
+        return item.authority === this.existingView;
       });
       // console.log(this.existingViewValue,9999999999)
       // console.log(this.existingView,'shitu') //点击添加的值
@@ -375,7 +378,7 @@ export default {
       }
       const res =await this.setAddAuthorityView({
         view_authority_text:obj.authority,
-        view_id:obj.view_id //视图id  
+        view_id:'111' //视图id  
       }) 
       this.hint(res);
       this.existingView = ''//,
