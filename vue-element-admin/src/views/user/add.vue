@@ -158,6 +158,7 @@ export default {
       userName: '',//输入用户名
       userId: '',//用户id
       pwd: '',//密码
+      avatar:'',//用户头像
 
       identityId: '',//选择身份id_1
       identityId_api: '',//api接口选择身份id_2
@@ -179,9 +180,9 @@ export default {
   },
   computed: {
     ...mapState({
-      identityId_viewValue:state => state.indexUsers.identityId_viewValue,
+      // identityId_viewValue:state => state.indexUsers.identityId_viewValue,
       // //身份设置视图权限_身份id选择
-      identityId_apiValue:state => state.indexUsers.identityId_apiValue,
+      // identityId_apiValue:state => state.indexUsers.identityId_apiValue,
       // //身份设置api接口权限——身份id选择
       userIdValue:state => state.viewUsers.userIdValue,
       // //添加/更新_用户id 选择
@@ -288,9 +289,8 @@ export default {
           user_pwd: this.pwd,
           identity_id: this.identityId
         });
-        console.log(res,7878)
-      this.hint(res);
-
+        // console.log(res,7878)
+        this.hint(res);
         // console.log(this.setUpdataUserInfo(),111)
       }
       //清空
@@ -356,14 +356,14 @@ export default {
     async view() {
       let obj = {};
       obj = this.existingViewValue.filter((item,index)=>{
-        console.log(item,this.existingView,'shitu')
+        // console.log(item,this.existingView,'shitu')
         if(item.authority === this.existingView){
            return item
         }
       });
       // console.log(this.existingViewValue,9999999999)
       // console.log(this.existingView,'shitu') //点击添加的值
-      // console.log(obj,888)
+      console.log(obj,888)
       
       if(!this.existingView){
         this.$message({

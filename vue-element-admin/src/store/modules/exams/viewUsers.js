@@ -145,6 +145,7 @@ const actions = {
     },
     //获取视图权限
     async setViewAuthority({ commit }, payload) {
+        
         let result = await viewAuthority(payload);
         // console.log(result, '展示视图权限')
         commit('getViewAuthoritys', result)
