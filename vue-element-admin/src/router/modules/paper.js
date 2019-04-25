@@ -19,7 +19,7 @@ const papersRouter = {
       meta: { title: 'awaitClass' }
     },
     {
-      path: 'await1',
+      path: 'paperList',
       component: () => import('@/views/paper/paperList'),
       name: 'await1',
       meta: { title: '123' }
