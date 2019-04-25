@@ -43,8 +43,8 @@ const mutations = {
             //用户id
             state.userIdValue.push(item.user_name)
         })
+        console.log(state.userDatas,'获取用户')
         deWeight(state.userIdValue)
-        // console.log(state.userDatas,'获取用户')
         // state.total = state.userDatas.length
         state.data = state.userDatas.slice(0, 10)
     },
