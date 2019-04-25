@@ -8,12 +8,12 @@ const service = axios.create({
   baseURL:'/api',
   // baseURL: process.env.VUE_APP_BASE_API, // api 的 base_url
   // withCredentials: true, // 跨域请求时发送 cookies
-  timeout: 5000 // request timeout
+//  timeout: 5000 // request timeout
 })
 
 // request interceptor
 
-//请求拦截器,所有请求都需要走这里过一遍
+//请求拦截器,所有请求都需要走这里过一遍, 可以带一些非业务逻辑(如:登录态)
 service.interceptors.request.use(
   config => {
     // Do something before request is sent
@@ -46,9 +46,11 @@ service.interceptors.response.use(//响应拦截器
 //响应拦截器,所以响应回来的 拦截器都需要走这里走
   response => {
     const res = response.data
-    if (res.code == 1){
+    // const res = response;
+    // console.log('...res',res,response);
+    // if(res.code == 1){
       return res;
-    }
+    // }
 
     // if (res.code !== 20000) {
     //   Message({
@@ -78,7 +80,7 @@ service.interceptors.response.use(//响应拦截器
   error => {
     console.log('err' + error) // for debug
     Message({
-      message: error.message,
+      message: error.msg,
       type: 'error',
       duration: 5 * 1000
     })

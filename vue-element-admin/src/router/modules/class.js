@@ -15,20 +15,21 @@ const classesRouter = {
     {
       path: 'class',
       component: () => import('@/views/class/class'),
-      name: 'KeyboardChart',
-      meta: { title: 'classesAdmin', noCache: true }
+      name: 'class',
+      meta: { title: 'classesAdmin', noCache: true, view_id: 'main-grade'}
     }, {
       path: 'room',
       component: () => import('@/views/class/room'),
-      name: 'MixChart',
-      meta: { title: 'roomAdmin', noCache: true }
+      name: 'room',
+      meta: { title: 'roomAdmin', noCache: true, view_id: 'main-room'}
     }, {
       path: 'student',
       component: () => import('@/views/class/student'),
-      name: 'MixChart',
+      name: 'student',
       meta: {
         title: 'studentAdmin',
-        noCache: true
+        noCache: true,
+        view_id: 'main-student'
       }
     }
   ]

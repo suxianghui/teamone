@@ -7,14 +7,13 @@ Vue.use(Router)
 import Layout from '@/layout'
 
 /* Router Modules */
-import componentsRouter from './modules/components'
-import chartsRouter from './modules/charts'
-import nestedRouter from './modules/nested'
-import tableRouter from './modules/table'
-
+// import componentsRouter from './modules/components'
+// import chartsRouter from './modules/charts'
+// import nestedRouter from './modules/nested'
+// import tableRouter from './modules/table'
 
 import testsRouter from './modules/test'
-import usersRouter from './modules/user'
+import usersRouter from './modules/user'//包含上传头像
 import examsRouter from './modules/exam'
 import classesRouter from './modules/class'
 import papersRouter from './modules/paper'
@@ -96,31 +95,31 @@ export const constantRoutes = [
     ]
   },
   // 文档
-  {
-    path: '/documentation',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/documentation/index'),
-        name: 'Documentation',
-        meta: { title: 'documentation', icon: 'documentation', affix: true }
-      }
-    ]
-  },
-  {
-    path: '/guide',
-    component: Layout,
-    redirect: '/guide/index',
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/guide/index'),
-        name: 'Guide',
-        meta: { title: 'guide', icon: 'guide', noCache: true }
-      }
-    ]
-  }
+//   {
+//     path: '/documentation',
+//     component: Layout,
+//     children: [
+//       {
+//         path: 'index',
+//         component: () => import('@/views/documentation/index'),
+//         name: 'Documentation',
+//         meta: { title: 'documentation', icon: 'documentation', affix: true }
+//       }
+//     ]
+//   },
+//   {
+//     path: '/guide',
+//     component: Layout,
+//     redirect: '/guide/index',
+//     children: [
+//       {
+//         path: 'index',
+//         component: () => import('@/views/guide/index'),
+//         name: 'Guide',
+//         meta: { title: 'guide', icon: 'guide', noCache: true }
+//       }
+//     ]
+//   }
 ]
 
 /**
@@ -183,10 +182,10 @@ export const asyncRoutes = [
   // },
 
   /** when your routing map is too long, you can split it into small modules **/
-  componentsRouter,
-  chartsRouter,
-  nestedRouter,
-  tableRouter,
+  // componentsRouter,
+  // chartsRouter,
+  // nestedRouter,
+  // tableRouter,
 
   // {
   //   path: '/example',

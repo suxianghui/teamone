@@ -7,19 +7,34 @@ export function login(data) {
     data
   })
 }
-
-export function getInfo(token) {
+//导航守卫 获取用户信息(路由)
+export function getInfo() {
   return request({
-    url: '/user/info',
-    method: 'get',
-    params: { token }
+    url: '/user/userInfo',
+    method: 'get'
   })
 }
+
+export function getViewAuthority() {
+  return request({
+    url: '/user/view_authority',
+    method: 'get'
+  })
+}
+
 
 export function logout() {
   return request({
     url: '/user/logout',
     method: 'post'
+  })
+}
+
+export function userPic(data) {
+  return request({
+    url: '/user/user',
+    method: 'put',
+    data
   })
 }
 

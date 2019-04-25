@@ -7,7 +7,7 @@ export function getToken() {
 }
 
 export function setToken(token) {
-  return Cookies.set(TokenKey, token, { expires: 7 })
+  return Cookies.set(TokenKey, token, { expires: 7 })  // 7天免登录
 }
 
 export function removeToken() {

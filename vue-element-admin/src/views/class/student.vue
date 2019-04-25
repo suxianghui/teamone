@@ -4,56 +4,56 @@
     <div class="search-wrap">
       <input v-model="input" placeholder="输入学生姓名" class="input">
       <el-select
-        v-model="value"
+        v-model="roomValue"
         placeholder="请输入教室号"
         size="mini"
       >
         <el-option
-          v-for="item in roomdata"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value"
+          v-for="item in roomData"
+          :key="item.room_id"
+          :label="item.room_text"
+          :value="item.room_text"
         />
       </el-select>
       <el-select
-        v-model="value"
-        placeholder="班级名"
+        v-model="classValue"
+        placeholder="请输入班级"
         size="mini"
       >
         <el-option
-          v-for="item in options"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value"
+          v-for="item in classData"
+          :key="item.grade_id"
+          :label="item.grade_name"
+          :value="item.grade_name"
         />
       </el-select>
-      <button class="search-btn">搜索</button>
-      <button class="reset-btn">重置</button>
+      <button class="search-btn" @click="search">搜索</button>
+      <button class="reset-btn" @click="reset">重置</button>
     </div>
     <div class="main">
       <el-table
         class="table-wrap"
-        :data="tableData"
+        :data="pagenationData"
         style="width: 100%"
       >
         <el-table-column
-          prop="name"
+          prop="student_name"
           label="姓名"
         />
         <el-table-column
-          prop="studentNumber"
+          prop="student_id"
           label="学号"
         />
         <el-table-column
-          prop="classNumber"
+          prop="grade_name"
           label="班级"
         />
         <el-table-column
-          prop="roomNumber"
+          prop="room_text"
           label="教室号"
         />
         <el-table-column
-          prop="password"
+          prop="student_pwd"
           label="密码"
         />
         <el-table-column
@@ -63,113 +63,116 @@
             <el-button
               type="text"
               size="small"
-              @click.native.prevent="deleteRow(scope.$index, tableData)"
+              @click.native.prevent="deleteRow(scope.$index,pagenationData)"
             >
               删除
             </el-button>
           </template>
         </el-table-column>
       </el-table>
+      <div class="block">
+        <el-pagination
+          background
+          :page-sizes="pageChose"
+          :page-size="pageSize"
+          layout="prev, pager, next, sizes, jumper"
+          :total="studentInfo.length>0?studentInfo.length:data.studentData.length"
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+        />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-
+import { mapState, mapActions } from 'vuex'
 export default {
   data() {
     return {
+      classValue: '',
+      roomValue: '',
       input: '',
-      roomValue: '请输入教室号',
-      roomdata: [
-        {
-          value: '选项1',
-          label: '34310'
-        },
-        {
-          value: '选项2',
-          label: '34301'
-        },
-        {
-          value: '选项3',
-          label: '34302'
-        },
-        {
-          value: '选项4',
-          label: '34303'
-        },
-        {
-          value: '选项5',
-          label: '34304'
-        },
-        {
-          value: '选项6',
-          label: '34305'
-        }
-      ],
-      options: [{
-        value: '选项1',
-        label: '1610C'
-      }, {
-        value: '选项2',
-        label: '1701E'
-      }, {
-        value: '选项3',
-        label: '1611C'
-      }, {
-        value: '选项4',
-        label: '1609B'
-      }, {
-        value: '选项5',
-        label: '1609A'
-      }],
-      tableData: [
-        {
-          name: '张娜',
-          studentNumber: '16323',
-          classNumber: '1611C',
-          roomNumber: '34308',
-          password: 'Pm626521@'
-        },
-        {
-          name: '张娜',
-          studentNumber: '16323',
-          classNumber: '1611C',
-          roomNumber: '34308',
-          password: 'Pm626521@'
-        },
-        {
-          name: '张娜',
-          studentNumber: '16323',
-          classNumber: '1611C',
-          roomNumber: '34308',
-          password: 'Pm626521@'
-        },
-        {
-          name: '张娜',
-          studentNumber: '16323',
-          classNumber: '1611C',
-          roomNumber: '34308',
-          password: 'Pm626521@'
-        },
-        {
-          name: '张娜',
-          studentNumber: '16323',
-          classNumber: '1611C',
-          roomNumber: '34308',
-          password: 'Pm626521@'
-        },
-        {
-          name: '张娜',
-          studentNumber: '16323',
-          classNumber: '1611C',
-          roomNumber: '34308',
-          password: 'Pm626521@'
-        }
-      ]
+      roomData: [],
+      classData: [],
+      studentInfo: [],
+      pagenationData: [],
+      pageChose: [5, 30, 50, 80, 100, 150, 200],
+      pageSize: 30,
+      current: 1
     }
   },
+  computed: {
+    ...mapState({
+      data: state => state.student
+    })
+  },
+  async created() {
+    this.getMangerStudent()
+    this.roomData = await this.getMangerRoom()
+    this.classData = await this.getMangerGrade()
+    // 进入首页默认的分页数据
+    this.changePagenation()
+    // console.log(this.pagenationData)
+  },
   methods: {
+    ...mapActions({
+      getMangerStudent: 'student/getMangerStudent',
+      getMangerRoom: 'student/getMangerRoom',
+      getMangerGrade: 'student/getMangerGrade',
+      deleteMangerStudent: 'student/deleteMangerStudent'
+    }),
+    search() {
+      // 按条件搜索
+      let result=[];
+      if(this.input&&this.classValue&&this.roomValue){
+        result = this.data.studentData.filter(item => {
+          return item.student_name === this.input && item.room_text === this.roomValue && item.grade_name === this.classValue
+        })
+      }else if((this.input && this.classValue)||(this.input && this.roomValue)||(this.roomValue && this.classValue)) {
+        result = this.data.studentData.filter(item => {
+          return (item.student_name === this.input && item.room_text === this.roomValue) || (item.student_name === this.input && item.grade_name === this.classValue) || (item.room_text === this.roomValue && item.grade_name === this.classValue)
+        })
+      }else {
+        result = this.data.studentData.filter(item => {
+          return item.student_name === this.input || item.room_text === this.roomValue || item.grade_name === this.classValue
+        })
+      }
+      this.studentInfo = result
+      this.pagenationData = this.studentInfo
+      if(result.length==0){
+        alert('没有查到您要的信息')
+      }
+      
+    },
+    reset() {
+      this.input = ''
+      this.classValue = ''
+      this.roomValue = ''
+      this.changePagenation()
+    },
+    handleSizeChange(val) {
+      this.pageSize = val * 1
+      this.changePagenation()
+      // console.log(this.pagenationData)
+    },
+    handleCurrentChange(val) {
+      this.current = val
+      this.changePagenation()
+      // console.log(this.pagenationData)
+    },
+    deleteRow(index, rows) {
+      const result = this.pagenationData.find((item, ind) => {
+        return index === ind
+      })
+      console.log('result', result)
+      this.deleteMangerStudent(result.student_id)
+      this.getMangerStudent()
+      rows.splice(index, 1)
+    },
+    changePagenation() {
+      this.pagenationData = this.data.studentData.slice((this.current - 1) * this.pageSize, this.current * this.pageSize)
+    }
   }
 }
 
@@ -211,10 +214,12 @@ export default {
   }
   .main{
     width: 100%;
-    height: 863px;
+    /* height: 863px; */
     box-sizing: border-box;
     margin: 0 0 20px;
     background: #fff;
+    padding-bottom: 80px;
+    box-sizing: border-box;
   }
   .room-btn{
     padding: 10px 45px;
@@ -242,6 +247,9 @@ export default {
     border: solid 1px #ddd;
     border-radius: 4px;
     color: #fff;
+  }
+  .el-pagination{
+    margin-top: 25px;
   }
   /*
   敏捷开发：工作进度，站立会议/晨会

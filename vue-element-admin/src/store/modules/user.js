@@ -1,4 +1,4 @@
-import { login, logout, getInfo } from '@/api/user'
+import { login, logout, getInfo, getViewAuthority, userPic } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import router, { resetRouter } from '@/router'
 
@@ -7,7 +7,9 @@ const state = {
   name: '',
   avatar: '',
   introduction: '',
-  roles: []
+  roles: [],
+  userInfo:{},
+  viewAuthority:[]
 }
 
 const mutations = {
@@ -25,7 +27,17 @@ const mutations = {
   },
   SET_ROLES: (state, roles) => {
     state.roles = roles
+  },
+  SET_USERINFO: (state,userInfo) => {
+    state.userInfo=userInfo
+  },
+  SET_VIEWAUTHORITY: (state,viewAuthority) => {
+    state.viewAuthority = viewAuthority
+  },
+  SET_AVATAR: (state,avatar)=> {
+    state.avatar=avatar
   }
+
 }
 
 const actions = {
@@ -33,38 +45,26 @@ const actions = {
   async login({ commit }, userInfo) {
     const { username, password } = userInfo
     let res = await login({user_name: username, user_pwd: password});
-    setToken(res.token);
+    setToken(res.token);  //把登录态authorization存储在cookie中
     return res;
   },
-
   // get user info
-  getInfo({ commit, state }) {
-    return new Promise((resolve, reject) => {
-      getInfo(state.token).then(response => {
-        const { data } = response
-
-        if (!data) {
-          reject('Verification failed, please Login again.')
-        }
-
-        const { roles, name, avatar, introduction } = data
-
-        // roles must be a non-empty array
-        if (!roles || roles.length <= 0) {
-          reject('getInfo: roles must be a non-null array!')
-        }
-
-        commit('SET_ROLES', roles)
-        commit('SET_NAME', name)
-        commit('SET_AVATAR', avatar)
-        commit('SET_INTRODUCTION', introduction)
-        resolve(data)
-      }).catch(error => {
-        reject(error)
-      })
-    })
+  async getInfo({ commit }, state ) {
+       let data =await getInfo();
+       commit('SET_USERINFO',data.data)
+       commit('SET_AVATAR',data.data.avatar);
+       return data.data
   },
-
+  // get user viewAuthority
+  async getViewAuthority({commit}){
+    let data = await getViewAuthority();
+    console.log('userAuthority',data)
+    if(data.code == 1) {
+      commit('SET_VIEWAUTHORITY',data.data)
+      return data.data
+    }
+    return []
+  },
   // user logout
   logout({ commit, state }) {
     return new Promise((resolve, reject) => {
@@ -110,6 +110,14 @@ const actions = {
 
       resolve()
     })
+  },
+
+  async changePic({commit},payload){
+    let data = await userPic(payload);
+    console.log('userpic',data)
+    let uInfo=await getInfo();
+    console.log(uInfo)
+    commit('SET_AVATAR',uInfo.data.avatar);
   }
 }
 

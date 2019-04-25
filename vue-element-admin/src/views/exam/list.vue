@@ -32,7 +32,7 @@
           </el-button>
           <!-- </div> -->
         </div>
-        <div class="contentBot">
+        <!-- <div class="contentBot">
           <div class="title">
             <span>试卷列表</span>
             <div class="condition" @click="toggleType">
@@ -41,15 +41,60 @@
               <span>已结束</span>
             </div>
           </div>
-          <el-table :data="tableData" style="width: 100%">
-            <el-table-column fit="true" prop="info" label="试卷信息" width="240" />
-            <el-table-column prop="grade" label="班级" width="200" />
-            <el-table-column prop="user" label="创建人" />
-            <el-table-column prop="start" label="开始时间" width="180" />
-            <el-table-column prop="end" label="结束时间" width="180" />
+          <el-table :data="allExamList" style="width: 100%">
+            <el-table-column prop="title" label="试卷信息" width="240" />
+            <el-table-column prop="grade_name[0]" label="班级" width="200" />
+            <el-table-column prop="user_name" label="创建人" />
+            <el-table-column prop="start_time" label="开始时间" width="180" />
+            <el-table-column prop="end_time" label="结束时间" width="180" />
             <el-table-column style="color: #0139FD;" prop="update" align="center" label="操作">
               <template>
-                <el-button type="text" size="small">详情</el-button>
+                <el-button type="text" size="small" @click="goDetail()">详情</el-button>
+              </template>
+            </el-table-column>
+          </el-table>
+        </div> -->
+        <div class="content">
+          <div class="nav">
+            <span>试卷列表</span>
+            <div class="type">
+              <span v-for="(item,index) in navList" :key="index" 
+                :class="index == changeClass ? 'active_span' : '' " @click="toggleType(index, $event)">
+                {{ item }}
+              </span>
+            </div>
+          </div>
+          <el-table :data="allExamList" :header-cell-style="tableHeaderColor" style="width: 100%">
+            <el-table-column label="试卷信息">
+              <template slot-scope="childData">
+                <p>{{childData.row.title}}</p>
+                <p>考试时间:{{0}} {{childData.row.number}}道题{{childData.row.status}}分</p>
+              </template>
+            </el-table-column>
+            <el-table-column label="班级">
+              <template slot-scope="childData">
+                <p>教室班级</p>
+                <p><span v-for="(item, index) in childData.row.grade_name" :key="index">{{item}}</span></p>
+              </template>
+            </el-table-column>
+            <el-table-column label="创建人">
+                <template slot-scope="childData">
+                    <p>{{ childData.row.user_name }}</p>
+                  </template>
+            </el-table-column>
+            <el-table-column label="开始时间">
+              <template slot-scope="childData">
+                <span>{{childData.row.start_time}}</span>
+              </template>
+            </el-table-column>
+            <el-table-column label="结束时间">
+              <template slot-scope="childData">
+                <span>{{childData.row.end_time}}</span>
+              </template>
+            </el-table-column>
+            <el-table-column label="操作" width="87">
+              <template slot-scope="childData">
+                <span class="detail" @click='goDetail(childData.row.exam_exam_id)'>详情</span>
               </template>
             </el-table-column>
           </el-table>
@@ -60,10 +105,16 @@
 </template>
 
 <script>
+import { mapActions, mapState} from 'vuex'
+import { timeFormat } from '@/utils/index'
+
+
 export default {
   name: 'List',
   data() {
     return {
+      navList: ['全部', '进行中', '已结束'],
+      changeClass: 0,
       examValue: '',
       classValue: '',
       examOptions: [{
@@ -166,13 +217,59 @@ export default {
       ]
     }
   },
+
+  created() {
+    this.getExamList()
+    timeFormat()
+    console.log(this.allExamList,'.....')
+  },
+
+  computed: {
+    ...mapState({
+      allExamList: state => state.exam.allExamList
+    }),
+  },
+
   methods: {
+    ...mapActions({
+      getExamList: 'exam/getExamList'
+    }),
+    // 点击查询框
     searchBtn() {
-      console.log(this.examValue)
-      console.log(this.classValue)
+      if(!this.examValue && !this.classValue) {
+        this.$message({
+          showClose: true,
+          message: '请输入查询内容',
+          type: 'error'
+        })
+      }else if(!this.examValue || !this.classValue) {
+        this.$message({
+          showClose: true,
+          message: '查询内容不能为空,请继续输入...',
+          type: 'warning'
+        })
+      }else {
+        console.log(this.examValue, this.classValue, '查询数据...')
+      }
     },
-    toggleType(e) {
-      console.log(e.target.innerText)  //全部 - 进行中 - 已结束
+    // 点击改变样式
+    toggleType(index, e) {
+      this.changeClass = index
+      // 全部 - 进行中 - 已结束
+      console.log(e.target.innerText, 'tab切换数据...')
+    },
+    // table表格的头部样式
+    tableHeaderColor({ row, column, rowIndex, columnIndex }) {
+      if (rowIndex === 0) {
+        return 'background-color: #f4f7f9;color: #000;font-weight: 500;width:100%; height: 53px;'
+      }
+    },
+    // 点击去详情页
+    goDetail(id) {
+      console.log(id, '去详情页...')
+      this.$router.push({
+        path: '/exam/detail' + '?id=' + id
+      })
     }
   }
 }
@@ -183,7 +280,7 @@ export default {
 .wrapper {
   margin-top:66px;
   width: 100%;
-  height: 750px;
+  height: 1150px;
   background: #f0f2f5;
   display: flex;
   flex-direction: column;
@@ -256,6 +353,66 @@ export default {
       }
     }
   }
+}
+.content {
+  padding: 24px;
+  box-sizing: border-box;
+  background: #fff;
+  border-radius: 10px;
+}
+.from {
+  padding-bottom: 24px;
+  box-sizing: border-box;
+}
+.btn {
+  width: 150px;
+  margin-left: -50px;
+  background: blue;
+}
+.select {
+  margin-right: 100px;
+  width: 16.1%;
+  min-width: 150px;
+  margin-left: 10px;
+}
+.one {
+  margin-left: 5%;
+}
+.content:nth-child(3) {
+  margin-top: 20px;
+}
+.type {
+  display: inline-block;
+}
+.active {
+    color: blue;
+    border-color: blue;
+  }
+.spans {
+    margin: 0;
+    color: skyblue;
+    border: 1px solid #eee;
+    display: inline-block;
+    cursor: pointer;
+    padding: 10px;
+  }
+.detail {
+  color: blue
+}
+.type .active_span{
+  /* margin-left: 88%; */
+    color: blue;
+    border-color:blue;
+}
+.type   span{
+    border:1px solid #f4f7f9;
+    padding:5px 15px;
+    cursor: pointer;
+  }
+.nav{
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 40px;
 }
 </style>
 
