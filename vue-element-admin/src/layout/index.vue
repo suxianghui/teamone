@@ -1,5 +1,20 @@
 <template>
   <div :class="classObj" class="app-wrapper">
+    <div class="navbar">
+      <img
+        src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1551624718911&di=4a7004f8d71bd8da84d4eadf1b59e689&imgtype=0&src=http%3A%2F%2Fimg105.job1001.com%2Fupload%2Falbum%2F2014-10-15%2F1413365052_95IE3msH.jpg"
+        alt
+        style="width:120px;"
+      >
+      <!-- <breadcrumb id="breadcrumb-container" class="breadcrumb-container" /> -->
+      <div class="right-menu">
+        <img
+          src="https://cdn.nlark.com/yuque/0/2019/png/anonymous/1547609339813-e4e49227-157c-452d-be7e-408ca8654ffe.png?x-oss-process=image/resize,m_fill,w_48,h_48/format,png"
+          alt
+        >
+        <span>chenmanjie</span>
+      </div>
+    </div>
     <div v-if="device==='mobile'&&sidebar.opened" class="drawer-bg" @click="handleClickOutside" />
     <sidebar class="sidebar-container" />
     <div :class="{hasTagsView:needTagsView}" class="main-container">
@@ -8,31 +23,29 @@
         <navbar />
         <tags-view v-if="needTagsView" />
       </div>
-      <!--  二级路由区域 -->
       <app-main />
-      <!-- 悬浮设置菜单 -->
-      <right-panel v-if="showSettings">
+      <!-- <right-panel v-if="showSettings">
         <settings />
-      </right-panel>
+      </right-panel> -->
     </div>
   </div>
 </template>
 
 <script>
-import RightPanel from '@/components/RightPanel'
-import { Navbar, Sidebar, AppMain, TagsView, Settings } from './components'
+// import RightPanel from '@/components/RightPanel'
+import { AppMain, Sidebar, Navbar, TagsView } from './components' //  Settings,
 import ResizeMixin from './mixin/ResizeHandler'
 import { mapState , mapActions} from 'vuex'
 
 export default {
   name: 'Layout',
   components: {
-    RightPanel,
+    // RightPanel,
     Navbar,
     Sidebar,
     AppMain,
     TagsView,
-    Settings
+    // Settings
   },
   mixins: [ResizeMixin],
   computed: {

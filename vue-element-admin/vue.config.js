@@ -7,7 +7,7 @@ function resolve(dir) {
 }
 
 const name = pkg.name || 'vue-element-admin' // page title
-const port = 9527 // dev port
+const port = 9528 // dev port
 
 // All configuration item explanations can be find in https://cli.vuejs.org/config/
 module.exports = {
@@ -30,7 +30,7 @@ module.exports = {
       warnings: false,
       errors: true
     },
-    //跨域代理
+    //跨域代理  vuecli3.0 webpack配置
     proxy: {
       '/api': {
         target: `http://169.254.18.69:7001/`,

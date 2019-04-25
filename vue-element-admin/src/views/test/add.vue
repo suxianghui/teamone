@@ -39,7 +39,6 @@
         </div>
       </div>
       <div class="btn">
-        <!-- <el-button type="primary" @click="bindtap">提交</el-button> -->
         <el-button type="primary" class="btn" @click="dialogFormVisible = true">提交</el-button>
         <el-dialog title="添加类型" class="tan" :visible.sync="dialogFormVisible">
             <p>{{modificationAdds}}</p>

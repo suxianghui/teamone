@@ -37,6 +37,7 @@ const mutations = {
   SET_AVATAR: (state,avatar)=> {
     state.avatar=avatar
   }
+
 }
 
 const actions = {
@@ -44,13 +45,12 @@ const actions = {
   async login({ commit }, userInfo) {
     const { username, password } = userInfo
     let res = await login({user_name: username, user_pwd: password});
-    setToken(res.token);
+    setToken(res.token);  //把登录态authorization存储在cookie中
     return res;
   },
   // get user info
   async getInfo({ commit }, state ) {
        let data =await getInfo();
-       console.log('userInfo',data)
        commit('SET_USERINFO',data.data)
        commit('SET_AVATAR',data.data.avatar);
        return data.data

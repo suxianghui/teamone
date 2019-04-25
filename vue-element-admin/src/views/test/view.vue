@@ -167,7 +167,7 @@
   }
 
   .bottomlittle {
-    width: 1605px;
+    width: 95%;
   }
 
   .curriculumtype {
@@ -233,12 +233,11 @@
   }
 
   .childrenbox {
-    width: 98%;
-    height: 115px;
+    width: 100%;
+    height: 100%;
     border-bottom: 1px solid #eee;
     position: relative;
     font-size: 14px;
-    margin: 0;
     cursor: pointer;
   }
 
