@@ -3,7 +3,7 @@
     <div class=" clearfix">
       <pan-thumb :image="userInfo.avatar" style="float: left">
         Your roles:
-        <span v-for="item in roles" :key="item" class="pan-info-roles">{{ userInfo.identity_text }}</span>
+        <span class="pan-info-roles">{{ userInfo.identity_text }}</span>
       </pan-thumb>
       <github-corner style="position: absolute; top: 0px; border: 0; right: 0;" />
       <div class="info-container">
@@ -18,7 +18,7 @@
 </template>
 
 <script>
-// import { mapGetters } from 'vuex'
+import { mapGetters } from 'vuex'
 import {mapState} from "vuex"
 import PanThumb from '@/components/PanThumb'
 import GithubCorner from '@/components/GithubCorner'
@@ -36,7 +36,7 @@ export default {
     //   'name',
     //   'avatar',
     //   'roles'
-    // ])
+    // ]),
     ...mapState({
       userInfo:state => state.user.userInfo
     })

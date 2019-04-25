@@ -31,7 +31,7 @@
               v-for="item in userDatas"
               :key="item.user_id"
               :label="item.user_name"
-              :value="item.user_name"
+              :value="item.user_id"
             />
           </el-select>
           <el-input v-model="userName" placeholder="请输入用户名" />
