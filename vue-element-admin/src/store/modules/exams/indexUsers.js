@@ -96,6 +96,7 @@ const actions = {
   //添加视图权限
   async setAddAuthorityView({ commit }, payload) {
     let result = await addAuthorityView(payload);
+    console.log(result,'0000')//打印出身份权限不足
     return result
   },
   //给身份设定api接口权限

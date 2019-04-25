@@ -203,7 +203,7 @@ export default {
       //身份和api权限
       identityApiAuthorityRelationsData:state => state.viewUsers.identityApiAuthorityRelationsData,
       //身份设置试图
-      identityApiAuthorityRelationsData:state => state.viewUsers.identityApiAuthorityRelationsData
+      identityViewAuthorityRelationsData:state => state.viewUsers.identityViewAuthorityRelationsData
     })
   },
   created() {
@@ -212,11 +212,11 @@ export default {
     this.setUserData()
     // console.log(this.userDatas,'55555555')
     this.setViewAuthority()
-    // console.log(this.setViewAuthority,222222)
+    // console.log(this.viewAuthoritysData,222222)
     this.setIdentityApiAuthorityRelation()
-    // console.log(this.setIdentityApiAuthorityRelation,'6666')
+    // console.log(this.identityApiAuthorityRelationsData,'试卷类型')
     this.setidentityViewAuthorityRelation()
-    // console.log(this.setidentityViewAuthorityRelation,'555555')
+    // console.log(this.identityViewAuthorityRelationsData,111111111)
   },
   methods: {
     ...mapActions({
@@ -288,9 +288,11 @@ export default {
           user_pwd: this.pwd,
           identity_id: this.identityId
         });
+        console.log(res,7878)
+      this.hint(res);
+
         // console.log(this.setUpdataUserInfo(),111)
       }
-      this.hint(res);
       //清空
       this.userId = '',
       this.userName = '',
@@ -353,9 +355,16 @@ export default {
     //添加视图接口权限
     async view() {
       let obj = {};
-      obj = this.existingViewValue.find((item,index)=>{
-        return item.label === this.existingView;
+      obj = this.existingViewValue.filter((item,index)=>{
+        console.log(item,this.existingView,'shitu')
+        if(item.authority === this.existingView){
+           return item
+        }
       });
+      // console.log(this.existingViewValue,9999999999)
+      // console.log(this.existingView,'shitu') //点击添加的值
+      // console.log(obj,888)
+      
       if(!this.existingView){
         this.$message({
           showClose:true,
@@ -365,13 +374,12 @@ export default {
         return false;
       }
       const res =await this.setAddAuthorityView({
-        view_authority_text:this.existingView,
-        view_id:"1121"//obj.view_id //视图id  字符串
-      })
-      console.log(obj,888)
+        view_authority_text:obj.authority,
+        view_id:obj.view_id //视图id  
+      }) 
       this.hint(res);
       this.existingView = ''//,
-      // obj.view_id = ''
+      obj.view_id = ''
     },
     //给身份设置视图权限
     async set(){

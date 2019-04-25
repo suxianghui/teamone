@@ -21,8 +21,9 @@ const state = {
     // 添加/更新用户_身份id选择
     viewJurisdictionIdValue: [],
     //给身份设置视图权限_权限id选择
-    existingViewValue: [],
-    //添加视图接口权限_选择已有视图
+
+    existingViewValue: [],//添加视图接口权限_选择已有视图
+    
     apiJurisdictionIdValue: [],
     //给身份设置api接口权限_请选择api接口权限id
 
@@ -95,7 +96,7 @@ const mutations = {
         })
         // console.log(state.identityViewAuthorityRelationsData,'身份和视图')
         deWeight(state.existingViewValue)
-        console.log(state.existingViewValue,66666666)
+        // console.log(state.existingViewValue,66666666)
         state.existingViewValue = [...new Set(state.existingViewValue)]
     },
 
