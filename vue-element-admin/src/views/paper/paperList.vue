@@ -6,50 +6,33 @@
           <el-dropdown trigger="click" class="el">
             <div class="box">
               <span class="text">状态:</span>
-              <span class="el-dropdown-link sl">
-                <i class="el-icon-arrow-down el-icon--right"/>
-              </span>
+              <el-select v-model="valueu" placeholder="请选择" class="sl"></el-select>
             </div>
-            <el-dropdown-menu slot="dropdown" class="dropdown1">
-              <el-dropdown-item icon="el-icon-plus">黄金糕</el-dropdown-item>
-              <el-dropdown-item icon="el-icon-circle-plus">狮子头</el-dropdown-item>
-              <el-dropdown-item icon="el-icon-circle-plus-outline">螺蛳粉</el-dropdown-item>
-              <el-dropdown-item icon="el-icon-check">双皮奶</el-dropdown-item>
-              <el-dropdown-item icon="el-icon-circle-check-outline">蚵仔煎</el-dropdown-item>
-            </el-dropdown-menu>
+            <el-dropdown-menu slot="dropdown" class="dropdown1"></el-dropdown-menu>
           </el-dropdown>
         </el-col>
       </el-row>
-      <el-row class="block-col-2 ma">
-        <el-col :span="12">
-          <el-dropdown trigger="click" class="el">
-            <div class="box">
-              <span class="text">班级:</span>
-              <span class="el-dropdown-link sl">
-                <i class="el-icon-arrow-down el-icon--right"/>
-              </span>
-            </div>
-            <el-dropdown-menu slot="dropdown" class="dropdown1">
-              <el-dropdown-item icon="el-icon-plus">黄金糕</el-dropdown-item>
-              <el-dropdown-item icon="el-icon-circle-plus">狮子头</el-dropdown-item>
-              <el-dropdown-item icon="el-icon-circle-plus-outline">螺蛳粉</el-dropdown-item>
-              <el-dropdown-item icon="el-icon-check">双皮奶</el-dropdown-item>
-              <el-dropdown-item icon="el-icon-circle-check-outline">蚵仔煎</el-dropdown-item>
-            </el-dropdown-menu>
-          </el-dropdown>
-        </el-col>
-      </el-row>
+      <div class="box">
+        <span class="text">班级:</span>
+        <el-select v-model="valuee" placeholder="请选择" class="sl">
+          <el-option
+            v-for="item in detail"
+            :key="item.grade_id"
+            :label="item.grade_name"
+            :value="item.grade_id"
+          ></el-option>
+        </el-select>
+      </div>
       <el-button type="primary" class="but">查询</el-button>
     </div>
     <div class="list">
-      <!-- examList.slice((currentPages-1)*pagesizes,currentPages*pagesizes) -->
       <el-table
-        :data="userLists.slice((currentPages-1)*pagesizes,currentPages*pagesizes)"
+        :data="examList ? examList.exam.slice((currentPages-1)*pagesizes,currentPages*pagesizes) : []"
         style="width: 100%"
       >
         <el-table-column label="班级" width="180">
           <template>
-            <span style="margin-left: 10px">{{grade.grade_name}}</span>
+            <span style="margin-left: 10px">{{gradeName}}</span>
           </template>
         </el-table-column>
         <el-table-column label="姓名" width="180">
@@ -59,7 +42,7 @@
         </el-table-column>
         <el-table-column label="阅卷状态">
           <template>
-            <span style="margin-left: 10px"/>
+            <span style="margin-left: 10px">{{status ? '已阅' : '未阅'}}</span>
           </template>
         </el-table-column>
         <el-table-column label="开始时间">
@@ -79,21 +62,20 @@
         </el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
-            <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">批卷</el-button>
+            <el-button size="mini" type="danger" @click="handleEdits(scope.$index, scope.row)">批卷</el-button>
           </template>
         </el-table-column>
       </el-table>
       <div class="page">
         <el-pagination
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
+          @size-change="handleSizeChanges"
+          @current-change="handleCurrentChanges"
           :current-page="currentPages"
           :page-sizes="[5, 10, 20, 40]"
           :page-size="pagesizes"
           layout="total, sizes, prev, pager, next, jumper"
-          :total="userLists.length"
+          :total="examList ? examList.exam.length : 1"
           class="nav"
-          background
         ></el-pagination>
       </div>
     </div>
@@ -101,58 +83,70 @@
 </template>
 <script>
 import { mapActions, mapState } from "vuex";
-//student_name
+
 export default {
   data() {
     return {
       currentPages: 1, //初始页
       pagesizes: 10, //    每页的数据
       userLists: [],
-      grade: ""
+      name: "",
+      grade: "",
+      grades: "",
+      valuee: "",
+      valueu: "",
+      status:0,
     };
   },
   computed: {
     // 获取到的数据
     ...mapState({
-      examList: state => state.examinations.examList.exam
+      examList: state => state.examinations.examList,
+      detail: state => state.examinations.detail.data,
+      gradeName: state=>state.examinations.gradeName
     })
   },
   created() {
-    this.grade = this.$route.query.grade;
-    console.log("sss",this.$route.query.grade);
-    // 调用获取数据接口 ，使得一进入页面就有数据
     this.getExamination({
-      grade_id: this.grade.grade_id,
-      student_id:this.grade.student_id,
-      exam_exam_id:this.grade.exam_exam_id
+      grade_id:this.$route.query.grade_id
     });
+    this.userLists = this.examList ? this.examList.exam : [];
+    console.log(this.examList, "examlist");
+    console.log("this.$route.query",this.$route.query)
+    // 调用获取数据接口 ，使得一进入页面就有数据
+    //学生列表exam_student_id
+    
+    console.log('asdfg',this.examList)
+    this.getstudentPapers();
   },
-  mounted() {
-    // 在页面打印看是否获取到值
-    console.log(this.examList, ".......");
-    this.userLists = this.examList;
-  },
+
   methods: {
+    ...mapActions({
+      // detailList: "examinations/students",
+      getExamination: "examinations/getExamination",
+      getstudentPapers: "examinations/getstudentPapers"
+    }),
     // 初始页currentPages、初始每页数据数pagesizes和数据data
-    handleSizeChange: function(size) {
+    handleSizeChanges: function(size) {
       this.pagesizes = size;
       console.log(this.pagesizes); //每页下拉显示数据
     },
-    handleCurrentChange: function(currentPages) {
+    handleCurrentChanges: function(currentPages) {
       this.currentPages = currentPages;
       console.log(this.currentPages); //点击第几页
     },
-    handleEdit(index, row) {
+    handleEdits(index, row) {
       console.log(index, row);
-      this.grades = this.userLists[index];
+      this.grades = this.examList.exam[index];
+      // let res = await this.detailList();
+      // console.log("dddd",res)
       this.$router.push({
-        path: "/paper/detail",query:{grades:this.grades}
+        path: "/paper/detail",
+        query:{grades:this.grades}
       });
     },
     // 引入store中的方法， 在页面使用
-    ...mapActions({
-      getExamination: "examinations/getExamination"
-    })
+
   }
 };
 </script>
@@ -192,7 +186,6 @@ export default {
   line-height: 30px;
   text-align: right;
   padding-right: 8px;
-  border: 1px solid #d9d9d9;
 }
 
 .page {

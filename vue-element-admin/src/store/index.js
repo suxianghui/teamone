@@ -5,8 +5,6 @@ import getters from './getters'
 import addQuestions from './modules/test/addQuestions'
 import getTypeExam from './modules/test/getTypeExam'
 import examination from './modules/examinations'
-import examDetail from './modules/examDetail'
-import examList from './modules/examList'
 
 Vue.use(Vuex)
 
@@ -28,8 +26,6 @@ const store = new Vuex.Store({
   addQuestions,
   getTypeExam,
   examination,
-  examDetail,
-  examList
 })
 
 export default store

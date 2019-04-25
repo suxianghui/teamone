@@ -21,7 +21,7 @@
             <span style="margin-left: 10px"/>
           </template>
         </el-table-column>
-        <el-table-column label="课程名称">
+        <el-table-column label="课程名称"> 
           <template slot-scope="scope">
             <span style="margin-left: 10px">{{ scope.row.subject_text }}</span>
           </template>
@@ -55,7 +55,8 @@
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
+
+import { mapActions, mapState, mapMutations } from "vuex";
 export default {
   data() {
     return {
@@ -65,36 +66,38 @@ export default {
       grade_id:"",
     };
   },
-  beforeCreate(){
-
-  },
   computed: {
     // 获取到的数据
     ...mapState({
-      detail: state => state.examDetail.detail.data
+      detail: state => state.examinations.detail.data
     })
   },
   created() {
     // 调用获取数据接口 ，使得一进入页面就有数据
     this.getexamDetail();
+    console.log('dee',this.detail)
     this.userList = this.detail;
   },
-  mounted() {
-    // 在页面打印看是否获取到值
-    // console.log(this.detail, ".......");
-  },
   methods: {
+    ...mapActions({
+      getexamDetail: "examinations/getstudentPapers",
+      getExamination: "examinations/getExamination",
+    }),
+    ...mapMutations({
+      changegradeName:"examinations/changegradeName"
+    }),
     handleEdit(index, row) {
       console.log(index, row, '......');
       this.grade = this.userList[index];
+      // let res = await this.getExamination({grade_id:this.userList[index].grade_id});
+      console.log(this.grade,'ffff')
+      this.changegradeName(this.grade.grade_name)
       this.$router.push({
-        path: "/paper/paperList",query:{grade:this.grade},
+        path: "/paper/paperList",query:{grade_id:this.grade.grade_id},
       });
     },
     // 引入store中的方法， 在页面使用
-    ...mapActions({
-      getexamDetail: "examDetail/getstudentPapers"
-    }),
+    
     // 初始页currentPage、初始每页数据数pagesize和数据data
     handleSizeChange: function(size) {
       this.pagesize = size;
