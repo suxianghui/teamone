@@ -158,6 +158,7 @@ export default {
       userName: '',//输入用户名
       userId: '',//用户id
       pwd: '',//密码
+      avatar:'',//用户头像
 
       identityId: '',//选择身份id_1
       identityId_api: '',//api接口选择身份id_2
@@ -179,9 +180,9 @@ export default {
   },
   computed: {
     ...mapState({
-      identityId_viewValue:state => state.indexUsers.identityId_viewValue,
+      // identityId_viewValue:state => state.indexUsers.identityId_viewValue,
       // //身份设置视图权限_身份id选择
-      identityId_apiValue:state => state.indexUsers.identityId_apiValue,
+      // identityId_apiValue:state => state.indexUsers.identityId_apiValue,
       // //身份设置api接口权限——身份id选择
       userIdValue:state => state.viewUsers.userIdValue,
       // //添加/更新_用户id 选择
@@ -203,7 +204,7 @@ export default {
       //身份和api权限
       identityApiAuthorityRelationsData:state => state.viewUsers.identityApiAuthorityRelationsData,
       //身份设置试图
-      identityApiAuthorityRelationsData:state => state.viewUsers.identityApiAuthorityRelationsData
+      identityViewAuthorityRelationsData:state => state.viewUsers.identityViewAuthorityRelationsData
     })
   },
   created() {
@@ -212,11 +213,11 @@ export default {
     this.setUserData()
     // console.log(this.userDatas,'55555555')
     this.setViewAuthority()
-    // console.log(this.setViewAuthority,222222)
+    // console.log(this.viewAuthoritysData,222222)
     this.setIdentityApiAuthorityRelation()
-    // console.log(this.setIdentityApiAuthorityRelation,'6666')
+    // console.log(this.identityApiAuthorityRelationsData,'试卷类型')
     this.setidentityViewAuthorityRelation()
-    // console.log(this.setidentityViewAuthorityRelation,'555555')
+    // console.log(this.identityViewAuthorityRelationsData,111111111)
   },
   methods: {
     ...mapActions({
@@ -288,13 +289,15 @@ export default {
           user_pwd: this.pwd,
           identity_id: this.identityId
         });
+        // console.log(res,7878)
+        this.hint(res);
+        // console.log(this.setUpdataUserInfo(),111)
       }
-      this.hint(res);
       //清空
-      this.userId = " ",
-      this.userName = " ",
-      this.pwd = " ",
-      this.identityId = " "
+      this.userId = '',
+      this.userName = '',
+      this.pwd = '',
+      this.identityId = ''
     },
     //添加身份
     async identity() {
@@ -309,7 +312,7 @@ export default {
       var res = await this.setAddIdentity({ identity_text: this.identityName });
       // console.log(res,'res.....')
       this.hint(res);
-      this.identityName = " "
+      this.identityName = ''
     },
     //添加 api 接口权限
     async jurisdiction(){
@@ -321,7 +324,7 @@ export default {
         })
         return false
       }
-      var res = await this.setAddAuthorityApi({ 
+      const res = await this.setAddAuthorityApi({ 
         api_authority_text: this.apiJurisdictionName,
         api_authority_url: this.apiJurisdictionUrl,
         api_authority_method: this.apiJurisdictionMethod
@@ -346,15 +349,22 @@ export default {
         api_authority_id:this.apiJurisdictionId,
       })
       this.hint(res);
-      this.identityId_api = " ",
-      this.apiJurisdictionId = " "
+      this.identityId_api = '',
+      this.apiJurisdictionId = ''
     },
     //添加视图接口权限
     async view() {
       let obj = {};
-      obj = this.existingViewValue.find((item,index)=>{
-        return item.label === this.existingView;
+      obj = this.existingViewValue.filter((item,index)=>{
+        // console.log(item,this.existingView,'shitu')
+        if(item.authority === this.existingView){
+           return item
+        }
       });
+      // console.log(this.existingViewValue,9999999999)
+      // console.log(this.existingView,'shitu') //点击添加的值
+      console.log(obj,888)
+      
       if(!this.existingView){
         this.$message({
           showClose:true,
@@ -363,13 +373,13 @@ export default {
         })
         return false;
       }
-      const res = await setAddAuthorityView({
-        view_authority_text:this.existingView,
-        view_id:obj.view_id //视图id  字符串
-      })
+      const res =await this.setAddAuthorityView({
+        view_authority_text:obj.authority,
+        view_id:obj.view_id //视图id  
+      }) 
       this.hint(res);
-      this.existingView = " ",
-      obj.view_id = " "
+      this.existingView = ''//,
+      obj.view_id = ''
     },
     //给身份设置视图权限
     async set(){
@@ -386,8 +396,8 @@ export default {
         view_authority_id:this.viewJurisdictionId
       });
       this.hint(res);
-      this.identityId_view = " ",
-      this.viewJurisdictionId = " "
+      this.identityId_view = '',
+      this.viewJurisdictionId = ''
     },
     //tab切换
     change(idx) {

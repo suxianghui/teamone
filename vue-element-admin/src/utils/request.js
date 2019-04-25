@@ -48,9 +48,9 @@ service.interceptors.response.use(//响应拦截器
     const res = response.data
     // const res = response;
     // console.log('...res',res,response);
-    if(res.code == 1){
+    // if(res.code == 1){
       return res;
-    }
+    // }
 
     // if (res.code !== 20000) {
     //   Message({

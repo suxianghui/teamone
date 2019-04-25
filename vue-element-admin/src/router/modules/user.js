@@ -22,6 +22,13 @@ const usersRouter = {
       component: () => import('@/views/user/views'),
       name: 'view',
       meta: { title: 'viewusers', noCache: true }
+    },
+    //上传头像
+    {
+      path: 'update',
+      component: () => import('@/views/user/updatepic'),
+      name: 'view',
+      meta: { title: 'updatePic', noCache: true }
     }
   ]
 }
