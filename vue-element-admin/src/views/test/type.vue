@@ -72,18 +72,20 @@ export default {
       addTestTypes:'addType/addTestType',
       delQuestion:'getpush/delQuestion'
     }),
-    addTypeStudy(){
+   async addTypeStudy(){
       this.dialogFormVisible = false
       this.addTestTypes({
         text:this.form.name,
         sort:Math.random().toString(36).substr(2)
       })
+      this.list = await this.question()
     },
-    clickTap(item){
+   async clickTap(item){
       this.dialogFormVisibles=false
       this.delQuestion({
         id:item
       })
+      this.list = await this.question()
     }
   },
   async created(){

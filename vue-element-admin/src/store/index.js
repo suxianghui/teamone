@@ -42,7 +42,6 @@ const store = new Vuex.Store({
   getTypeQuestion,
   addQuestions,
   exam,
-
   conditionalTests,
   getpush,
   updateQuestion,

@@ -32,6 +32,7 @@
 </template>
 
 <script>
+
 // import RightPanel from '@/components/RightPanel'
 import { AppMain, Sidebar, Navbar, TagsView } from './components' //  Settings,
 import ResizeMixin from './mixin/ResizeHandler'
