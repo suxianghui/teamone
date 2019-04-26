@@ -173,7 +173,7 @@ export default {
         //validate 有两个参数(boolean，object)是否校验成功和未通过校验的字段，
         //若不传入回调函数，则会返回 promise
         if (valid) {//判断校验通过
-        console.log(this.loginForm)
+        // console.log(this.loginForm)
         //loginForm里边就是 data数据，username和password
           this.loading = true //loading加载
           let res = await this.login(this.loginForm);

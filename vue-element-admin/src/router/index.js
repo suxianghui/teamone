@@ -13,7 +13,7 @@ import Layout from '@/layout'
 // import tableRouter from './modules/table'
 
 import testsRouter from './modules/test'
-import usersRouter from './modules/user'
+import usersRouter from './modules/user'//包含上传头像
 import examsRouter from './modules/exam'
 import classesRouter from './modules/class'
 import papersRouter from './modules/paper'
@@ -45,11 +45,6 @@ import papersRouter from './modules/paper'
  * all roles can be accessed
  */
 export const constantRoutes = [
-  testsRouter,
-  usersRouter,
-  examsRouter,
-  classesRouter,
-  papersRouter,
   {
     path: '/redirect',
     component: Layout,
@@ -127,6 +122,11 @@ export const constantRoutes = [
  * the routes that need to be dynamically loaded based on user roles
  */
 export const asyncRoutes = [
+  testsRouter,
+  usersRouter,
+  examsRouter,
+  classesRouter,
+  papersRouter,
   // {
   //   path: '/permission',
   //   component: Layout,
