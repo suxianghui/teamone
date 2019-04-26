@@ -45,11 +45,6 @@ import papersRouter from './modules/paper'
  * all roles can be accessed
  */
 export const constantRoutes = [
-  testsRouter,
-  usersRouter,
-  examsRouter,
-  classesRouter,
-  papersRouter,
   {
     path: '/redirect',
     component: Layout,
@@ -127,6 +122,11 @@ export const constantRoutes = [
  * the routes that need to be dynamically loaded based on user roles
  */
 export const asyncRoutes = [
+  testsRouter,
+  usersRouter,
+  examsRouter,
+  classesRouter,
+  papersRouter,
   // {
   //   path: '/permission',
   //   component: Layout,
