@@ -28,8 +28,8 @@ export default {
     })
   },
   created() {
-    console.log('this.identity_text',this.identity_text)
-    if (this.identity_text !== "管理者") {
+    // console.log('this.identity_text',this.identity_text)
+    if (this.identity_text === "管理者") {
       this.currentRole = 'editorDashboard'
     }
   }

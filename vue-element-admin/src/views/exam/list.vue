@@ -28,7 +28,8 @@
           </div>
           <!-- <div class="btnBox"> -->
           <el-button class="btn" style="width:130px;height:36px;text-align:center;margin-top:0;" type="primary" @click="searchBtn">
-            <i class="el-icon-search" /><span>查询</span>
+            <i class="el-icon-search" />
+            <span>查询</span>
           </el-button>
           <!-- </div> -->
         </div>
