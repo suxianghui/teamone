@@ -250,6 +250,7 @@ export default {
     
     //添加用户或者更新用户
     async addUsersInfo() {
+      console.log(this.userId)
       //添加用户
       if( this.idx === 0){
         //判断信息是否完整

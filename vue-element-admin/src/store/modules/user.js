@@ -1,3 +1,4 @@
+
 import { login, logout, getInfo, getViewAuthority } from '@/api/user'
 import { userData } from "@/api/exams/users"
 import { getToken, setToken, removeToken } from '@/utils/auth'
@@ -34,6 +35,9 @@ const mutations = {
   },
   SET_VIEWAUTHORITY: (state,viewAuthority) => {
     state.viewAuthority = viewAuthority
+  },
+  SET_AVATAR: (state,avatar)=> {
+    state.avatar=avatar
   }
 
 }
@@ -58,6 +62,7 @@ const actions = {
   async getInfo({ commit }, state ) {
        let data =await getInfo();
        commit('SET_USERINFO',data.data)
+       commit('SET_AVATAR',data.data.avatar);
        return data.data
   },
   // get user viewAuthority
@@ -115,6 +120,14 @@ const actions = {
 
       resolve()
     })
+  },
+
+  async changePic({commit},payload){
+    let data = await userPic(payload);
+    console.log('userpic',data)
+    let uInfo=await getInfo();
+    console.log(uInfo)
+    commit('SET_AVATAR',uInfo.data.avatar);
   }
 }
 

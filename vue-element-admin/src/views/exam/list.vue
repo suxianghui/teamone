@@ -31,30 +31,12 @@
             <i class="el-icon-search" />
             <span>查询</span>
           </el-button>
-          <!-- </div> -->
+          <el-button class="btn" 
+            style="width:130px;height:36px;text-align:center;margin-top:0;" 
+            type="primary" @click="exportExcel">
+              <i class="el-icon-search" /><span>导出Excel</span>
+          </el-button>
         </div>
-        <!-- <div class="contentBot">
-          <div class="title">
-            <span>试卷列表</span>
-            <div class="condition" @click="toggleType">
-              <span>全部</span>
-              <span>进行中</span>
-              <span>已结束</span>
-            </div>
-          </div>
-          <el-table :data="allExamList" style="width: 100%">
-            <el-table-column prop="title" label="试卷信息" width="240" />
-            <el-table-column prop="grade_name[0]" label="班级" width="200" />
-            <el-table-column prop="user_name" label="创建人" />
-            <el-table-column prop="start_time" label="开始时间" width="180" />
-            <el-table-column prop="end_time" label="结束时间" width="180" />
-            <el-table-column style="color: #0139FD;" prop="update" align="center" label="操作">
-              <template>
-                <el-button type="text" size="small" @click="goDetail()">详情</el-button>
-              </template>
-            </el-table-column>
-          </el-table>
-        </div> -->
         <div class="content">
           <div class="nav">
             <span>试卷列表</span>
@@ -235,6 +217,27 @@ export default {
     ...mapActions({
       getExamList: 'exam/getExamList'
     }),
+    // 导出Excel
+    exportExcel(){
+      // header与 data 的长度要一致,所以在此定义一个变量
+      let header = Object.keys(this.allExamList[0]);
+      // 此方法只接受数组, 所以我们取它的键值并转为字符串
+      let list = this.allExamList.map(item => {
+        let arr = Object.values(item);
+        return arr.map(val => {
+          return JSON.stringify(val)
+        })
+      });
+      console.log(list,'list')
+      import('@/vendor/Export2Excel').then(excel => {
+        excel.export_json_to_excel({
+          header: header,  // 导出文件的列名
+          data: list,
+          filename: '试卷列表',   // 导出的文件名
+          bookType: 'xlsx'   // 导出类型(xlsx, csv, xls)
+        })
+      })
+    },
     // 点击查询框
     searchBtn() {
       if(!this.examValue && !this.classValue) {
@@ -368,6 +371,7 @@ export default {
 .btn {
   width: 150px;
   margin-left: -50px;
+  margin-right:80px;
   background: blue;
 }
 .select {

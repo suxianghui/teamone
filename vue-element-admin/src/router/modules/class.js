@@ -31,15 +31,6 @@ const classesRouter = {
         noCache: true,
         view_id: 'main-student'
       }
-    }, {
-      path: 'update',
-      component: () => import('@/views/class/upload'),
-      name: 'update',
-      meta: {
-        title: 'update',
-        noCache: true,
-        view_id: 'main-student'
-      }
     }
   ]
 }

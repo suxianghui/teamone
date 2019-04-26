@@ -7,7 +7,7 @@ import { asyncRoutes, constantRoutes } from '@/router'
  */
 function hasPermission(view_ids, route) {
   if (route.meta && route.meta.view_id) {
-    return view_ids.some(item => item.meta.view_id)
+    return view_ids.some(item => item===route.meta.view_id)
   } else {
     return true
   }

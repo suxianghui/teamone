@@ -5,16 +5,16 @@
     <div class="right-menu">
       <!-- <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click"> -->
         <el-dropdown class="avatar-container right-menu-item">
-        <div class="avatar-wrapper">
 
+        <div class="avatar-wrapper">
           <img :src="userInfo.avatar" class="user-avatar">
           <span class="user_name">{{userInfo.user_name}}</span>
           <!-- 图片上传到导航     -->
           <!-- <pan-thumb :image="userInfo.avatar" />
           <span>{{userInfo.user_name}}</span> -->
           <i class="el-icon-caret-bottom" />
-
         </div>
+
         <el-dropdown-menu slot="dropdown">
           <router-link to="/">
             <el-dropdown-item>
@@ -34,7 +34,9 @@
           <el-dropdown-item divided>
             <span style="display:block;" @click="logout">{{ $t('navbar.logOut') }}</span>
           </el-dropdown-item>
+          
         </el-dropdown-menu>
+
       </el-dropdown>
 
       <el-button type="primary" icon="upload" style="position: absolute;bottom:0px;z-index: 999;width: 60px;height: 60px;border-radius: 50%;opacity: 0;" @click="imagecropperShow=true" />
@@ -50,6 +52,16 @@
         @crop-upload-success="cropSuccess"
       />
     </div>
+    <image-cropper
+    v-show="imagecropperShow"
+    :key="imagecropperKey"
+    :width="300"
+    :height="300"
+    url="http://123.206.55.50:11000/upload"
+    lang-type="en"
+    @close="close"
+    @crop-upload-success="cropSuccess"
+    />
   </div>
 </template>
 
@@ -96,8 +108,12 @@ export default {
       userInfo:state => state.user.userInfo
     })
   },
+  created(){
+  },
   methods: {
     ...mapActions({
+      getInfo:'user/getInfo',
+      changePic:'user/changePic',
       user_pic:'user/user_pic'
     }),
     toggleSideBar() {
@@ -113,9 +129,6 @@ export default {
         user_name:this.userInfo.user_name,
         avatar:e[0].path
       })
-    },
-    close(){
-      this.imagecropperShow = false
     }
   }
 }
