@@ -1,4 +1,5 @@
 import { login, logout, getInfo, getViewAuthority } from '@/api/user'
+import { userData } from "@/api/exams/users"
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import router, { resetRouter } from '@/router'
 
@@ -38,6 +39,14 @@ const mutations = {
 }
 
 const actions = {
+  //user_pic
+  async user_pic({commit},payload){
+    console.log(payload,'user_pic')
+    await userData(payload);
+    let result = await getInfo();
+    commit('SET_USERINFO',result.data)
+    return result.data;
+  },
   // user login
   async login({ commit }, userInfo) {
     const { username, password } = userInfo
