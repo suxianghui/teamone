@@ -34,7 +34,7 @@
           <el-dropdown-item divided>
             <span style="display:block;" @click="logout">{{ $t('navbar.logOut') }}</span>
           </el-dropdown-item>
-          
+
         </el-dropdown-menu>
 
       </el-dropdown>
@@ -52,16 +52,6 @@
         @crop-upload-success="cropSuccess"
       />
     </div>
-    <image-cropper
-    v-show="imagecropperShow"
-    :key="imagecropperKey"
-    :width="300"
-    :height="300"
-    url="http://123.206.55.50:11000/upload"
-    lang-type="en"
-    @close="close"
-    @crop-upload-success="cropSuccess"
-    />
   </div>
 </template>
 
@@ -129,6 +119,9 @@ export default {
         user_name:this.userInfo.user_name,
         avatar:e[0].path
       })
+    },
+    close() {
+      this.imagecropperShow = false
     }
   }
 }
