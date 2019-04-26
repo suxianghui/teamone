@@ -24,6 +24,11 @@ const examsRouter = {
       name: 'addexam',
       meta: { title: 'addExams', noCache: true }
     }, {
+      path: 'importExcel',
+      component: () => import('@/views/exam/importExcel'),
+      name: 'importExcel',
+      meta: { title: 'importExcel', noCache: true }
+    }, {
       path: 'detail',
       component: () => import('@/views/exam/detail'),
       hidden: true,
