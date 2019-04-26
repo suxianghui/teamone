@@ -147,6 +147,7 @@ export default {
     vertical-align: top;
   }
   .right-menu {
+    width:auto;
     float: right;
     height: 100%;
     line-height: 50px;
@@ -171,16 +172,15 @@ export default {
     .avatar-container {
       margin-right: 30px;
       .avatar-wrapper {
+        height: 50px;
         margin-top: 5px;
         position: relative;
         .user-avatar {
+          height: 50px;
           cursor: pointer;
           width: 40px;
           height: 40px;
-          border-radius: 10px;
-        }
-        .user_name{
-          line-height:40px;
+          border-radius: 50%;
         }
         .el-icon-caret-bottom {
           cursor: pointer;
