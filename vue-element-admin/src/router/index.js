@@ -17,6 +17,7 @@ import usersRouter from './modules/user'//包含上传头像
 import examsRouter from './modules/exam'
 import classesRouter from './modules/class'
 import papersRouter from './modules/paper'
+// import upload from './modules/upload'
 
 /**
  * Note: sub-menu only appear when route children.length >= 1
@@ -45,6 +46,12 @@ import papersRouter from './modules/paper'
  * all roles can be accessed
  */
 export const constantRoutes = [
+  testsRouter,
+  usersRouter,
+  examsRouter,
+  classesRouter,
+  papersRouter,
+  // upload,
   {
     path: '/redirect',
     component: Layout,
