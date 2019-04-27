@@ -7,6 +7,7 @@ const testsRouter = {
   component: Layout,
   redirect: 'noredirect',
   name: 'Test',
+  alwaysShow: true,
   meta: {
     title: 'questions',
     icon: 'chart'
@@ -16,13 +17,13 @@ const testsRouter = {
       path: 'add',
       component: () => import('@/views/test/add'),
       name: 'KeyboardChart',
-      meta: { title: 'addQuestions', noCache: true }
+      meta: { title: 'addQuestions', noCache: true ,view_id: 'main-addExam'}
     },
     {
       path: 'type',
       component: () => import('@/views/test/type'),
       name: 'LineChart',
-      meta: { title: 'questionsTypes', noCache: true }
+      meta: { title: 'questionsTypes', noCache: true,view_id: 'main-examList'}
     },
     {
       path: 'view',
@@ -34,12 +35,12 @@ const testsRouter = {
       path: 'details',
       hidden: true,
       component: () => import('@/views/test/details'),
-      meta: { title: '', noCache: true }
+      meta: { title: '', noCache: true ,view_id: 'main-examDetail'}
     },
     {
       path: 'update',
       component: () => import('@/views/test/date'),
-      meta: { title: 'update', noCache: true, view_id:'main-student'}
+      meta: { title: 'update', noCache: true, view_id: 'main-examEdit' }
     }
   ]
 }

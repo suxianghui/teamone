@@ -50,13 +50,13 @@ router.beforeEach(async (to, from, next) => {
           // note: roles must be a object array! such as: ['admin'] or ,['developer','editor']
           //如果没有用户信息，就去获取用户信息
           const userInfo = await store.dispatch('user/getInfo')
-
+          
           //通过用户信息，获取权限
           const viewAuthority = await store.dispatch('user/getViewAuthority')
-
+    
           //通过权限，生成路由
           const accessRoutes= await store.dispatch('permission/generateRoutes',viewAuthority)
-          
+          console.log('accessRoutes',accessRoutes)
           // 动态添加路由到路由表中
           router.addRoutes(accessRoutes)
 

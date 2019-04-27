@@ -7,6 +7,7 @@ const classesRouter = {
   component: Layout,
   redirect: 'noredirect',
   name: 'Class',
+  alwaysShow: true,
   meta: {
     title: 'classes',
     icon: 'chart'
@@ -26,20 +27,12 @@ const classesRouter = {
       path: 'student',
       component: () => import('@/views/class/student'),
       name: 'student',
-      meta: {
-        title: 'studentAdmin',
-        noCache: true,
-        view_id: 'main-student'
-      }
+      meta: { title: 'studentAdmin', noCache: true }
     }, {
       path: 'update',
       component: () => import('@/views/class/upload'),
       name: 'update',
-      meta: {
-        title: 'update',
-        noCache: true,
-        view_id: 'main-student'
-      }
+      meta: { title: 'update', noCache: true, view_id: 'main-examPaperClassmate' }
     }
   ]
 }

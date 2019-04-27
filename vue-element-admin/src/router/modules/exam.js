@@ -7,6 +7,7 @@ const examsRouter = {
   component: Layout,
   redirect: 'noredirect',
   name: 'Exam',
+  alwaysShow: true,
   meta: {
     title: 'exams',
     icon: 'chart'

@@ -107,8 +107,8 @@ export default {
     }
     return {
        loginForm: {
-        username: 'guhuilin',
-        password: 'Guhuilin123!'
+        username: 'suxianghui',
+        password: 'Suxianghui123!'
       },
       // 校验，有几个需要校验的就写几条规则,
       loginRules: {

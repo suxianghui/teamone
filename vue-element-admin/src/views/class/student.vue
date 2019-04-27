@@ -76,7 +76,7 @@
           :page-sizes="pageChose"
           :page-size="pageSize"
           layout="prev, pager, next, sizes, jumper"
-          :total="studentInfo.length>0?studentInfo.length:data.studentData.length"
+          :total="studentInfoShow?studentInfo.length:data.studentData.length"
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
         />
@@ -96,6 +96,7 @@ export default {
       roomData: [],
       classData: [],
       studentInfo: [],
+      studentInfoShow: false,
       pagenationData: [],
       pageChose: [5, 30, 50, 80, 100, 150, 200],
       pageSize: 30,
@@ -108,7 +109,8 @@ export default {
     })
   },
   async created() {
-    this.getMangerStudent()
+    await this.getMangerStudent()
+    console.log('createdstudentData',this.data.studentData.length)
     this.roomData = await this.getMangerRoom()
     this.classData = await this.getMangerGrade()
     // 进入首页默认的分页数据
@@ -124,6 +126,7 @@ export default {
     }),
     search() {
       // 按条件搜索
+      this.studentInfoShow = true;
       let result=[];
       if(this.input&&this.classValue&&this.roomValue){
         result = this.data.studentData.filter(item => {
@@ -146,6 +149,7 @@ export default {
       
     },
     reset() {
+      this.studentInfoShow = false;
       this.input = ''
       this.classValue = ''
       this.roomValue = ''
@@ -161,17 +165,18 @@ export default {
       this.changePagenation()
       // console.log(this.pagenationData)
     },
-    deleteRow(index, rows) {
+    async deleteRow(index, rows) {
       const result = this.pagenationData.find((item, ind) => {
         return index === ind
       })
       console.log('result', result)
-      this.deleteMangerStudent(result.student_id)
-      this.getMangerStudent()
+      await this.deleteMangerStudent(result.student_id)
+      await this.getMangerStudent()
+      console.log('clickstudentData',this.data.studentData.length)
       rows.splice(index, 1)
     },
     changePagenation() {
-      this.pagenationData = this.data.studentData.slice((this.current - 1) * this.pageSize, this.current * this.pageSize)
+      this.pagenationData =this.studentInfoShow?this.pagenationData.slice((this.current-1)*this.pageSize,this.current * this.pageSize): this.data.studentData.slice((this.current - 1) * this.pageSize, this.current * this.pageSize)
     }
   }
 }

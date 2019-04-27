@@ -264,6 +264,24 @@ export default {
         return 'background-color: #f4f7f9;color: #000;font-weight: 500;width:100%; height: 53px;'
       }
     },
+    //导出excel表
+    exportExcel(){
+      console.log('allExamList',this.allExamList)
+      let header = Object.keys(this.allExamList[0]);
+      let list = this.allExamList.map(item=> {
+        let arr = Object.values(item);
+        return arr.map(item=>JSON.stringify(item))
+      })
+      console.log('allExamList',list);
+      import('@/vendor/Export2Excel').then(excel=>{
+        excel.export_json_to_excel({
+          header:header,
+          data:list,
+          filename:'',
+          bookType:'xlsx'
+        })
+      })
+    },
     // 点击去详情页
     goDetail(id) {
       console.log(id, '去详情页...')
