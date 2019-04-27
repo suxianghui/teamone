@@ -85,16 +85,15 @@ export default {
   },
   created() {
     this.detailList({
-      exam_student_id: this.$route.query.grades.exam_student_id
+      exam_student_id: this.$route.query.exam_student_id
     });
-    console.log('this.$route.query.grades.exam_student_id',this.$route.query.grades.exam_student_id)
+    console.log('t.exam_student_id',this.$route.query)
     // this.grades = this.$route.query.grades;
-    this.name = this.$route.query.grades.student_name;
-    console.log("aaaa", this.list);
+    this.name = this.$route.query.student_name;
     // console.log("999", this.grades);
-    this.lists = this.list ? this.list.questions : [];
+    this.lists = this.list ? this.list && this.list.questions : [];
+    console.log("aaaa", this.lists);
     console.log("lll", this.lists);
-    
   },
   methods: {
     ...mapActions({
@@ -117,11 +116,12 @@ export default {
       this.flg = !this.flg;
       this.flgs = !this.flgs;
       this.studentspsjuan({
-        exam_student_id: this.$route.query.grades.exam_student_id,
+        exam_student_id: this.$route.query.exam_student_id,
         score: this.sliderValue
       });
     },
     hehe(){
+      console.log(this.list)
     this.$router.push({
         path: "/paper/paperList",
         query:{grade_id:this.list.grade_id}

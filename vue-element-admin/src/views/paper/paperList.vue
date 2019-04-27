@@ -27,7 +27,7 @@
     </div>
     <div class="list">
       <el-table
-        :data="examList ? examList.exam.slice((currentPages-1)*pagesizes,currentPages*pagesizes) : []"
+        :data="examList ? examList.exam && examList.exam.slice((currentPages-1)*pagesizes,currentPages*pagesizes) : []"
         style="width: 100%"
       >
         <el-table-column label="班级" width="180">
@@ -42,7 +42,7 @@
         </el-table-column>
         <el-table-column label="阅卷状态">
           <template>
-            <span style="margin-left: 10px">{{status ? '已阅' : '未阅'}}</span>
+            <span style="margin-left: 10px">未阅</span>
           </template>
         </el-table-column>
         <el-table-column label="开始时间">
@@ -74,7 +74,7 @@
           :page-sizes="[5, 10, 20, 40]"
           :page-size="pagesizes"
           layout="total, sizes, prev, pager, next, jumper"
-          :total="examList ? examList.exam.length : 1"
+          :total="examList ?examList.exam && examList.exam.length : 1"
           class="nav"
         ></el-pagination>
       </div>
@@ -82,7 +82,7 @@
   </div>
 </template>
 <script>
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapState, mapMutations } from "vuex";
 
 export default {
   data() {
@@ -115,16 +115,18 @@ export default {
     console.log("this.$route.query",this.$route.query)
     // 调用获取数据接口 ，使得一进入页面就有数据
     //学生列表exam_student_id
-    
     console.log('asdfg',this.examList)
     this.getstudentPapers();
   },
 
   methods: {
     ...mapActions({
-      // detailList: "examinations/students",
+      detailList: "examinations/students",
       getExamination: "examinations/getExamination",
       getstudentPapers: "examinations/getstudentPapers"
+    }),
+    ...mapMutations({
+      changegradeName:"examinations/changegradeName"
     }),
     // 初始页currentPages、初始每页数据数pagesizes和数据data
     handleSizeChanges: function(size) {
@@ -139,14 +141,13 @@ export default {
       console.log(index, row);
       this.grades = this.examList.exam[index];
       // let res = await this.detailList();
-      // console.log("dddd",res)
+      console.log("dddd",this.grades)
       this.$router.push({
         path: "/paper/detail",
-        query:{grades:this.grades}
+        query:{exam_student_id:this.grades.exam_student_id,student_name:this.grades.student_name}
       });
     },
     // 引入store中的方法， 在页面使用
-
   }
 };
 </script>
