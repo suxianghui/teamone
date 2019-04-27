@@ -59,9 +59,6 @@
       handleClickOutside() {
         this.$store.dispatch('app/closeSideBar', { withoutAnimation: false })
       }
-    },
-    async created(){
-      await this.generateRoutes([]);
     }
   }
   </script>

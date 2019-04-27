@@ -7,6 +7,8 @@ const classesRouter = {
   component: Layout,
   redirect: 'noredirect',
   name: 'Class',
+  alwaysShow:true,
+  hidden:false,
   meta: {
     title: 'classes',
     icon: 'chart'

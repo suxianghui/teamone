@@ -84,3 +84,11 @@ export function getTypeQuestions() {
 export let conditionalTest = params =>{
     return request.get('/exam/questions/condition',{params})
 }
+
+//更新用户信息
+export function UpdateUserInformation() {
+    return request({
+        url: '/user/user',
+        method: 'put'
+    })
+}

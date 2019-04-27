@@ -7,6 +7,8 @@ const papersRouter = {
   component: Layout,
   redirect: 'noredirect',
   name: 'Paper',
+  alwaysShow:true,
+  hidden:false,
   meta: {
     title: 'papers',
     icon: 'chart'
