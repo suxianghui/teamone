@@ -8,18 +8,16 @@ export function login(data) {
   })
 }
 
-export function getInfo() {
+export function getInfo(token) {
   return request({
     url: '/user/userInfo',
-    method: 'get'
+    method: 'get',
+    params: { token }
   })
 }
 
-export function getViewAuthority() {
-  return request({
-    url: '/user/view_authority',
-    method: 'get'
-  })
+export let getviewAuthority = params => {
+  return request.get('/user/new',{params});
 }
 
 export function logout() {
@@ -27,6 +25,16 @@ export function logout() {
     url: '/user/logout',
     method: 'post'
   })
+}
+export function user_gx(data) {
+  return request({
+    url: '/user/user',
+    method: 'put',
+    data
+  })
+}
+export let usernew = params => {
+  return request.get('/user/new',{params});
 }
 
 export function userPic(data) {
@@ -36,4 +44,3 @@ export function userPic(data) {
     data
   })
 }
-

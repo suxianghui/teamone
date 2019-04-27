@@ -108,7 +108,7 @@ const actions = {
   async setIdentityView({ commit }, payload) {
     let result = await identityView(payload);
     return result
-  },
+  }
 }
 
 export default {
