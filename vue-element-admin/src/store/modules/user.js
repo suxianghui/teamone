@@ -30,6 +30,7 @@ const mutations = {
   },
   userInfo(state,payload){
     state.userInfo = payload
+    state.avatar = payload.avatar
   },
   viewAuthority(state,payload){
     state.Authoritys = payload;
