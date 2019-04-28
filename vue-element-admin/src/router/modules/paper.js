@@ -18,13 +18,21 @@ const papersRouter = {
       path: 'await',
       component: () => import('@/views/paper/awaits'),
       name: 'await',
-      meta: { title: 'awaitClass',view_id:'main-examPaperClassList' }
+      meta: { title: 'awaitClass', noCache: true },
     },
     {
       path: 'paperList',
       component: () => import('@/views/paper/paperList'),
       name: 'await1',
-      meta: { title: '123',view_id:'main-examPaperClassmate' }
+      meta: { title: '学生列表', noCache: true },
+      hidden: true,
+    },
+    {
+      path: 'detail',
+      component: () => import('@/views/paper/detail'),
+      name: 'await1',
+      meta: { title: '批卷详情', noCache: true },
+      hidden: true,
     }
   ]
 }

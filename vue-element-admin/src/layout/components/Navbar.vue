@@ -61,7 +61,7 @@
 </template>
 
 <script>
-import { mapMutations, mapActions, mapGetters } from 'vuex'
+import { mapMutations, mapActions, mapGetters ,mapState} from 'vuex'
 import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
 import ErrorLog from '@/components/ErrorLog'
@@ -95,7 +95,10 @@ export default {
       'avatar',
       'device',
       'userInfo'
-    ])
+    ]),
+    ...mapState({
+      userInfo:state=>state.user.userInfo
+    })
   },
   created(){
     this.setAvatar(this.image)

@@ -3,146 +3,139 @@
     <h2 class="title">阅卷</h2>
     <div class="daw">
       <div class="content1">
-        <div class="box" v-for="(item,index) in List" :key="index">
+        <div class="box" v-for="(item,index) in lists" :key="index">
           <div class="oneQuestion">{{item.title}}</div>
-          <div class="question">{{item.questions_stem}}</div>
+          <div class="mark">
+            <VueMarkdown class="mdown">{{item.questions_stem}}</VueMarkdown>
+          </div>
           <div class="daanbox">
             <div class="xs">
               <span>学生答案</span>
-              <span>{{item.student_answer}}</span>
+              <VueMarkdown class="mdown">{{item.student_answer}}</VueMarkdown>
             </div>
             <div class="bz">
               <span>标准答案</span>
-              <span>{{item.questions_answer}}</span>
+              <VueMarkdown class="mdown">{{item.questions_answer}}</VueMarkdown>
             </div>
           </div>
         </div>
       </div>
-      <div class="content2"></div>
+      <div class="content2">
+        <h3>{{name}}</h3>
+        <div class="fen">
+          得分:
+          <span>{{sliderValue}}</span>
+        </div>
+        <div class="block">
+          <el-slider v-model="value1" @change="changeValue"></el-slider>
+        </div>
+        <el-button type="primary" @click="sure">确定</el-button>
+      </div>
+    </div>
+    <div class="morkbox" :class="flg ? 'action' : ''">
+      <div class="mork">
+        <i>
+          <img src="../../icons/ss.png" alt>
+        </i>
+        <p>确定提交阅卷结果？</p>
+        <span>分数值是{{sliderValue}}</span>
+        <div class="btnn">
+          <el-button @click="del">取消</el-button>
+          <el-button type="primary" @click="haha">确定</el-button>
+        </div>
+      </div>
+    </div>
+    <div class="morkbox" :class="flgs ? 'action' : ''">
+      <div class="mork">
+        <i>
+          <img src="../../icons/ll.png" alt>
+        </i>
+        <p>批卷结果</p>
+        <span>批改试卷成功 {{name}}得分{{sliderValue}}</span>
+        <div class="btnn">
+          <el-button type="primary" @click="hehe">知道了</el-button>
+        </div>
+      </div>
     </div>
   </div>
-<!-- <div class="components-container">
-    <code>Markdown is based on
-      <a href="https://github.com/nhnent/tui.editor" target="_blank">tui.editor</a> ，simply wrapped with Vue.
-      <a
-        target="_blank"
-        href="https://panjiachen.github.io/vue-element-admin-site/feature/component/markdown-editor.html"
-      >
-        Documentation </a>
-    </code>
-
-    <div class="editor-container">
-      <el-tag class="tag-title">
-        Basic:
-      </el-tag>
-      <markdown-editor v-model="content1" height="300px" />
-    </div>
-
-    <div class="editor-container">
-      <el-tag class="tag-title">
-        Markdown Mode:
-      </el-tag>
-      <markdown-editor ref="markdownEditor" v-model="content2" :options="{hideModeSwitch:true,previewStyle:'tab'}" height="200px" />
-    </div>
-
-    <div class="editor-container">
-      <el-tag class="tag-title">
-        Customize Toolbar:
-      </el-tag>
-      <markdown-editor v-model="content3" :options="{ toolbarItems: ['heading','bold','italic']}" />
-    </div>
-
-    <div class="editor-container">
-      <el-tag class="tag-title">
-        I18n:
-      </el-tag>
-      <el-alert
-        :closable="false"
-        title="You can change the language of the admin system to see the effect"
-        type="success"
-      />
-      <markdown-editor ref="markdownEditor" v-model="content4" :language="language" height="300px" />
-    </div>
-
-    <el-button style="margin-top:80px;" type="primary" icon="el-icon-document" @click="getHtml">
-      Get HTML
-    </el-button>
-    <div v-html="html" />
-  </div> -->
 </template>
 <script>
 import { mapActions, mapState } from "vuex";
-// import MarkdownEditor from '@/components/MarkdownEditor'
+import VueMarkdown from "vue-markdown";
 
 export default {
   data() {
     return {
-      // list:[]
-      // content4: content,
+      lists: [],
+      name: "",
+      flg: true,
+      flgs: true,
+      value1: 0,
+      sliderValue: 0,
+      // grades:null,
     };
   },
+  components: {
+    VueMarkdown
+  },
   computed: {
-    // language() {
-    //   return this.languageTypeList[this.$store.getters.language]
-    // },
     ...mapState({
-      List: state => state.examList.List.data.questions
+      list: state => state.examinations.List.data
     })
   },
   created() {
+    this.detailList({
+      exam_student_id: this.$route.query.exam_student_id
+    });
+    console.log('t.exam_student_id',this.$route.query)
     // this.grades = this.$route.query.grades;
-    // console.log("ddd", this.$route.query.grades);
-    this.detailList();
-    console.log("lll", this.List);
+    this.name = this.$route.query.student_name;
+    // console.log("999", this.grades);
+    this.lists = this.list ? this.list && this.list.questions : [];
+    console.log("aaaa", this.lists);
+    console.log("lll", this.lists);
   },
   methods: {
     ...mapActions({
-      detailList: "examList/students"
-    })
+      detailList: "examinations/students",
+      studentspsjuan: "examinations/studentspsjuan"
+    }),
+    sure() {
+      this.flg = !this.flg;
+      console.log(this.flg);
+    },
+    del() {
+      this.flg = !this.flg;
+      console.log(this.flg);
+    },
+    changeValue(e) {
+      console.log(e);
+      this.sliderValue = e;
+    },
+    haha() {
+      this.flg = !this.flg;
+      this.flgs = !this.flgs;
+      this.studentspsjuan({
+        exam_student_id: this.$route.query.exam_student_id,
+        score: this.sliderValue
+      });
+    },
+    hehe(){
+      console.log(this.list)
+    this.$router.push({
+        path: "/paper/paperList",
+        query:{grade_id:this.list.grade_id}
+        });
+    }
   }
 };
-// const content = `
-// **This is test**
-
-// * vue
-// * element
-// * webpack
-
-// `
-// export default {
-//   name: 'MarkdownDemo',
-//   components: { MarkdownEditor },
-//   data() {
-//     return {
-//       content1: content,
-//       content2: content,
-//       content3: content,
-//       content4: content,
-//       html: '',
-//       languageTypeList: {
-//         'en': 'en_US',
-//         'zh': 'zh_CN',
-//         'es': 'es_ES'
-//       }
-//     }
-//   },
-//   computed: {
-//     language() {
-//       return this.languageTypeList[this.$store.getters.language]
-//     }
-//   },
-//   methods: {
-//     getHtml() {
-//       this.html = this.$refs.markdownEditor.getHtml()
-//       console.log(this.html)
-//     }
-//   }
-// }
 </script>
 <style scoped>
 .wrap {
   width: 100%;
   height: auto;
+  padding: 24px;
+  box-sizing: border-box;
 }
 .title {
   padding: 20px 0px;
@@ -158,12 +151,21 @@ export default {
   display: flex;
 }
 .content1 {
-  flex: 7;
+  flex: 8;
   height: auto;
+  background: #fff;
+  padding: 24px;
+  box-sizing: border-box;
+  border-radius: 10px;
 }
 .content2 {
-  flex: 3;
-  height: auto;
+  flex: 2;
+  height: 300px;
+  background: #fff;
+  margin-left: 24px;
+  border-radius: 10px;
+  padding: 24px;
+  box-sizing: border-box;
 }
 .content1 .box {
   width: 100%;
@@ -175,19 +177,89 @@ export default {
   line-height: 4;
   color: #000;
 }
-.daanbox{
-  width:100%;
-  height:auto;
+.daanbox {
+  width: 100%;
+  height: auto;
   display: flex;
   justify-content: space-between;
 }
-.daanbox .xs{
-  flex:4.5;
-  height:auto;
+.daanbox .xs {
+  flex: 4.5;
+  height: auto;
 }
-.daanbox .bz{
-  flex:4.5;
-  height:auto;
+.daanbox .bz {
+  flex: 4.5;
+  height: auto;
+}
+.morkbox {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 1000;
+}
+.mork {
+  position: fixed;
+  top: 25%;
+  left: 50%;
+  margin-left: -222px;
+  width: 450px;
+  height: 200px;
+  background: #fff;
+  border-radius: 10px;
+}
+.mork i {
+  display: block;
+  width: 100%;
+  height: auto;
+  text-align: center;
+  padding: 30px 0 0 0;
+  box-sizing: border-box;
+}
+.mork p {
+  width: 100%;
+  text-align: center;
+  /* line-height: 33px; */
+}
+.mork span {
+  display: block;
+  text-align: center;
+  line-height: 22px;
+  color: #595959;
+  font-size: 14px;
+}
+.btnn {
+  width: 100%;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 10px 60px 0;
+  box-sizing: border-box;
+}
+.action {
+  display: none !important;
+}
+</style>
+<style>
+.mark {
+  width: 100%;
+  height: auto;
+}
+.mdown p:nth-child(1) {
+  width: 100%;
+  height: auto;
+}
+.box:nth-child(2) .mdown .language-js {
+  width: 100%;
+  height: 545px;
+  overflow: scroll;
+}
+.mdown > p > img {
+  width: 100% !important;
+  height: 100% !important;
 }
 </style>
 

@@ -25,6 +25,7 @@ export default {
       getInfo:state=>state.user.userInfo.identity_text
     })
   },
+  //根据他的身份进入不同的页面
   created() {
     console.log('adsasd',)
     if (this.getInfo==='管理员') {

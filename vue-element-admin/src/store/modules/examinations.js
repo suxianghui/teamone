@@ -1,32 +1,54 @@
-import { examination } from '@/api/examination'
+import { examination,studentPapers,studentExaminationPapers,studentpis } from '@/api/examination'
 
 const state = {
   examList:[],
-  // eaamList:[]
+  detail:[],
+  List:[],
+  gradeName:"",
 }
 
 const mutations = {
-  // List(state, payload) {
-  //   console.log('payload',payload)
-  //   state.examList = { ...state.examList, ...payload }
-  // }
+  //学生列表
   getExaminationData(state, payload) {
     state.examList = payload
+  },
+  //班级
+  getstudentPapersData(state, payload) {
+    state.detail = payload
+  },
+  //学生详情
+  getstudentData(state, payload) {
+    state.List = payload
+  },
+  changegradeName(state,payload){
+    state.gradeName = payload
   }
 }
 
 const actions = {
-  // getListData({ state }, payload) {
-  //   return new Promise(async (resolve, reject) => {
-  //     let data = await examination(payload)
-  //     console('data',data)
-  //     resolve(data.data)
-  //   })
-  // },
+  //学生列表
   async getExamination({commit}, payload){
     let result= await examination(payload)
     commit('getExaminationData', result);
     // console.log(result)
+  },
+
+  //班级列表
+  async getstudentPapers({commit}, payload){
+    let result= await studentPapers(payload)
+    console.log("getstudentPapers",result)
+      commit('getstudentPapersData', result);
+  },
+  //学生详情
+  async students({commit}, payload){
+    let result= await studentExaminationPapers(payload)
+    console.log("studentExaminationPapers",result)
+    commit('getstudentData', result);
+  },
+  // //批卷
+  async studentspsjuan({commit}, payload){
+    let result= await studentpis(payload)
+    // commit('getstudentspsjuan', result);
   }
 }
 
