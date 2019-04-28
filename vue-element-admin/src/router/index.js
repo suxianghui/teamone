@@ -11,11 +11,6 @@ import examsRouter from './modules/exam'
 import classesRouter from './modules/class'
 import papersRouter from './modules/paper'
 export const constantRoutes = [
-  testsRouter,
-  usersRouter,
-  examsRouter,
-  classesRouter,
-  papersRouter,
   // upload,
   {
     path: '/redirect',
