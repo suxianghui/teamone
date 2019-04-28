@@ -6,131 +6,179 @@
           <el-dropdown trigger="click" class="el">
             <div class="box">
               <span class="text">状态:</span>
-              <span class="el-dropdown-link sl">
-                <i class="el-icon-arrow-down el-icon--right" />
-              </span>
+              <el-select v-model="valueu" placeholder="请选择" class="sl"></el-select>
             </div>
-            <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item icon="el-icon-plus">黄金糕</el-dropdown-item>
-              <el-dropdown-item icon="el-icon-circle-plus">狮子头</el-dropdown-item>
-              <el-dropdown-item icon="el-icon-circle-plus-outline">螺蛳粉</el-dropdown-item>
-              <el-dropdown-item icon="el-icon-check">双皮奶</el-dropdown-item>
-              <el-dropdown-item icon="el-icon-circle-check-outline">蚵仔煎</el-dropdown-item>
-            </el-dropdown-menu>
+            <el-dropdown-menu slot="dropdown" class="dropdown1"></el-dropdown-menu>
           </el-dropdown>
         </el-col>
       </el-row>
-      <el-row class="block-col-2 ma">
-        <el-col :span="12">
-          <el-dropdown trigger="click" class="el">
-            <div class="box">
-              <span class="text">班级:</span>
-              <span class="el-dropdown-link sl">
-                <i class="el-icon-arrow-down el-icon--right" />
-              </span>
-            </div>
-
-            <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item icon="el-icon-plus">黄金糕</el-dropdown-item>
-              <el-dropdown-item icon="el-icon-circle-plus">狮子头</el-dropdown-item>
-              <el-dropdown-item icon="el-icon-circle-plus-outline">螺蛳粉</el-dropdown-item>
-              <el-dropdown-item icon="el-icon-check">双皮奶</el-dropdown-item>
-              <el-dropdown-item icon="el-icon-circle-check-outline">蚵仔煎</el-dropdown-item>
-            </el-dropdown-menu>
-          </el-dropdown>
-        </el-col>
-      </el-row>
+      <div class="box">
+        <span class="text">班级:</span>
+        <el-select v-model="valuee" placeholder="请选择" class="sl">
+          <el-option
+            v-for="item in detail"
+            :key="item.grade_id"
+            :label="item.grade_name"
+            :value="item.grade_id"
+          ></el-option>
+        </el-select>
+      </div>
       <el-button type="primary" class="but">查询</el-button>
     </div>
     <div class="list">
-      <el-table :data="tableData" style="width: 100%">
+      <el-table
+        :data="examList ? examList.exam && examList.exam.slice((currentPages-1)*pagesizes,currentPages*pagesizes) : []"
+        style="width: 100%"
+      >
         <el-table-column label="班级" width="180">
-          <template slot-scope="scope">
-            <span style="margin-left: 10px">{{ scope.row.date }}</span>
+          <template>
+            <span style="margin-left: 10px">{{gradeName}}</span>
           </template>
         </el-table-column>
         <el-table-column label="姓名" width="180">
           <template slot-scope="scope">
-            <span style="margin-left: 10px">{{ scope.row.date }}</span>
+            <span style="margin-left: 10px">{{ scope.row.student_name }}</span>
           </template>
         </el-table-column>
         <el-table-column label="阅卷状态">
           <template>
-            <span style="margin-left: 10px" />
+            <span style="margin-left: 10px">未阅</span>
           </template>
         </el-table-column>
         <el-table-column label="开始时间">
           <template slot-scope="scope">
-            <span style="margin-left: 10px">{{ scope.row.date }}</span>
+            <span style="margin-left: 10px">{{ scope.row.start_time }}</span>
           </template>
         </el-table-column>
         <el-table-column label="结束时间">
           <template slot-scope="scope">
-            <span style="margin-left: 10px">{{ scope.row.date }}</span>
+            <span style="margin-left: 10px">{{ scope.row.end_time }}</span>
           </template>
         </el-table-column>
         <el-table-column label="成材率">
           <template slot-scope="scope">
-            <span style="margin-left: 10px">{{ scope.row.date }}</span>
+            <span style="margin-left: 10px">{{ scope.row.name }}</span>
           </template>
         </el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
-            <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">批卷</el-button>
+            <el-button size="mini" type="danger" @click="handleEdits(scope.$index, scope.row)">批卷</el-button>
           </template>
         </el-table-column>
       </el-table>
-      <el-pagination class="page" background layout="prev, pager, next" :total="1000" />
+      <div class="page">
+        <el-pagination
+          @size-change="handleSizeChanges"
+          @current-change="handleCurrentChanges"
+          :current-page="currentPages"
+          :page-sizes="[5, 10, 20, 40]"
+          :page-size="pagesizes"
+          layout="total, sizes, prev, pager, next, jumper"
+          :total="examList ?examList.exam && examList.exam.length : 1"
+          class="nav"
+        ></el-pagination>
+      </div>
     </div>
   </div>
 </template>
 <script>
+import { mapActions, mapState, mapMutations } from "vuex";
+
 export default {
   data() {
     return {
-      tableData: [
-        {
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        },
-        {
-          date: '2016-05-04',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1517 弄'
-        },
-        {
-          date: '2016-05-01',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1519 弄'
-        },
-        {
-          date: '2016-05-03',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1516 弄'
-        }
-      ]
-    }
+      currentPages: 1, //初始页
+      pagesizes: 10, //    每页的数据
+      userLists: [],
+      name: "",
+      grade: "",
+      grades: "",
+      valuee: "",
+      valueu: "",
+      status:0,
+    };
+  },
+  computed: {
+    // 获取到的数据
+    ...mapState({
+      examList: state => state.examinations.examList,
+      detail: state => state.examinations.detail.data,
+      gradeName: state=>state.examinations.gradeName
+    })
+  },
+  created() {
+    this.getExamination({
+      grade_id:this.$route.query.grade_id
+    });
+    this.userLists = this.examList ? this.examList.exam : [];
+    console.log(this.examList, "examlist");
+    console.log("this.$route.query",this.$route.query)
+    // 调用获取数据接口 ，使得一进入页面就有数据
+    //学生列表exam_student_id
+    console.log('asdfg',this.examList)
+    this.getstudentPapers();
+  },
+
+  methods: {
+    ...mapActions({
+      detailList: "examinations/students",
+      getExamination: "examinations/getExamination",
+      getstudentPapers: "examinations/getstudentPapers"
+    }),
+    ...mapMutations({
+      changegradeName:"examinations/changegradeName"
+    }),
+    // 初始页currentPages、初始每页数据数pagesizes和数据data
+    handleSizeChanges: function(size) {
+      this.pagesizes = size;
+      console.log(this.pagesizes); //每页下拉显示数据
+    },
+    handleCurrentChanges: function(currentPages) {
+      this.currentPages = currentPages;
+      console.log(this.currentPages); //点击第几页
+    },
+    handleEdits(index, row) {
+      console.log(index, row);
+      this.grades = this.examList.exam[index];
+      // let res = await this.detailList();
+      console.log("dddd",this.grades)
+      this.$router.push({
+        path: "/paper/detail",
+        query:{exam_student_id:this.grades.exam_student_id,student_name:this.grades.student_name}
+      });
+    },
+    // 引入store中的方法， 在页面使用
   }
-}
+};
 </script>
-<style>
-.search{
-  width:100%;
-  height:121px;
+<style scoped>
+.wrap {
+  width: 100%;
+  height: auto;
+  padding: 0px 24px 24px;
+  box-sizing: border-box;
+}
+.search {
+  width: 100%;
+  height: 121px;
   display: flex;
   align-items: center;
 }
-.ma{
-  margin-left: 80px;
+.list {
+  width: 100%;
+  height: auto;
+  padding: 24px;
+  box-sizing: border-box;
+  background: #ffffff;
+  border-radius: 10px;
 }
-.box{
+.box {
   display: flex;
   align-items: center;
-  margin-bottom: 30px;
+  /* margin-bottom: 30px; */
 }
-.text{
-  width:40px;
+.text {
+  width: 40px;
 }
 .sl {
   display: inline-block;
@@ -139,13 +187,28 @@ export default {
   line-height: 30px;
   text-align: right;
   padding-right: 8px;
-  border: 1px solid #d9d9d9;
 }
-.but{
-  margin-left: 80px;
-  margin-bottom: 30px;
-}
-.page{
-  margin: right;
+
+.page {
+  width: 100%;
+  height: auto;
+  background: #fff;
+  padding: 16px 10px 24px;
 }
 </style>
+<style>
+.ma {
+  margin-left: 80px;
+}
+.but {
+  margin-left: 80px;
+  /* margin-bottom: 30px; */
+}
+.nav {
+  float: right;
+}
+.dropdown1 {
+  width: 200px;
+}
+</style>
+

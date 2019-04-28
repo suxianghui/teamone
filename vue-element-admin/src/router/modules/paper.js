@@ -7,6 +7,8 @@ const papersRouter = {
   component: Layout,
   redirect: 'noredirect',
   name: 'Paper',
+  alwaysShow:true,
+  hidden:false,
   meta: {
     title: 'papers',
     icon: 'chart'
@@ -16,13 +18,21 @@ const papersRouter = {
       path: 'await',
       component: () => import('@/views/paper/awaits'),
       name: 'await',
-      meta: { title: 'awaitClass' }
+      meta: { title: 'awaitClass', noCache: true },
     },
     {
-      path: 'await1',
+      path: 'paperList',
       component: () => import('@/views/paper/paperList'),
       name: 'await1',
-      meta: { title: '123' }
+      meta: { title: '学生列表', noCache: true },
+      hidden: true,
+    },
+    {
+      path: 'detail',
+      component: () => import('@/views/paper/detail'),
+      name: 'await1',
+      meta: { title: '批卷详情', noCache: true },
+      hidden: true,
     }
   ]
 }

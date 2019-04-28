@@ -3,6 +3,8 @@ import Vuex from 'vuex'
 import getters from './getters'
 // import createLogger from "vuex/dist/logger"
 
+
+import examination from './modules/examinations'
 // import createLogger from 'vuex/dist/logger'
 
 import exam from './modules/exam'
@@ -24,7 +26,6 @@ Vue.use(Vuex)
 
 // https://webpack.js.org/guides/dependency-management/#requirecontext
 const modulesFiles = require.context('./modules', false, /\.js$/)
-
 // you do not need `import app from './modules/app'`
 // it will auto require all vuex module from modules file
 const modules = modulesFiles.keys().reduce((modules, modulePath) => {
@@ -38,11 +39,11 @@ const modules = modulesFiles.keys().reduce((modules, modulePath) => {
 const store = new Vuex.Store({
   getters,
   getTypeExam,
+  examination,
   gettingLesson,
   getTypeQuestion,
   addQuestions,
   exam,
-
   conditionalTests,
   getpush,
   updateQuestion,
@@ -54,7 +55,7 @@ const store = new Vuex.Store({
     ...modules,
     indexUsers,
     viewUsers,
-  }
+  },
   // plugins:[createLogger()]
 })
 

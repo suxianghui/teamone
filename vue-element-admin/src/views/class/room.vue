@@ -60,7 +60,7 @@ export default {
       },
       rules: {
         roomName: [
-          { required: true, message: '请选择教室号', trigger: 'change' }
+          { required: true, message: '请输入教室号', trigger: 'change' }
         ]
       }
     }
@@ -84,12 +84,12 @@ export default {
     },
     // 确认添加教室数据
     submitForm(formName) {
-      this.$refs[formName].validate((valid) => {
+      this.$refs[formName].validate(async (valid) => {
         if (valid) {
-          console.log('valid', this.ruleForm)
-          this.AddmangerRoom(this.ruleForm)
-          this.getMangerRoom()
+          // console.log('valid', this.ruleForm)
+          await this.AddmangerRoom(this.ruleForm)
           this.diaIsshow = !this.diaIsshow
+          this.getMangerRoom()
         } else {
           console.log('error submit!!')
           return false
@@ -103,11 +103,6 @@ export default {
       })
       this.DeletemangerRoom({ room_id: result.room_id })
       rows.splice(index, 1)
-    },
-    // 编辑教室
-    updateClick(e) {
-      this.diaIsshow = !this.diaIsshow
-      console.log(e)
     },
     // 关闭弹窗
     cancelFn() {
@@ -131,7 +126,6 @@ h2 {
 }
 .main {
   width: 100%;
-  height: 863px;
   padding: 24px;
   box-sizing: border-box;
   margin: 0 0 20px;

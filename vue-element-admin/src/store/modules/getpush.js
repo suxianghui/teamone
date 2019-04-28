@@ -1,4 +1,4 @@
-import {gettingQuestions ,deleteQuestions} from '@/api/test.js'
+import {gettingQuestions , deleteQuestions , UpdateUserInformation} from '@/api/test.js'
 
 const state={
   list:{}
@@ -17,8 +17,15 @@ const actions={
   },
   delQuestion({commit,state},payload){
     return new Promise(async (resolve,reject)=>{
-      console.log(payload)
       let data = await deleteQuestions(payload)
+      resolve(data)
+    })
+  },
+  UpdateUserInfor({commit,state},payload){
+    return new Promise(async (resolve,reject)=>{
+      console.log(payload)
+      let data = await UpdateUserInformation(payload)
+      console.log(data)
       resolve(data)
     })
   }
