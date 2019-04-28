@@ -53,7 +53,6 @@ router.beforeEach(async (to, from, next) => {
           
           //通过用户信息，获取权限
           const viewAuthority = await store.dispatch('user/getViewAuthority')
-
           //通过权限，生成路由
           const accessRoutes= await store.dispatch('permission/generateRoutes',viewAuthority)
           

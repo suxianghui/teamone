@@ -45,7 +45,7 @@ const mutations = {
 const actions = {
   //user_pic
   async user_pic({commit},payload){
-    console.log(payload,'user_pic')
+    // console.log(payload,'user_pic')
     await userData(payload);
     let result = await getInfo();
     commit('SET_USERINFO',result.data)
@@ -66,9 +66,9 @@ const actions = {
        return data.data
   },
   // get user viewAuthority
-  async getViewAuthority({commit}){
+  async getViewAuthority({commit},payload){
     let data = await getViewAuthority();
-    console.log('userAuthority',data)
+    console.log('userAuthority', data)
     if(data.code == 1) {
       commit('SET_VIEWAUTHORITY',data.data)
       return data.data
