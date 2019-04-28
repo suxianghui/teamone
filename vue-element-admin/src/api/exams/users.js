@@ -31,7 +31,7 @@ export function addIdentity (data) {
 
 // 添加 api 接口权限
 export function addAuthorityApi (data) {
-  console.log(data,'111111111')
+  // console.log(data,'111111111')
   return request({
     url: '/user/authorityApi/edit',
     method: 'get',

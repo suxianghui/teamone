@@ -109,6 +109,7 @@ export default {
     })
   },
   async created() {
+    this.loading;
     await this.getMangerStudent()
     console.log('createdstudentData',this.data.studentData.length)
     this.roomData = await this.getMangerRoom()

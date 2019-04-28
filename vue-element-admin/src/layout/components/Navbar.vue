@@ -98,14 +98,14 @@ export default {
     ])
   },
   created(){
-    this.setAvatar(this.image)
+    // this.setAvatar(this.image)
     this.getInfo()
-    console.log('avatar',this.avatar)
+    // console.log('avatar111',this.userInfo)
   },
   methods: {
-    ...mapMutations({
-      setAvatar:'user/SET_AVATAR',
-    }),
+    // ...mapMutations({
+    //   setAvatar:'user/SET_AVATAR',
+    // }),
     ...mapActions({
       getInfo:'user/getInfo',
       changePic:'user/changePic'
@@ -124,7 +124,9 @@ export default {
         user_id:this.userInfo.user_id,
         avatar:this.image
       })
+      this.getInfo()
       this.imagecropperShow = false
+
     },
     close() {
       this.imagecropperShow = false

@@ -7,7 +7,8 @@ const papersRouter = {
   component: Layout,
   redirect: 'noredirect',
   name: 'Paper',
-  alwaysShow: true,
+  alwaysShow:true,
+  hidden:false,
   meta: {
     title: 'papers',
     icon: 'chart'
@@ -17,13 +18,13 @@ const papersRouter = {
       path: 'await',
       component: () => import('@/views/paper/awaits'),
       name: 'await',
-      meta: { title: 'awaitClass' }
+      meta: { title: 'awaitClass',view_id:'main-examPaperClassList' }
     },
     {
-      path: 'await1',
+      path: 'paperList',
       component: () => import('@/views/paper/paperList'),
       name: 'await1',
-      meta: { title: '123' }
+      meta: { title: '123',view_id:'main-examPaperClassmate' }
     }
   ]
 }

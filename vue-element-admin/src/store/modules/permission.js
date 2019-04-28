@@ -9,11 +9,7 @@ import { asyncRoutes, constantRoutes } from '@/router'
 function hasPermission(view_ids, route) {
   // console.log('iii',view_ids,'oo',route.meta.view_id)
   if (route.meta && route.meta.view_id) {
-    let flag = view_ids.some(item=>{
-      return item === route.meta.view_id
-    })
-    return flag
-    // return view_ids.some(item =>item === route.meta.view_id)
+    return view_ids.some(item => item===route.meta.view_id)
   } else {
     // console.log(80)
     return true

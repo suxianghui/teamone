@@ -40,9 +40,9 @@
             auto-complete="on"
             @keyup.enter.native="handleLogin"
           />
-          <!-- <span class="show-pwd" @click="showPwd">
+          <span class="show-pwd" @click="showPwd">
             <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
-          </span> -->
+          </span>
         </el-form-item>
       </el-tooltip>
 <!-- 登录按钮 -->
@@ -107,8 +107,8 @@ export default {
     }
     return {
        loginForm: {
-        username: 'suxianghui',
-        password: 'Suxianghui123!'
+        username: 'chenmanjie',
+        password: 'Chenmanjie123!'
       },
       // 校验，有几个需要校验的就写几条规则,
       loginRules: {
@@ -173,7 +173,7 @@ export default {
         //validate 有两个参数(boolean，object)是否校验成功和未通过校验的字段，
         //若不传入回调函数，则会返回 promise
         if (valid) {//判断校验通过
-        console.log(this.loginForm)
+        // console.log(this.loginForm)
         //loginForm里边就是 data数据，username和password
           this.loading = true //loading加载
           let res = await this.login(this.loginForm);
@@ -197,24 +197,6 @@ export default {
         }
       })
     }
-    // afterQRScan() {
-    //   if (e.key === 'x-admin-oauth-code') {
-    //     const code = getQueryObject(e.newValue)
-    //     const codeMap = {
-    //       wechat: 'code',
-    //       tencent: 'code'
-    //     }
-    //     const type = codeMap[this.auth_type]
-    //     const codeName = code[type]
-    //     if (codeName) {
-    //       this.$store.dispatch('LoginByThirdparty', codeName).then(() => {
-    //         this.$router.push({ path: this.redirect || '/' })
-    //       })
-    //     } else {
-    //       alert('第三方登录失败')
-    //     }
-    //   }
-    // }
   }
 }
 </script>
