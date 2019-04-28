@@ -5,10 +5,13 @@ import { asyncRoutes, constantRoutes } from '@/router'
  * @param view_id
  * @param route
  */
+
 function hasPermission(view_ids, route) {
+  // console.log('iii',view_ids,'oo',route.meta.view_id)
   if (route.meta && route.meta.view_id) {
     return view_ids.some(item => item===route.meta.view_id)
   } else {
+    // console.log(80)
     return true
   }
 }
@@ -20,9 +23,10 @@ function hasPermission(view_ids, route) {
  */
 export function filterAsyncRoutes(routes, view_id) {
   const res = []
-
+  
   routes.forEach(route => {
     const tmp = { ...route }
+    // console.log('has',hasPermission(view_id, tmp))
     if (hasPermission(view_id, tmp)) {
       if (tmp.children) {
         tmp.children = filterAsyncRoutes(tmp.children, view_id)

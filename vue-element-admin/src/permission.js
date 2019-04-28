@@ -44,9 +44,21 @@ router.beforeEach(async (to, from, next) => {
         try {
           //如果没有用户信息，就去获取用户信息
           const userInfo = await store.dispatch('user/getInfo')
+          
+          //通过用户信息，获取权限
           const getViewAuthority = await store.dispatch('user/getViewAuthoritys',userInfo.user_id)
-          const generateRoutes = await store.dispatch('permission/generateRoutes',getViewAuthority)
+    
+          //通过权限，生成路由
+          const generateRoutes= await store.dispatch('permission/generateRoutes',getViewAuthority)
+          console.log('accessRoutes',generateRoutes)
+          // 动态添加路由到路由表中
           router.addRoutes(generateRoutes)
+
+          // hack method to ensure that addRoutes is complete
+          // set the replace: true, so the navigation will not leave a history record
+          // const getViewAuthority = await store.dispatch('user/getViewAuthoritys',userInfo.user_id)
+          // const generateRoutes = await store.dispatch('permission/generateRoutes',getViewAuthority)
+          // router.addRoutes(generateRoutes)
           next({ ...to, replace: true })
         } catch (error) {
           // remove token and go to login page to re-login

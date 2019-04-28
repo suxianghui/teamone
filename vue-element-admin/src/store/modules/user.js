@@ -72,10 +72,10 @@ const actions = {
 
   async changePic({commit},payload){
     let data = await userPic(payload);
-    console.log('userpic',data)
-    let uInfo=await getInfo();
-    console.log(uInfo)
-    commit('SET_AVATAR',uInfo.data.avatar);
+    // console.log('userpic',data)
+    // let uInfo=await getInfo();
+    // console.log(uInfo)
+    commit('SET_AVATAR',payload.avatar);
   },
 
   // user logout
