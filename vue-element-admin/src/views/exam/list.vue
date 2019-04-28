@@ -205,7 +205,7 @@ export default {
   created() {
     this.getExamList()
     timeFormat()
-    this.alllist = this.allExamList;
+    this.alllist = this.allExamList || [];
   },
 
   computed: {

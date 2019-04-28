@@ -1,5 +1,5 @@
 import { examType, examSubject, submitExam, deleteExam, renewal, examList, detailData, allQuestion } from "../../api/exam";
-
+import moment from 'moment'
 
 const state = {
   submitExamTest: '',
@@ -27,7 +27,19 @@ const mutations = {
   //   state.getCreateExam = { ...payload };
   // },
   listAll(state, payload) {
-    state.allExamList = payload;
+    payload.forEach(element => {
+      element.start_time = moment(element.start_time * 1).format('YYYY-MM-DD HH:mm')
+      element.end_time = moment(element.end_time * 1).format('YYYY-MM-DD HH:mm')
+    });
+    state.allExamList = payload
+    // state.allExamList = payload.allExamList;
+    // payload.allExamList.forEach((item, ind) => {
+    //   state.allExamList.forEach((x,k) => {
+    //     x.start_time = moment(x.start_time * 1).format('YYYY-MM-DD HH:mm');
+    //     x.end_time = moment(x.end_time * 1).format('YYYY-MM-DD HH:mm');
+    //   })
+    // })
+    // state.allExamList = payload.allExamList
   },
 }
 
@@ -66,7 +78,7 @@ const actions = {
   // 查询所有的数据
   async getExamList({ commit }, payload) {                 ////
     let res = await examList();
-    commit('updateState', { allExamList: res.exam });
+    commit('listAll', res.exam );
     return res;
   },
 
