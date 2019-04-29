@@ -22,25 +22,6 @@ const mutations = {
   allExamSubject(state, payload) {
     state.allExamSubjects = payload;
   },
-  // createExam(state, payload){
-  //   // console.log(payload,'.....')
-  //   state.getCreateExam = { ...payload };
-  // },
-  listAll(state, payload) {
-    payload.forEach(element => {
-      element.start_time = moment(element.start_time * 1).format('YYYY-MM-DD HH:mm')
-      element.end_time = moment(element.end_time * 1).format('YYYY-MM-DD HH:mm')
-    });
-    state.allExamList = payload
-    // state.allExamList = payload.allExamList;
-    // payload.allExamList.forEach((item, ind) => {
-    //   state.allExamList.forEach((x,k) => {
-    //     x.start_time = moment(x.start_time * 1).format('YYYY-MM-DD HH:mm');
-    //     x.end_time = moment(x.end_time * 1).format('YYYY-MM-DD HH:mm');
-    //   })
-    // })
-    // state.allExamList = payload.allExamList
-  },
 }
 
 const actions = {
@@ -74,11 +55,15 @@ const actions = {
     let res = await renewal(payload.header, payload.data)
     return res
   },
-  
+
   // 查询所有的数据
-  async getExamList({ commit }, payload) {                 ////
-    let res = await examList();
-    commit('listAll', res.exam );
+  async getList({ commit }, payload) {
+    const res = await examList(payload)
+    res.exam.forEach(item => {
+      item['start_time'] = moment(item.start_time * 1).format('YYYY-MM-DD h:mm:ss')
+      item['end_time'] = moment(item.end_time * 1).format('YYYY-MM-DD h:mm:ss')
+    })
+    commit('updateState', { allExamList: res.exam });
     return res;
   },
 

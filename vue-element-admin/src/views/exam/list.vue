@@ -8,10 +8,10 @@
             <p>考试类型:</p>
             <el-select v-model="examValue" placeholder>
               <el-option
-                v-for="item in examOptions"
+                v-for="item in allExamTypes"
                 :key="item.value"
-                :label="item.label"
-                :value="item.label"
+                :label="item.exam_name"
+                :value="item.exam_id"
               />
             </el-select>
           </div>
@@ -19,10 +19,10 @@
             <p>课程:</p>
             <el-select v-model="classValue" placeholder>
               <el-option
-                v-for="item in classOptions"
+                v-for="item in allExamSubjects"
                 :key="item.value"
-                :label="item.label"
-                :value="item.label"
+                :label="item.subject_text"
+                :value="item.subject_id"
               />
             </el-select>
           </div>
@@ -101,61 +101,6 @@ export default {
       changeClass: 0,
       examValue: '',
       classValue: '',
-      examOptions: [{
-        value: '选项1',
-        label: '周考1'
-      }, {
-        value: '选项2',
-        label: '周考2'
-      }, {
-        value: '选项3',
-        label: '周考3'
-      }, {
-        value: '选项4',
-        label: '月考'
-      }],
-      classOptions: [
-        {
-          value: '选项1',
-          label: 'javaScript上'
-        },
-        {
-          value: '选项2',
-          label: 'javaScript下'
-        },
-        {
-          value: '选项3',
-          label: '模块化开发'
-        },
-        {
-          value: '选项4',
-          label: '移动端开发'
-        },
-        {
-          value: '选项5',
-          label: 'node基础'
-        },
-        {
-          value: '选项6',
-          label: '组件化开发(vue)'
-        },
-        {
-          value: '选项7',
-          label: '渐进式开发(react)'
-        },
-        {
-          value: '选项8',
-          label: '项目实战'
-        },
-        {
-          value: '选项9',
-          label: 'javaScript高级'
-        },
-        {
-          value: '选项10',
-          label: 'node高级'
-        }
-      ],
       value: '',
       tableData: [
         {
@@ -203,20 +148,25 @@ export default {
   },
 
   created() {
-    this.getExamList()
-    timeFormat()
+    this.getExamType();
+    this.getExamSubject();
+    this.getList()
     this.alllist = this.allExamList || [];
   },
 
   computed: {
     ...mapState({
+      allExamTypes: state => state.exam.allExamTypes,
+      allExamSubjects: state => state.exam.allExamSubjects,
       allExamList: state => state.exam.allExamList
-    }),
+    })
   },
 
   methods: {
     ...mapActions({
-      getExamList: 'exam/getExamList'
+      getExamType: 'exam/getExamType',
+      getExamSubject: 'exam/getExamSubject',
+      getList: 'exam/getList'
     }),
     // 导出Excel
     exportExcel(){
@@ -319,7 +269,6 @@ export default {
 .wrapper {
   margin-top:66px;
   width: 100%;
-  height: 1150px;
   background: #f0f2f5;
   display: flex;
   flex-direction: column;
