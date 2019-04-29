@@ -4,19 +4,16 @@
         <p class="text">添加考试</p>
         <div class="list">
           <div class="content">
-            <div class="style_questionitem__3ETlC" v-for="(item,index) in this.detailDatas.questions" :key="index">
+            <div class="markdown" v-for="(item,index) in this.detailDatas.questions" :key="index">
+              <h4>{{ index+1 }}、{{ item.questions_type_text }}</h4>
+              <VueMarkdown :source="item.questions_stem" ></VueMarkdown>
               <h4>{{index+1}}、{{item.questions_type_text}}</h4>
-              <div class="markdown">
-                <pre>{{item.questions_stem}}</pre>
-              </div>
             </div>
           </div>
           <div class="content">
-            <div class="style_questionitem__3ETlC" v-for="(item,index) in this.detailDatas.questions" :key="index">
-              <h4>{{index+1}}、答案:</h4>
-              <div class="markdown">
-                <pre>{{item.questions_answer}}</pre>
-              </div>
+            <div class="markdown" v-for="(item,index) in this.detailDatas.questions" :key="index">
+              <h4>{{ index+1 }}、{{ item.questions_type_text }}</h4>
+              <VueMarkdown :source="item.questions_answer" ></VueMarkdown>
             </div>
           </div>
         </div>
@@ -26,11 +23,10 @@
 
 <script>
 import { mapActions, mapState } from 'vuex'
+import VueMarkdown from 'vue-markdown'
 export default {
-  data() {
-    return {
-      
-    }
+  components:{
+    VueMarkdown
   },
   computed: {
     ...mapState({
@@ -51,6 +47,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  .content/deep/code {
+    white-space:normal;
+    word-break:break-all;
+  }
+  .content/deep/.markdown {
+    white-space:normal;
+    word-break:break-all;
+  }
   p {
     line-height: 0;
     padding-bottom: 20px;
