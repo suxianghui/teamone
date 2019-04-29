@@ -39,15 +39,7 @@
         </div>
       </div>
       <div class="btn">
-        <el-button type="primary" class="btn" @click="dialogFormVisible = true">提交</el-button>
-        <el-dialog title="添加类型" class="tan" :visible.sync="dialogFormVisible">
-            <p>{{modificationAdds}}</p>
-            <p>{{Addmodifications}}</p>
-          <div slot="footer" class="dialog-footer">
-            <el-button @click="dialogFormVisible = false">取 消</el-button>
-            <el-button type="primary" @click="bindtap">确 定</el-button>
-          </div>
-        </el-dialog>
+        <el-button class="clickBtn" type="text" @click="open">提交</el-button>
       </div>
     </div>
   </div>
@@ -81,8 +73,15 @@
         modificationAdds:'您确定要添加这道试题吗？',
         Addmodifications:'真的要添加吗？',
         arr:[],
-        quesId:''
+        quesId:'',
+        Elasticframe:''
       }
+    },
+    computed:{
+      ...mapState({
+        frame:state => state.addQuestions.list,
+        update:state => state.updateQuestion.list
+      })
     },
     methods: {
       ...mapActions({
@@ -106,11 +105,27 @@
       questions(e) {
         this.questions_type_id = e;
       },
-      bindtap() {
-        this.dialogFormVisible = false;
-        if (this.title == '' && this.questions_stem == '' && this.exam_id == '' && this.subject_id == '' && this.questions_type_id == '' && this.questions_answer == '' && this.user_id == '') {
-            alert('缺少参数')
-        } else {
+      open() {
+        this.$confirm(this.Addmodifications,this.modificationAdds , {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning',
+          center: true
+        }).then(() => {
+          this.bindtap()
+          this.$message({
+            type: 'success',
+            message: this.Elasticframe
+          });
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消'
+          });
+        });
+      },
+      bindtap:function() {
+        if (this.title !== '' && this.questions_stem !== '' && this.exam_id !== '' && this.subject_id !== '' && this.questions_type_id !== '' && this.questions_answer !== '' && this.user_id !== '') {
           if (this.checktitles ==='添加试题') {
             this.clickaddQuestions({
               title: this.title,
@@ -121,6 +136,7 @@
               questions_answer: this.questions_answer,
               user_id: this.user_id
             })
+            this.Elasticframe = this.frame
           } else{
             this.QuestionStudy({
               questions_id: this.questions_id,
@@ -131,7 +147,10 @@
               questions_type_id: this.questions_type_id,
               exam_id: this.exam_id
             })
+            this.Elasticframe = this.update
           } 
+        }else{
+          this.Elasticframe = '缺少参数'
         }
       }
     },
@@ -236,6 +255,14 @@
   }
 
   .btn {
+    width: 80px;
+    height: 40px;
     margin: 20px;
+  }
+  .clickBtn{
+    width: 80px;
+    height: 40px;
+    background: rgb(96, 199, 240);
+    color:white;
   }
 </style>

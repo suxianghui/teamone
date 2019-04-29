@@ -33,7 +33,7 @@ module.exports = {
     //跨域代理  vuecli3.0 webpack配置
     proxy: {
       '/api': {
-        target: `http://169.254.18.69:7001/`,
+        target: `http://169.254.111.27:7001`,
         changeOrigin: true,
         pathRewrite: {
           '/api': ''

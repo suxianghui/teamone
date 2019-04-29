@@ -2,13 +2,16 @@
   <div class="box">
     <div class="tittle">查看试题</div>
     <div class="topbox">
+      <div class="toplittle">
       <div class="curriculumtype">
-        <span>课程类型: </span>
-        <span :class="isTrue?'all backblue':'all'" @click="tapAll">All</span>
         <div style="display: inline-block" v-if="isTrue===false">
+          <span>课程类型: </span>
+          <span :class="isTrue?'all backblue':'all'" @click="tapAll">All</span>
           <span v-for="(item,index) in currtype" :key="index" :class="clickindex==index?'currsps backblue':'currsps'" @click="bindtap(item,index)">{{ item.subject_text }}</span>
         </div>
         <div style="display: inline-block" v-if="isTrue">
+          <span>课程类型: </span>
+          <span :class="isTrue?'all backblue':'all'" @click="tapAll">All</span>
           <span v-for="(item,index) in currtype" :key="index" class="currsps backblue" @click="bindtap(item,index)">{{ item.subject_text }}</span>
         </div>
       </div>
@@ -26,10 +29,11 @@
             />
           </el-select>
         </div>
-        <div>
+        <div class="select">
           <el-button type="primary" class="btn" icon="el-icon-search" @click="clicktap">查询</el-button>
         </div>
       </div>
+    </div>
     </div>
     <div class="bottombox">
       <div class="bottomlittle">
@@ -58,7 +62,7 @@
 </template>
 
 <script>
-  import { mapActions,mapMutations } from 'vuex'
+  import { mapActions, mapMutations } from 'vuex'
   export default {
     data() {
       return {
@@ -101,25 +105,32 @@
         this.isTrue = !this.isTrue
       },
       async clicktap() {
-        this.options = await this.conditionals({
+        let data={}
+        let obj={
           questions_type_id: this.subjectid,
           subject_id: this.currTypes,
           exam_id: this.examid
-        })
+        }
+        for(var i in obj){
+          if(obj[i]){
+            data[i]=obj[i]
+          }
+        }
+        this.options = await this.conditionals(data)
       },
       DetailedRouting(e, item) {
         if (e.target.tagName == 'I') {
           this.$router.push({
             path: '/test/add',
-            query:{
-             id: item.questions_id
+            query: {
+              id: item.questions_id
             }
           })
-        }else{
+        } else {
           this.$router.push({
             path: '/test/details',
-            query:{
-             id: item.questions_id
+            query: {
+              id: item.questions_id
             }
           })
         }
@@ -151,7 +162,6 @@
 
   .topbox {
     width: 95%;
-    height: 184px;
     background: white;
     border-radius: 10px;
     padding: 24px;
@@ -171,7 +181,8 @@
   }
 
   .curriculumtype {
-    height: 39px;
+    width: 100%;
+    padding: 0 20px;
     line-height: 39px;
     margin-left: 30px;
   }
@@ -208,16 +219,14 @@
 
   .studytype {
     width: 100%;
-    height: 73px;
-    margin-top: 10px;
+    padding: 20px 20px;
+    margin-left: 30px;
   }
 
   .select {
-    width: 401.25px;
-    height: 63px;
-    line-height: 63px;
-    margin: 5px 20px 0 15px;
-    float: left;
+    width: 350px;
+    height:50px;
+    display: inline-block;
   }
 
   .sel {
@@ -227,9 +236,9 @@
   .btn {
     width: 130px;
     height: 32px;
-    background: #0139fd;
+    background: rgb(96, 199, 240);
     float: left;
-    margin-top: 20px;
+    margin-top:28px;
   }
 
   .childrenbox {

@@ -130,7 +130,7 @@ export default {
 
   .tan {
     width: 100%;
-    text-align: center;
+    
   }
 
   .btn {
@@ -159,7 +159,7 @@ export default {
     width: 33%;
     line-height: 45px;
     padding:0 20px;
-    display: inline-block;
+    float: left;
   }
   .count-text {
     height: 45px;
@@ -176,8 +176,9 @@ export default {
     width: 80px;
     height: 30px;
     border-radius: 5px;
-    background: blue;
+    background: rgb(96, 199, 240);
     display: inline-block;
+    margin-top:10px;
     color:white;
     cursor: pointer;
   }

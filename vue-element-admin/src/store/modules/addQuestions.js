@@ -1,18 +1,21 @@
 import { addQuestions,CurrentUserInformation } from '@/api/test.js'
 
 const state={
-    
+    list:''
 }
 
 const mutations={
-
+    addQuestions(state,payload){
+        state.list = payload.msg
+        console.log(state.list)
+    }
 }
 
 const actions={
    addQuestionStudy({commit,state},payload){
        return new Promise(async(resolve,reject)=>{
         let data = await addQuestions(payload)
-        console.log(data)
+        commit('addQuestions',data)
         resolve(data)
        })
    },
