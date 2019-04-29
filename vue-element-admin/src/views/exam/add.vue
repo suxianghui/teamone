@@ -40,20 +40,28 @@
           </el-col>
         </el-form-item>
         <el-button class="btn" type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
+        <el-button class="btn" type="primary" plain @click="exportExcel">导出Excel</el-button>
       </el-form>
     </div>
+
+    <exportExcel v-show="show"></exportExcel>
   </div>
 </template>
 
 <script>
 import {momentTime} from '@/utils/index'
 import { mapActions, mapState } from 'vuex'
+import exportExcel from '@/components/Exam/exportExcel.vue'
 
 
 export default {
   name: 'AddTheTest',
+  components:{
+    exportExcel
+  },
   data() {
     return {
+      show: false,
       ruleForm: {
         num: 3,
         name: '',
@@ -68,19 +76,19 @@ export default {
           { required: true, message: '请输入试卷名称', trigger: 'blur' },
           { min: 3, max: 10, message: '长度在 3 到 10 个字符', trigger: 'blur' }
         ],
-        region1: [
+        exam_id: [
           { required: true, message: '请选择考试类型', trigger: 'change' }
         ],
-        region2: [
+        subject_id: [
           { required: true, message: '请选择课程', trigger: 'change' }
         ],
         num: [
           { required: true, message: '请选择题量', trigger: 'change' }
         ],
-        date1: [
+        starttime: [
           { type: 'date', required: true, message: '请选择日期', trigger: 'change' }
         ],
-        date2: [
+        endtime: [
           { type: 'date', required: true, message: '请选择日期', trigger: 'change' }
         ]
       }
@@ -105,6 +113,9 @@ export default {
       getExamSubject: 'exam/getExamSubject',
       getSubmitExam:'exam/getSubmitExam'
     }),
+    exportExcel(){
+      this.show = !this.show;
+    },
     submitForm(formName) {
       this.$refs[formName].validate(async (valid) => {
         if (valid) {
@@ -144,7 +155,6 @@ export default {
   .wrapper {
     position: relative;
     width: 100%;
-    height: 850px;
     background: #f0f2f5;
     padding: 24px;
     box-sizing: border-box;

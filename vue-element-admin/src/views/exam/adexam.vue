@@ -22,10 +22,11 @@
     <div v-show="flag" class="add-drawer">
       <div class="mask" @click="showDialog" />
       <div class="add-drawer-right">
-        <h3>添加试题</h3>
-        <ul>
-          <li v-for="(val, ind) in allQuestions" :key="ind">{{val.title}}</li>
-        </ul>
+        <p class="title">所有试题</p>
+        <div v-for="(item, index) in allQuestions" :key="index" class="exam" @click="changeEaxm(item)">
+          <span>{{ index + 1 }} :</span>
+          <VueMarkdown :source="item.title" ></VueMarkdown>
+        </div>
       </div>
     </div>
   </div>
@@ -34,6 +35,7 @@
 <script>
 import { timeFormat } from '@/utils/index'
 import { mapActions } from 'vuex'
+import VueMarkdown from 'vue-markdown'
 
 
 export default {
@@ -46,6 +48,9 @@ export default {
       questionList: [],
       allQuestions:[]
     }
+  },
+  components:{
+    VueMarkdown
   },
   created() {
     // 获取add页面本地存储的值
@@ -62,6 +67,11 @@ export default {
       renewal: 'exam/renewal',
       allQuestion: 'exam/allQuestion'
     }),
+    changeEaxm(item){
+      this.questionList.push(item)
+      window.localStorage.setItem('exam', JSON.stringify(this.pageDetail))
+      this.flag = false
+    },
     // 添加试题弹出框
     async showDialog() {
       this.flag = !this.flag
@@ -111,10 +121,6 @@ export default {
 }
 </script>
 
-
-
-
-
 <style lang="scss" scoped>
 .add-drawer {
   position: fixed;
@@ -129,6 +135,23 @@ export default {
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.65);
+}
+.exam {
+  width: 100%;
+  height:40px;
+  display: flex;
+  align-items: center;
+  border-bottom:1px solid #ccc;
+  margin-right:20px;
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
+}
+.exam>span{
+  margin-right:10px;
+}
+.exam>div{
+  color:#999;
 }
 .add-drawer-right {
   width: 40%;
