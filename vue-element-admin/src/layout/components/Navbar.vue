@@ -46,7 +46,7 @@
         :key="imagecropperKey"
         :width="300"
         :height="300"
-        url="https://service.jasonandjay.com/"
+        url="https://service.jasonandjay.com/upload"
         lang-type="en"
         @close="close"
         @crop-upload-success="cropSuccess"
@@ -121,7 +121,7 @@ export default {
       this.$router.push(`/login?redirect=${this.$route.fullPath}`)
     },
     cropSuccess(e){
-      this.user_pic({
+      this.changePic({
         user_id:this.userInfo.user_id,
         user_name:this.userInfo.user_name,
         avatar:e[0].path

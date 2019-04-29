@@ -58,7 +58,7 @@ const actions = {
   async getInfo({ commit, state },payload) {
     let result = await getInfo();
     let data={...result.data,...payload}
-    console.log(data,66666)
+    // console.log(data,66666)
     commit('userInfo',data)
     return data;
   },

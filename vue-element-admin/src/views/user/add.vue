@@ -110,7 +110,7 @@
             v-for="item in identityApiAuthorityRelationsData"
             :key="item.identity_api_authority_relation_id"
             :label="item.api_authority_text"
-            :value="item.api_authority_text"
+            :value="item.identity_api_authority_relation_id"
           />
         </el-select>
         <div class="btn">
@@ -136,7 +136,7 @@
             v-for="item in viewAuthoritysData"
             :key="item.identity_view_authority_relation_id"
             :label="item.view_authority_text"
-            :value="item.view_authority_text"
+            :value="item.view_authority_id"
           />
         </el-select>
         <div class="btn">
@@ -213,7 +213,7 @@ export default {
     this.setUserData()
     // console.log(this.userDatas,'55555555')
     this.setViewAuthority()
-    // console.log(this.viewAuthoritysData,222222)
+    // console.log(this.viewAuthoritysData,222222)    
     this.setIdentityApiAuthorityRelation()
     // console.log(this.identityApiAuthorityRelationsData,'试卷类型')
     this.setidentityViewAuthorityRelation()

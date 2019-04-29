@@ -50,7 +50,7 @@ router.beforeEach(async (to, from, next) => {
     
           //通过权限，生成路由
           const generateRoutes= await store.dispatch('permission/generateRoutes',getViewAuthority)
-          console.log('accessRoutes',generateRoutes)
+          // console.log('accessRoutes',generateRoutes)
           // 动态添加路由到路由表中
           router.addRoutes(generateRoutes)
 
