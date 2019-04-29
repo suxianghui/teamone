@@ -20,7 +20,7 @@
               v-for="item in identitysData"
               :key="item.identity_id"
               :label="item.identity_text"
-              :value="item.identity_text"
+              :value="item.identity_id"
             />
           </el-select>
         </div>
@@ -41,7 +41,7 @@
               v-for="item in identitysData"
               :key="item.identity_id"
               :label="item.identity_text"
-              :value="item.identity_text"
+              :value="item.identity_id"
             />
           </el-select>
         </div>
@@ -102,7 +102,7 @@
             v-for="item in identitysData"
             :key="item.identity_api_authority_relation_id"
             :label="item.identity_text"
-            :value="item.identity_text"
+            :value="item.identity_id"
           />
         </el-select>
         <el-select v-model="apiJurisdictionId" placeholder="请选择api接口权限id">
@@ -110,7 +110,7 @@
             v-for="item in identityApiAuthorityRelationsData"
             :key="item.identity_api_authority_relation_id"
             :label="item.api_authority_text"
-            :value="item.api_authority_text"
+            :value="item.identity_api_authority_relation_id"
           />
         </el-select>
         <div class="btn">
@@ -128,7 +128,7 @@
             v-for="item in identitysData"
             :key="item.identity_view_authority_relation_id"
             :label="item.identity_text"
-            :value="item.identity_text"
+            :value="item.identity_id"
           />
         </el-select>
         <el-select v-model="viewJurisdictionId" placeholder="请选择视图权限id">
@@ -136,7 +136,7 @@
             v-for="item in viewAuthoritysData"
             :key="item.identity_view_authority_relation_id"
             :label="item.view_authority_text"
-            :value="item.view_authority_text"
+            :value="item.view_authority_id"
           />
         </el-select>
         <div class="btn">
@@ -213,9 +213,9 @@ export default {
     this.setUserData()
     // console.log(this.userDatas,'55555555')
     this.setViewAuthority()
-    // console.log(this.viewAuthoritysData,222222)
+    // console.log(this.viewAuthoritysData,222222)    
     this.setIdentityApiAuthorityRelation()
-    // console.log(this.identityApiAuthorityRelationsData,'试卷类型')
+    console.log(this.identityApiAuthorityRelationsData,'试卷类型')
     this.setidentityViewAuthorityRelation()
     // console.log(this.identityViewAuthorityRelationsData,111111111)
   },
@@ -356,11 +356,14 @@ export default {
     //添加视图接口权限
     async view() {
       let obj = {};
-      obj = this.existingViewValue.filter((item,index)=>{
-        // console.log(item,this.existingView,'shitu')
-        if(item.authority === this.existingView){
-           return item
-        }
+      // obj = this.existingViewValue.find((item,index)=>{
+      //   // console.log(item,this.existingView,'shitu')
+      //   if(item.authority === this.existingView){
+      //      return item
+      //   }
+      // });
+       obj = this.existingViewValue.find(item => {
+        return item.authority === this.existingView;
       });
       // console.log(this.existingViewValue,9999999999)
       // console.log(this.existingView,'shitu') //点击添加的值
@@ -376,7 +379,7 @@ export default {
       }
       const res =await this.setAddAuthorityView({
         view_authority_text:obj.authority,
-        view_id:obj.view_id //视图id  
+        view_id:'111' //视图id  
       }) 
       this.hint(res);
       this.existingView = ''//,

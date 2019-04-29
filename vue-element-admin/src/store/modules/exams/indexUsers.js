@@ -69,6 +69,7 @@ const actions = {
   async setAddUserData({ commit }, payload) {
     // console.log(payload,'111111');
     const result = await addUsers(payload)
+    // console.log(result,'ac11')
     return result
     // return new Promise(async(resolve, reject) => {
     //   const result = await addUsers(payload)

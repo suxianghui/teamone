@@ -27,8 +27,8 @@ export default {
   },
   //根据他的身份进入不同的页面
   created() {
-    console.log('adsasd',)
-    if (this.getInfo==='管理员') {
+    // console.log('adsasd',)
+    if (this.getInfo === '管理员') {
       this.currentRole = 'editorDashboard'
     }
   }

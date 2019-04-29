@@ -43,8 +43,8 @@ const mutations = {
             //用户id
             state.userIdValue.push(item.user_name)
         })
-        deWeight(state.userIdValue)
         // console.log(state.userDatas,'获取用户')
+        deWeight(state.userIdValue)
         // state.total = state.userDatas.length
         state.data = state.userDatas.slice(0, 10)
     },
@@ -74,6 +74,7 @@ const mutations = {
     //获取身份和api权限关系
     getIdentityApiAuthorityRelations(state, payload) {
         state.identityApiAuthorityRelationsData = payload.data;
+        
         // console.log(payload,'payload')
         // console.log(state.identityApiAuthorityRelationsData, '获取身份和api')
         // deWeight(state.identityApiAuthorityRelationsData)
@@ -138,6 +139,7 @@ const actions = {
     },
     //展示身份和api权限关系
     async setIdentityApiAuthorityRelation({ commit }, payload) {
+        console.log('payload',payload)
         let result = await identityApiAuthorityRelation(payload);
         // console.log(new Set(result.data), '展示身份和api')
         commit('getIdentityApiAuthorityRelations', result)

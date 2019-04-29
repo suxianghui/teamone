@@ -1,3 +1,6 @@
+
+// import { login, logout, getInfo, getViewAuthority } from '@/api/user'
+// import { userData } from "@/api/exams/users"
 import { login, logout, getInfo, getviewAuthority , user_gx ,userPic} from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import router, { resetRouter } from '@/router'
@@ -55,6 +58,7 @@ const actions = {
   async getInfo({ commit, state },payload) {
     let result = await getInfo();
     let data={...result.data,...payload}
+    // console.log(data,66666)
     commit('userInfo',data)
     return data;
   },

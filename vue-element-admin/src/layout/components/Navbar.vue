@@ -1,30 +1,20 @@
 <template>
   <div class="navbar">
     <hamburger id="hamburger-container" :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar" />
-
-    <breadcrumb id="breadcrumb-container" class="breadcrumb-container" />
-
+    
     <div class="right-menu">
-      <template v-if="device!=='mobile'">
-        <search id="header-search" class="right-menu-item" />
+      <!-- <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click"> -->
+        <el-dropdown class="avatar-container right-menu-item">
 
-        <error-log class="errLog-container right-menu-item hover-effect" />
-
-        <screenfull id="screenfull" class="right-menu-item hover-effect" />
-
-        <el-tooltip :content="$t('navbar.size')" effect="dark" placement="bottom">
-          <size-select id="size-select" class="right-menu-item hover-effect" />
-        </el-tooltip>
-
-        <lang-select class="right-menu-item hover-effect" />
-
-      </template>
-
-      <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
         <div class="avatar-wrapper">
-          <img :src="avatar" class="user-avatar">
+          <img :src="userInfo.avatar" class="user-avatar">
+          <span class="user_name">{{userInfo.user_name}}</span>
+          <!-- 图片上传到导航     -->
+          <!-- <pan-thumb :image="userInfo.avatar" />
+          <span>{{userInfo.user_name}}</span> -->
           <i class="el-icon-caret-bottom" />
         </div>
+
         <el-dropdown-menu slot="dropdown">
           <router-link to="/">
             <el-dropdown-item>
@@ -36,16 +26,31 @@
               {{ $t('navbar.github') }}
             </el-dropdown-item>
           </a>
-          <a href="#" @click="imagecropperShow=true">
-            <el-dropdown-item>
-              切换头像
-            </el-dropdown-item>
-          </a>
+
+          <el-dropdown-item>
+            <span @click="imagecropperShow=true">上传头像</span>
+          </el-dropdown-item>
+
           <el-dropdown-item divided>
             <span style="display:block;" @click="logout">{{ $t('navbar.logOut') }}</span>
           </el-dropdown-item>
+
         </el-dropdown-menu>
+
       </el-dropdown>
+
+      <el-button type="primary" icon="upload" style="position: absolute;bottom:0px;z-index: 999;width: 60px;height: 60px;border-radius: 50%;opacity: 0;" @click="imagecropperShow=true" />
+
+      <image-cropper
+        v-show="imagecropperShow"
+        :key="imagecropperKey"
+        :width="300"
+        :height="300"
+        url="https://service.jasonandjay.com/upload"
+        lang-type="en"
+        @close="close"
+        @crop-upload-success="cropSuccess"
+      />
     </div>
     <image-cropper
     v-show="imagecropperShow"
@@ -69,13 +74,16 @@ import Screenfull from '@/components/Screenfull'
 import SizeSelect from '@/components/SizeSelect'
 import LangSelect from '@/components/LangSelect'
 import Search from '@/components/HeaderSearch'
+
 import ImageCropper from '@/components/ImageCropper'
+import PanThumb from '@/components/PanThumb'
+
 export default {
   data(){
     return {
       imagecropperShow: false,
       imagecropperKey: 0,
-      image: 'https://wpimg.wallstcn.com/577965b9-bb9e-4e02-9f0c-095b41417191'
+      image: ''
     }
   },
   components: {
@@ -86,7 +94,8 @@ export default {
     SizeSelect,
     LangSelect,
     Search,
-    ImageCropper
+    ImageCropper,
+    PanThumb
   },
   computed: {
     ...mapGetters([
@@ -111,7 +120,8 @@ export default {
     // }),
     ...mapActions({
       getInfo:'user/getInfo',
-      changePic:'user/changePic'
+      changePic:'user/changePic',
+      user_pic:'user/user_pic'
     }),
     toggleSideBar() {
       this.$store.dispatch('app/toggleSideBar')
@@ -120,12 +130,11 @@ export default {
       await this.$store.dispatch('user/logout')
       this.$router.push(`/login?redirect=${this.$route.fullPath}`)
     },
-    cropSuccess(resData) {
-      console.log('resData',resData)
-      this.image=resData[0].path;
+    cropSuccess(e){
       this.changePic({
         user_id:this.userInfo.user_id,
-        avatar:this.image
+        user_name:this.userInfo.user_name,
+        avatar:e[0].path
       })
       this.getInfo()
       this.imagecropperShow = false
@@ -164,6 +173,7 @@ export default {
     vertical-align: top;
   }
   .right-menu {
+    width:auto;
     float: right;
     height: 100%;
     line-height: 50px;
@@ -177,24 +187,26 @@ export default {
       font-size: 18px;
       color: #5a5e66;
       vertical-align: text-bottom;
-      &.hover-effect {
-        cursor: pointer;
-        transition: background .3s;
-        &:hover {
-          background: rgba(0, 0, 0, .025)
-        }
-      }
+      // &.hover-effect {
+      //   cursor: pointer;
+      //   transition: background .3s;
+      //   &:hover {
+      //     background: rgba(0, 0, 0, .025)
+      //   }
+      // }
     }
     .avatar-container {
       margin-right: 30px;
       .avatar-wrapper {
+        height: 50px;
         margin-top: 5px;
         position: relative;
         .user-avatar {
+          height: 50px;
           cursor: pointer;
           width: 40px;
           height: 40px;
-          border-radius: 10px;
+          border-radius: 50%;
         }
         .el-icon-caret-bottom {
           cursor: pointer;

@@ -8,7 +8,7 @@ import examination from './modules/examinations'
 // import createLogger from 'vuex/dist/logger'
 
 import exam from './modules/exam'
-import createLogger from 'vuex/dist/logger'
+// import createLogger from 'vuex/dist/logger'
 import getTypeExam from './modules/getTypeExam'
 import gettingLesson from './modules/gettingLesson'
 import getTypeQuestion from './modules/getTypeQuestion'
