@@ -27,9 +27,9 @@
             </el-select>
           </div>
           <!-- <div class="btnBox"> -->
-          <el-button class="btn" style="width:130px;height:36px;text-align:center;margin-top:0;" type="primary" @click="searchBtn">
-            <i class="el-icon-search" />
-            <span>查询</span>
+          <el-button class="btn" style="width:130px;height:36px;text-align:center;margin-top:0;" 
+            type="primary" @click="searchBtn">
+            <i class="el-icon-search" /><span>查询</span>
           </el-button>
           <el-button class="btn" 
             style="width:130px;height:36px;text-align:center;margin-top:0;" 
@@ -47,7 +47,7 @@
               </span>
             </div>
           </div>
-          <el-table :data="allExamList" :header-cell-style="tableHeaderColor" style="width: 100%">
+          <el-table :data="alllist" :header-cell-style="tableHeaderColor" style="width: 100%">
             <el-table-column label="试卷信息">
               <template slot-scope="childData">
                 <p>{{childData.row.title}}</p>
@@ -89,13 +89,14 @@
 
 <script>
 import { mapActions, mapState} from 'vuex'
-import { timeFormat } from '@/utils/index'
+import { timeFormat, momentTime } from '@/utils/index'
 
 
 export default {
   name: 'List',
   data() {
     return {
+      alllist: [],
       navList: ['全部', '进行中', '已结束'],
       changeClass: 0,
       examValue: '',
@@ -204,7 +205,7 @@ export default {
   created() {
     this.getExamList()
     timeFormat()
-    console.log(this.allExamList,'.....')
+    this.alllist = this.allExamList;
   },
 
   computed: {
@@ -252,21 +253,55 @@ export default {
           message: '查询内容不能为空,请继续输入...',
           type: 'warning'
         })
-      }else {
-        console.log(this.examValue, this.classValue, '查询数据...')
+      } else {
+        this.alllist = this.allExamList.filter(item => {
+          return this.examValue === item.exam_name && this.classValue === item.subject_text
+        })
       }
     },
     // 点击改变样式
     toggleType(index, e) {
-      this.changeClass = index
+      this.changeClass = index;
+      let _time = momentTime(new Date())
+      console.log(momentTime(new Date()))
       // 全部 - 进行中 - 已结束
-      console.log(e.target.innerText, 'tab切换数据...')
+      this.alllist = this.alllist.filter(item => {
+        switch (e.target.innerText) {
+          case '全部':
+          return item.end_time > _time
+          break;
+          case '进行中':
+          return item.end_time < _time
+          break;
+          default :
+          return item;
+        }
+      })
+      console.log(this.alllist, 'tab切换数据...')
     },
     // table表格的头部样式
     tableHeaderColor({ row, column, rowIndex, columnIndex }) {
       if (rowIndex === 0) {
         return 'background-color: #f4f7f9;color: #000;font-weight: 500;width:100%; height: 53px;'
       }
+    },
+    //导出excel表
+    exportExcel(){
+      console.log('allExamList',this.allExamList)
+      let header = Object.keys(this.allExamList[0]);
+      let list = this.allExamList.map(item=> {
+        let arr = Object.values(item);
+        return arr.map(item=>JSON.stringify(item))
+      })
+      console.log('allExamList',list);
+      import('@/vendor/Export2Excel').then(excel=>{
+        excel.export_json_to_excel({
+          header:header,
+          data:list,
+          filename:'',
+          bookType:'xlsx'
+        })
+      })
     },
     // 点击去详情页
     goDetail(id) {

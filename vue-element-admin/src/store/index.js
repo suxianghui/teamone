@@ -3,6 +3,8 @@ import Vuex from 'vuex'
 import getters from './getters'
 // import createLogger from "vuex/dist/logger"
 
+
+import examination from './modules/examinations'
 // import createLogger from 'vuex/dist/logger'
 
 import exam from './modules/exam'
@@ -37,6 +39,7 @@ const modules = modulesFiles.keys().reduce((modules, modulePath) => {
 const store = new Vuex.Store({
   getters,
   getTypeExam,
+  examination,
   gettingLesson,
   getTypeQuestion,
   addQuestions,
@@ -52,7 +55,7 @@ const store = new Vuex.Store({
     ...modules,
     indexUsers,
     viewUsers,
-  }
+  },
   // plugins:[createLogger()]
 })
 

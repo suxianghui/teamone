@@ -5,11 +5,10 @@
 </template>
 
 <script>
-// import { mapGetters } from 'vuex'
-
+import { mapGetters,mapState } from 'vuex'
 import adminDashboard from './admin'
 import editorDashboard from './editor'
-import { mapState } from 'vuex';
+// import { mapState } from 'vuex';
 
 export default {
   name: 'Dashboard',
@@ -20,16 +19,17 @@ export default {
     }
   },
   computed: {
-    // ...mapGetters([//没有命名空间 => 全局模式
-    //   'rouls'
-    // ])  
+    ...mapGetters([
+      'roles'
+    ]),
     ...mapState({
-      identity_text:state => state.user.userInfo.identity_text
+      getInfo:state=>state.user.userInfo.identity_text
     })
   },
+  //根据他的身份进入不同的页面
   created() {
-    // console.log('this.identity_text',this.identity_text)
-    if (this.identity_text === "管理者") {
+    console.log('adsasd',)
+    if (this.getInfo === '管理员') {
       this.currentRole = 'editorDashboard'
     }
   }

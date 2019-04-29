@@ -46,7 +46,7 @@
         :key="imagecropperKey"
         :width="300"
         :height="300"
-        url="http://123.206.55.50:11000/upload"
+        url="https://service.jasonandjay.com/"
         lang-type="en"
         @close="close"
         @crop-upload-success="cropSuccess"
@@ -56,7 +56,7 @@
 </template>
 
 <script>
-import { mapGetters , mapState , mapActions } from 'vuex'
+import { mapMutations, mapActions, mapGetters ,mapState} from 'vuex'
 import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
 import ErrorLog from '@/components/ErrorLog'
@@ -92,15 +92,22 @@ export default {
       'sidebar',
       'name',
       'avatar',
-      'device'
+      'device',
+      'userInfo'
     ]),
     ...mapState({
-      userInfo:state => state.user.userInfo
+      userInfo:state=>state.user.userInfo
     })
   },
   created(){
+    // this.setAvatar(this.image)
+    this.getInfo()
+    // console.log('avatar111',this.userInfo)
   },
   methods: {
+    // ...mapMutations({
+    //   setAvatar:'user/SET_AVATAR',
+    // }),
     ...mapActions({
       getInfo:'user/getInfo',
       changePic:'user/changePic',
@@ -119,6 +126,9 @@ export default {
         user_name:this.userInfo.user_name,
         avatar:e[0].path
       })
+      this.getInfo()
+      this.imagecropperShow = false
+
     },
     close() {
       this.imagecropperShow = false

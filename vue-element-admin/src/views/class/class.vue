@@ -151,19 +151,19 @@ export default {
       }
     },
     submitForm(formName) {
-      this.$refs[formName].validate((valid) => {
+      this.$refs[formName].validate(async (valid) => {
         console.log('valid', this.ruleForm)
         if (valid) {
           // 用此来判断点击的是添加还是编辑：true为编辑，false为添加
           if (this.editclick) {
-            this.editMangerGrade({
+            await this.editMangerGrade({
               grade_id: this.classInfo.grade_id,
               grade_name: this.classInfo.grade_name,
               subject_id: this.ruleForm.subjectName,
               room_id: this.ruleForm.roomName
             })
           } else {
-            this.AddMangerGrade(this.ruleForm)
+            await this.AddMangerGrade(this.ruleForm)
           }
           this.getMangerGrade()
           this.diaIsshow = !this.diaIsshow
@@ -187,12 +187,12 @@ export default {
       this.ruleForm.subjectName = result.subject_text
     },
     // 删除班级信息
-    deleteRow(index, rows) {
+    async deleteRow(index, rows) {
       const result = this.data.classData.find((item, ind) => {
         return index === ind
       })
       console.log('result', result)
-      this.deleteMangerGrade({
+      await this.deleteMangerGrade({
         grade_id: result.grade_id
       })
       this.getMangerGrade()
@@ -219,7 +219,6 @@ export default {
   }
   .main{
     width: 100%;
-    height: 863px;
     padding: 24px;
     box-sizing: border-box;
     margin: 0 0 20px;

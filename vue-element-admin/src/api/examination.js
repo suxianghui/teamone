@@ -1,6 +1,6 @@
 import request from '@/utils/request'
 
-//获取学生试卷列表
+//获取学生列表
 export function examination(params) {
   // return request.get('/exam/student',data)
   return request({
@@ -13,17 +13,25 @@ export function examination(params) {
 // 获取学生试卷详情
 export function studentExaminationPapers(data) {
   return request({
-    url: '/exam/student/4edl4i-k0rr7a-b3yna-f87a9w',
+    url: '/exam/student/' + data.exam_student_id,
     method: 'GET',
     data
   })
 }
 
-//批卷
-export function studentPapers(data) {
+//批卷班级列表
+export function studentPapers() {
   return request({
     url: '/manger/grade',
-    method: 'GET',
-    params:data
+    method: 'GET'
+  })
+}
+
+//批卷
+export function studentpis(data) {
+  return request({
+    url: '/exam/student/' + data.exam_student_id,
+    method: 'PUT',
+    data
   })
 }

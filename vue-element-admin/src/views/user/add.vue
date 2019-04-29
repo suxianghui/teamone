@@ -20,7 +20,7 @@
               v-for="item in identitysData"
               :key="item.identity_id"
               :label="item.identity_text"
-              :value="item.identity_text"
+              :value="item.identity_id"
             />
           </el-select>
         </div>
@@ -41,7 +41,7 @@
               v-for="item in identitysData"
               :key="item.identity_id"
               :label="item.identity_text"
-              :value="item.identity_text"
+              :value="item.identity_id"
             />
           </el-select>
         </div>
@@ -102,7 +102,7 @@
             v-for="item in identitysData"
             :key="item.identity_api_authority_relation_id"
             :label="item.identity_text"
-            :value="item.identity_text"
+            :value="item.identity_id"
           />
         </el-select>
         <el-select v-model="apiJurisdictionId" placeholder="请选择api接口权限id">
@@ -128,7 +128,7 @@
             v-for="item in identitysData"
             :key="item.identity_view_authority_relation_id"
             :label="item.identity_text"
-            :value="item.identity_text"
+            :value="item.identity_id"
           />
         </el-select>
         <el-select v-model="viewJurisdictionId" placeholder="请选择视图权限id">

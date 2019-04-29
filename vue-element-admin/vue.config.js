@@ -18,7 +18,7 @@ module.exports = {
    * In most cases please use '/' !!!
    * Detail: https://cli.vuejs.org/config/#publicpath
    */
-  publicPath: '/',
+  publicPath: './',
   outputDir: 'dist',
   assetsDir: 'static',
   lintOnSave: process.env.NODE_ENV === 'development',
@@ -48,7 +48,7 @@ module.exports = {
     resolve: {
       alias: {
         '@': resolve('src'),
-        'vue$': 'vue/dist/vue.runtime.esm.js'
+        // 'vue$': 'vue/dist/vue.runtime.esm.js'
       }
     }
   },

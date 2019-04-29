@@ -107,8 +107,8 @@ export default {
     }
     return {
        loginForm: {
-        username: 'suxianghui',
-        password: 'Suxianghui123!'
+        username: 'yangrenbin',
+        password: 'Yangrenbin123!'
       },
       // 校验，有几个需要校验的就写几条规则,
       loginRules: {
@@ -197,24 +197,6 @@ export default {
         }
       })
     }
-    // afterQRScan() {
-    //   if (e.key === 'x-admin-oauth-code') {
-    //     const code = getQueryObject(e.newValue)
-    //     const codeMap = {
-    //       wechat: 'code',
-    //       tencent: 'code'
-    //     }
-    //     const type = codeMap[this.auth_type]
-    //     const codeName = code[type]
-    //     if (codeName) {
-    //       this.$store.dispatch('LoginByThirdparty', codeName).then(() => {
-    //         this.$router.push({ path: this.redirect || '/' })
-    //       })
-    //     } else {
-    //       alert('第三方登录失败')
-    //     }
-    //   }
-    // }
   }
 }
 </script>
