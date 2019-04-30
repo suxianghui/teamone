@@ -16,6 +16,10 @@
         s.parentNode.insertBefore(hm, s);
       })();
     </script>
+    <script src="https://browser.sentry-cdn.com/5.1.1/bundle.min.js" crossorigin="anonymous"></script>
+    <script>
+      Sentry.init({ dsn: 'https://2de04346baf74d9c98663dfd38d5484e@sentry.io/1449256' });
+    </script>
   </head>
   <body>
     <script src="<%= BASE_URL %>static/tinymce4.7.5/tinymce.min.js"></script>
