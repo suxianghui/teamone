@@ -3,7 +3,7 @@
     <h2 class="title">阅卷</h2>
     <div class="daw">
       <div class="content1">
-        <div class="box" v-for="(item,index) in lists" :key="index">
+        <div class="box" v-for="(item,index) in list ? list && list.questions : []" :key="index">
           <div class="oneQuestion">{{item.title}}</div>
           <div class="mark">
             <VueMarkdown class="mdown">{{item.questions_stem}}</VueMarkdown>
@@ -29,32 +29,8 @@
         <div class="block">
           <el-slider v-model="value1" @change="changeValue"></el-slider>
         </div>
-        <el-button type="primary" @click="sure">确定</el-button>
-      </div>
-    </div>
-    <div class="morkbox" :class="flg ? 'action' : ''">
-      <div class="mork">
-        <i>
-          <img src="../../icons/ss.png" alt>
-        </i>
-        <p>确定提交阅卷结果？</p>
-        <span>分数值是{{sliderValue}}</span>
-        <div class="btnn">
-          <el-button @click="del">取消</el-button>
-          <el-button type="primary" @click="haha">确定</el-button>
-        </div>
-      </div>
-    </div>
-    <div class="morkbox" :class="flgs ? 'action' : ''">
-      <div class="mork">
-        <i>
-          <img src="../../icons/ll.png" alt>
-        </i>
-        <p>批卷结果</p>
-        <span>批改试卷成功 {{name}}得分{{sliderValue}}</span>
-        <div class="btnn">
-          <el-button type="primary" @click="hehe">知道了</el-button>
-        </div>
+        <!-- <el-button type="primary" @click="sure">确定</el-button> -->
+        <el-button type="text" @click="open" class="open">确定</el-button>
       </div>
     </div>
   </div>
@@ -71,7 +47,7 @@ export default {
       flg: true,
       flgs: true,
       value1: 0,
-      sliderValue: 0,
+      sliderValue: 0
       // grades:null,
     };
   },
@@ -87,7 +63,7 @@ export default {
     this.detailList({
       exam_student_id: this.$route.query.exam_student_id
     });
-    console.log('t.exam_student_id',this.$route.query)
+    console.log("t.exam_student_id", this.$route.query);
     // this.grades = this.$route.query.grades;
     this.name = this.$route.query.student_name;
     // console.log("999", this.grades);
@@ -104,27 +80,47 @@ export default {
       this.flg = !this.flg;
       console.log(this.flg);
     },
-    del() {
-      this.flg = !this.flg;
-      console.log(this.flg);
-    },
     changeValue(e) {
       console.log(e);
       this.sliderValue = e;
     },
-    haha() {
-      this.flg = !this.flg;
-      this.flgs = !this.flgs;
+    open() {
       this.studentspsjuan({
-        exam_student_id: this.$route.query.exam_student_id,
-        score: this.sliderValue
-      });
-    },
-    hehe(){
-      console.log(this.list)
-    this.$router.push({
-        path: "/paper/paperList",
-        query:{grade_id:this.list.grade_id}
+        exam_student_id:this.$route.query.exam_student_id,
+        score:this.sliderValue
+      })
+      this.$confirm("分数值是" + this.sliderValue, "确定提交阅卷结果？", {
+        confirmButtonText: "批改成功",
+        cancelButtonText: "取消批改",
+        type: "warning",
+        center: true,
+        closeOnClickModal:false,
+      })
+        .then(() => {
+          this.$confirm(
+            "批改试卷成功 高诗蕊得分" + this.sliderValue,
+            "批卷结果",
+            {
+              confirmButtonText: "知道了",
+              showCancelButton: false,
+              type: "warning",
+              center: true,
+              closeOnClickModal:false,
+            }
+          ).then(() => {
+            this.list.score = this.list.score === 0 ? this.list.score = 1 : this.list.score = 1;
+            console.log("this.list.grade_id", this.list.score);
+            this.$router.push({
+              path: "/paper/paperList",
+              query: { grade_id: this.list.grade_id }
+            });
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消批改"
+          });
         });
     }
   }
@@ -260,6 +256,27 @@ export default {
 .mdown > p > img {
   width: 100% !important;
   height: 100% !important;
+}
+.el-icon-warning {
+  display: block;
+}
+..el-message-box__status::before {
+  display: block;
+}
+.el-message-box__title span {
+  display: block;
+}
+.open {
+  padding:7px 20px;
+  color: #ffffff;
+  background-color: #1890ff;
+  border-color: #1890ff;
+  white-space: nowrap;
+  cursor: pointer;
+  text-align: center;
+}
+.el-icon-close:before {
+    content: "";
 }
 </style>
 

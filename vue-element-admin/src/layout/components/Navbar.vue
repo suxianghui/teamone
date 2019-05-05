@@ -26,11 +26,12 @@
               {{ $t('navbar.github') }}
             </el-dropdown-item>
           </a>
-
-          <el-dropdown-item>
-            <span @click="imagecropperShow=true">上传头像</span>
-          </el-dropdown-item>
-
+          <a href="#" @click="imagecropperShow=true">
+            <el-dropdown-item>
+              切换头像
+            </el-dropdown-item>
+          </a>
+          <!-- https://service.jasonandjay.com/ -->
           <el-dropdown-item divided>
             <span style="display:block;" @click="logout">{{ $t('navbar.logOut') }}</span>
           </el-dropdown-item>
