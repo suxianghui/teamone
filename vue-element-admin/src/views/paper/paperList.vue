@@ -41,23 +41,23 @@
           </template>
         </el-table-column>
         <el-table-column label="阅卷状态">
-          <template>
-            <span style="margin-left: 10px">未阅</span>
+          <template  slot-scope="scope">
+            <span style="margin-left: 10px">{{scope.row.status == 1 ? '已阅' : '未阅'}}</span>
           </template>
         </el-table-column>
         <el-table-column label="开始时间">
           <template slot-scope="scope">
-            <span style="margin-left: 10px">{{ scope.row.start_time }}</span>
+            <span style="margin-left: 10px">{{ new Date(scope.row.start_time*1).toLocaleString() }}</span>
           </template>
         </el-table-column>
         <el-table-column label="结束时间">
           <template slot-scope="scope">
-            <span style="margin-left: 10px">{{ scope.row.end_time }}</span>
+            <span style="margin-left: 10px">{{ new Date(scope.row.end_time*1).toLocaleString() }}</span>
           </template>
         </el-table-column>
         <el-table-column label="成材率">
           <template slot-scope="scope">
-            <span style="margin-left: 10px">{{ scope.row.name }}</span>
+            <span style="margin-left: 10px">{{ scope.row.status ==1 ? scope.row.score : '-' }}</span>
           </template>
         </el-table-column>
         <el-table-column label="操作">

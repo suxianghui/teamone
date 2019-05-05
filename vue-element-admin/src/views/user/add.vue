@@ -31,7 +31,7 @@
               v-for="item in userDatas"
               :key="item.user_id"
               :label="item.user_name"
-              :value="item.user_name"
+              :value="item.user_id"
             />
           </el-select>
           <el-input v-model="userName" placeholder="请输入用户名" />
@@ -250,6 +250,7 @@ export default {
     
     //添加用户或者更新用户
     async addUsersInfo() {
+      console.log(this.userId)
       //添加用户
       if( this.idx === 0){
         //判断信息是否完整

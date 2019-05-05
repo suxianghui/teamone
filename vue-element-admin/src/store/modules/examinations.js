@@ -5,6 +5,7 @@ const state = {
   detail:[],
   List:[],
   gradeName:"",
+  status:'',
 }
 
 const mutations = {
@@ -22,6 +23,9 @@ const mutations = {
   },
   changegradeName(state,payload){
     state.gradeName = payload
+  },
+  statusValue(state,payload){
+    state.status = payload
   }
 }
 

@@ -66,7 +66,6 @@ const actions = {
   // 查询所有的数据
   async getExamList({ commit }, payload) {                 ////
     let res = await examList();
-    console.log(res, '...res')
     commit('updateState', { allExamList: res.exam });
     return res;
   },

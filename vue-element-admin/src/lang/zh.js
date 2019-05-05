@@ -73,6 +73,7 @@ export default {
 
     exams: '考试管理',
     addExams: '添加考试',
+    importExcel: '导入Excel',
     examsList: '试卷列表',
 
     classes: '班级管理',

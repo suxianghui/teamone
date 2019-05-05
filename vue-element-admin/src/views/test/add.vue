@@ -142,7 +142,6 @@
       this.user_id = await this.CurrentUser()
       this.quesId = this.$route.query.id
       this.arr = await this.randerStudy();
-      // console.log(this.arr)
       this.arr.data.forEach((v, i) => {
         if (this.quesId == v.questions_id) {
           this.item = v;

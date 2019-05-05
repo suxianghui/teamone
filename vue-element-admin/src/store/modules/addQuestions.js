@@ -19,6 +19,7 @@ const actions={
    CurrentUserInfor({commit,state},payload){
        return new Promise(async(resolve,reject)=>{
            let data = await CurrentUserInformation()
+           console.log(data)
            resolve(data.data.user_id)
        })
    }
