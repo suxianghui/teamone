@@ -47,6 +47,7 @@ import { mapState, mapMutations, mapActions } from "vuex";
 export default {
   data() {
     return {
+      list:[],
       nav: [
         "用户数据",
         "身份数据",
@@ -84,7 +85,7 @@ export default {
         "userDatas",
         "identitysData",
         "apiAuthoritysData",
-        "identityApiAuthorityRelationsData",
+        "list",
         "viewAuthoritysData",
         "identityViewAuthorityRelationsData"
       ],
@@ -113,13 +114,16 @@ export default {
       userData: state => state.viewUsers.userData
     })
   },
-  created() {
+  async created() {
     this.setUserData();
     this.setidentity();
     this.setApiAuthority();
     this.setIdentityApiAuthorityRelation();
+    // this.add =  await this.setIdentityApiAuthorityRelation()
     this.setViewAuthority();
     this.setidentityViewAuthorityRelation();
+    this.list =  await this.del();
+    console.log(this.list,'del')
   },
   methods: {
     ...mapMutations({
@@ -140,7 +144,8 @@ export default {
       setViewAuthority: "viewUsers/setViewAuthority",
       //展示身份和视图权限关系
       setidentityViewAuthorityRelation:
-        "viewUsers/setidentityViewAuthorityRelation"
+        "viewUsers/setidentityViewAuthorityRelation",
+      del:"viewUsers/del"
     }),
 
     //分页

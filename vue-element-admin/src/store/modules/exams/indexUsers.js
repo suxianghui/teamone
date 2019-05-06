@@ -15,7 +15,7 @@ const state = {
   addIdentityD:[],//添加身份
   addAuthorityApiD:[],//添加 api 接口权限
   addAuthorityViewD:[],//添加视图权限
-  identityApiD:[],//给身份设定 api 接口权限
+  // identityApiD:[],//给身份设定 api 接口权限
   identityViewD:[],//给身份设定视图权限
 
   // identityId_viewValue: [],
@@ -53,10 +53,10 @@ const mustations = {
     // console.log(payload, 'mustations添加视图');
   },
   //给身份设定 api 接口权限
-  addIdentityApiData(state,payload){
-    state.identityApiD = payload;
-    // console.log(payload, 'mustations设定api');
-  },
+  // addIdentityApiData(state,payload){
+  //   state.identityApiD = payload;
+  //   // console.log(payload, 'mustations设定api');
+  // },
   //给身份设定视图权限
   addIdentityViewData(state,payload){
     state.identityViewD = payload;
@@ -101,9 +101,18 @@ const actions = {
     return result
   },
   //给身份设定api接口权限
-  async setIdentityApi({ commit }, payload) {
-    let result = await identityApi(payload);
-    return result
+  // async setIdentityApi({ commit }, payload) {
+  //   let result = await identityApi(payload);
+  //   console.log(result,'111')
+  //   commit('addIdentityApiData', result);
+  //   return result
+  // },
+  setIdentityApi({ commit, state }, payload) {
+    return new Promise(async (resolve, reject) => {
+      let data = await identityApi(payload)
+      console.log(data.data, '123123')
+      resolve(data)
+    })
   },
   //给身份设定视图权限
   async setIdentityView({ commit }, payload) {

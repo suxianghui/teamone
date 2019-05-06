@@ -107,10 +107,10 @@
         </el-select>
         <el-select v-model="apiJurisdictionId" placeholder="请选择api接口权限id">
           <el-option
-            v-for="item in identityApiAuthorityRelationsData"
-            :key="item.identity_api_authority_relation_id"
+            v-for="item in add"
+            :key="item.api_authority_id"
             :label="item.api_authority_text"
-            :value="item.identity_api_authority_relation_id"
+            :value="item.api_authority_id"
           />
         </el-select>
         <div class="btn">
@@ -176,6 +176,8 @@ export default {
 
       idx: 0,//用于切换 添加用户和 更新用户
 
+      add:[]
+
     }
   },
   computed: {
@@ -202,20 +204,23 @@ export default {
       //获取视图权限
       viewAuthoritysData:state => state.viewUsers.viewAuthoritysData,
       //身份和api权限
-      identityApiAuthorityRelationsData:state => state.viewUsers.identityApiAuthorityRelationsData,
+      // identityApiAuthorityRelationsData:state => state.viewUsers.identityApiAuthorityRelationsData,
+      identityApiD:state => state.indexUsers.identityApiD,
       //身份设置试图
       identityViewAuthorityRelationsData:state => state.viewUsers.identityViewAuthorityRelationsData
     })
   },
-  created() {
+  async created() {
     this.setidentity()
     //  console.log(this.identitysData,'2222')
     this.setUserData()
     // console.log(this.userDatas,'55555555')
     this.setViewAuthority()
     // console.log(this.viewAuthoritysData,222222)    
-    this.setIdentityApiAuthorityRelation()
-    // console.log(this.identityApiAuthorityRelationsData,'试卷类型')
+    this.add =  await this.setIdentityApiAuthorityRelation()
+    console.log(this.add,'试卷类型')
+    // this.setIdentityApi()
+    // console.log('setIdentityApi',this.identityApiD)
     this.setidentityViewAuthorityRelation()
     // console.log(this.identityViewAuthorityRelationsData,111111111)
   },
@@ -244,6 +249,7 @@ export default {
       setViewAuthority:'viewUsers/setViewAuthority',
       //身份和api权限
       setIdentityApiAuthorityRelation:'viewUsers/setIdentityApiAuthorityRelation',
+      // setIdentityApi:'indexUsers/setIdentityApi',
       //身份设置视图
       setidentityViewAuthorityRelation:'viewUsers/setidentityViewAuthorityRelation'
     }),
