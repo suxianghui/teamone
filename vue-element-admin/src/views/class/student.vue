@@ -5,8 +5,8 @@
       <input v-model="input" placeholder="输入学生姓名" class="input">
       <el-select
         v-model="roomValue"
-        placeholder="请输入教室号"
-        size="mini"
+        placeholder="请选择教室号"
+        size="medium"
       >
         <el-option
           v-for="item in roomData"
@@ -17,8 +17,8 @@
       </el-select>
       <el-select
         v-model="classValue"
-        placeholder="请输入班级"
-        size="mini"
+        placeholder="请选择班级"
+        size="medium"
       >
         <el-option
           v-for="item in classData"
@@ -27,8 +27,12 @@
           :value="item.grade_name"
         />
       </el-select>
-      <button class="search-btn" @click="search">搜索</button>
-      <button class="reset-btn" @click="reset">重置</button>
+      <el-button type="primary" @click="search">搜索</el-button>
+      <!-- <el-botton class="search-btn">搜索</el-botton> -->
+      <el-button type="primary" @click="reset">重置</el-button>
+      <!-- <button class="reset-btn" @click="reset">重置</button> -->
+      <!-- <button class="search-btn" @click="search">搜索</button>
+      <button class="reset-btn" @click="reset">重置</button> -->
     </div>
     <div class="main">
       <el-table
@@ -100,7 +104,8 @@ export default {
       pagenationData: [],
       pageChose: [5, 30, 50, 80, 100, 150, 200],
       pageSize: 30,
-      current: 1
+      current: 1,
+      searchbtn:false
     }
   },
   computed: {
@@ -109,7 +114,14 @@ export default {
     })
   },
   async created() {
-    this.loading;
+    // let obj={
+    //   name:2,
+    //   age:3,
+    //   sex:'女'
+    // }
+    // for(var i in obj){
+    //   if(obj.hasOwnProperty)
+    // }
     await this.getMangerStudent()
     console.log('createdstudentData',this.data.studentData.length)
     this.roomData = await this.getMangerRoom()
@@ -127,6 +139,7 @@ export default {
     }),
     search() {
       // 按条件搜索
+      this.searchbtn = true;
       this.studentInfoShow = true;
       let result=[];
       if(this.input&&this.classValue&&this.roomValue){
@@ -138,16 +151,17 @@ export default {
           return (item.student_name === this.input && item.room_text === this.roomValue) || (item.student_name === this.input && item.grade_name === this.classValue) || (item.room_text === this.roomValue && item.grade_name === this.classValue)
         })
       }else {
-        result = this.data.studentData.filter(item => {
-          return item.student_name === this.input || item.room_text === this.roomValue || item.grade_name === this.classValue
-        })
+        if(this.input =="" && this.classValue =="" && this.roomValue =="" ){
+          this.$message('您还没有输入任何搜索内容');
+        }else{
+          result = this.data.studentData.filter(item => {
+            return item.student_name === this.input || item.room_text === this.roomValue || item.grade_name === this.classValue
+          })
+        }
+        
       }
       this.studentInfo = result
       this.pagenationData = this.studentInfo
-      if(result.length==0){
-        alert('没有查到您要的信息')
-      }
-      
     },
     reset() {
       this.studentInfoShow = false;
@@ -202,7 +216,7 @@ export default {
   .search-wrap .input{
     display: inline-block;
     width:180px;
-    padding: 4px;
+    padding:8px 4px;
     margin-right: 1px;
     outline: none;
     border-radius: 4px;
@@ -211,12 +225,15 @@ export default {
   .el-select{
     display: inline-block;
     /* height:20px!important; */
-    color: red!important;
-    border-radius: 0!important;
+    /* color: red!important;
+    border-radius: 0!important; */
   }
+  /* .el-select.el-select--mini{
+    height: 100px;
+  } */
   .el-input{
-    display: inline-block;
-    height: 100%!important;
+    /* display: inline-block;
+    height: 100%!important; */
   }
   .main{
     width: 100%;
@@ -244,9 +261,8 @@ export default {
     color:#ccc!important;
   }
   .search-btn,.reset-btn{
-    padding: 4px 45px;
-    margin: 0;
-    margin-right:1;
+    width: 111px; 
+    height: 33px;
     font-size: 14px;
     background: #0a3ffd;
     outline: 0;

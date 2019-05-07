@@ -29,6 +29,12 @@ const classesRouter = {
       component: () => import('@/views/class/student'),
       name: 'student',
       meta: { title: 'studentAdmin', noCache: true, view_id: 'main-student' }
+    },
+    {
+      path: 'upload',
+      component: () => import('@/views/class/upload'),
+      name: 'upload',
+      meta: { title: 'upload', noCache: true, view_id: 'main-student' }
     }
   ]
 }

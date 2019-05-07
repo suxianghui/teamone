@@ -22,7 +22,7 @@
 
       <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
         <div class="avatar-wrapper">
-          <img :src="avatar" class="user-avatar">
+          <img :src="image" class="user-avatar">
           <i class="el-icon-caret-bottom" />
         </div>
         <el-dropdown-menu slot="dropdown">
@@ -98,9 +98,9 @@ export default {
     ])
   },
   created(){
-    // this.setAvatar(this.image)
     this.getInfo()
-    // console.log('avatar111',this.userInfo)
+    // console.log('useravatar',this.avatar)
+    this.image=this.avatar?this.avatar:this.image
   },
   methods: {
     // ...mapMutations({
