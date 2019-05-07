@@ -108,6 +108,7 @@ export default {
       //获取身份和api权限关系
       identityApiAuthorityRelationsData: state =>
         state.viewUsers.identityApiAuthorityRelationsData,
+
       totals: state => state.viewUsers.total,
       data: state => state.viewUsers.data,
       pageSize: state => state.viewUsers.pageSize,
@@ -119,11 +120,10 @@ export default {
     this.setidentity();
     this.setApiAuthority();
     this.setIdentityApiAuthorityRelation();
-    // this.add =  await this.setIdentityApiAuthorityRelation()
     this.setViewAuthority();
     this.setidentityViewAuthorityRelation();
     this.list =  await this.del();
-    console.log(this.list,'del')
+    // console.log(this.list,'del')
   },
   methods: {
     ...mapMutations({

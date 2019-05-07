@@ -176,7 +176,7 @@ export default {
 
       idx: 0,//用于切换 添加用户和 更新用户
 
-      add:[]
+      add:[] //请选择api接口权限id
 
     }
   },
@@ -218,9 +218,7 @@ export default {
     this.setViewAuthority()
     // console.log(this.viewAuthoritysData,222222)    
     this.add =  await this.setIdentityApiAuthorityRelation()
-    console.log(this.add,'试卷类型')
-    // this.setIdentityApi()
-    // console.log('setIdentityApi',this.identityApiD)
+    // console.log(this.add,'试卷类型')
     this.setidentityViewAuthorityRelation()
     // console.log(this.identityViewAuthorityRelationsData,111111111)
   },
@@ -249,7 +247,6 @@ export default {
       setViewAuthority:'viewUsers/setViewAuthority',
       //身份和api权限
       setIdentityApiAuthorityRelation:'viewUsers/setIdentityApiAuthorityRelation',
-      // setIdentityApi:'indexUsers/setIdentityApi',
       //身份设置视图
       setidentityViewAuthorityRelation:'viewUsers/setidentityViewAuthorityRelation'
     }),
@@ -296,9 +293,7 @@ export default {
           user_pwd: this.pwd,
           identity_id: this.identityId
         });
-        // console.log(res,7878)
         this.hint(res);
-        // console.log(this.setUpdataUserInfo(),111)
       }
       //清空
       this.userId = '',
@@ -362,18 +357,10 @@ export default {
     //添加视图接口权限
     async view() {
       let obj = {};
-      // obj = this.existingViewValue.find((item,index)=>{
-      //   // console.log(item,this.existingView,'shitu')
-      //   if(item.authority === this.existingView){
-      //      return item
-      //   }
-      // });
        obj = this.existingViewValue.find(item => {
         return item.authority === this.existingView;
       });
-      // console.log(this.existingViewValue,9999999999)
-      // console.log(this.existingView,'shitu') //点击添加的值
-      console.log(obj,888)
+      // console.log(obj,888)
       
       if(!this.existingView){
         this.$message({
@@ -388,7 +375,7 @@ export default {
         view_id:'111' //视图id  
       }) 
       this.hint(res);
-      this.existingView = ''//,
+      this.existingView = ''
       obj.view_id = ''
     },
     //给身份设置视图权限
@@ -429,7 +416,7 @@ export default {
     },
     //重置
     reset(res){
-      console.log(1111)
+      console.log(11111)
     }
   }
 }
@@ -445,9 +432,6 @@ export default {
     font-size:22px;
     font-weight: 500;
     padding:20px 0;
-    // >span{
-    //   color: rgba(0, 0, 0, 0.65)
-    // }
   }
 }
 .addBox {

@@ -150,10 +150,11 @@ const actions = {
             resolve(data.data)
         })
     },
+    //展示身份和api权限
     del({ commit, state }, payload) {
         return new Promise(async (resolve, reject) => {
             let data = await identityApiAuthorityRelation()
-            console.log(data.data,'123132123666')
+            // console.log(data.data,'123132123666')
             resolve(data.data)
         })
     },
@@ -162,14 +163,12 @@ const actions = {
     async setViewAuthority({ commit }, payload) {
         
         let result = await viewAuthority(payload);
-        // console.log(result, '展示视图权限')
         commit('getViewAuthoritys', result)
         return result
     },
     //展示身份和视图权限关系
     async setidentityViewAuthorityRelation({ commit }, payload) {
         let result = await identityViewAuthorityRelation(payload);
-        // console.log(result, '展示身份和视图')
         commit('getIdentityViewAuthorityRelations', result)
         return result
     },
@@ -186,15 +185,6 @@ function pageList(page, data) {
     }
     return data
 }
-
-//循环
-// function loop(data,payload){
-//     for(let key in payolad){
-//         data[key] = payload[key]
-//     }
-//     return data
-// }
-
 // //去重
 function deWeight(data) {
     return data = [...new Set(data)]
