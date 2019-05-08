@@ -107,10 +107,10 @@
         </el-select>
         <el-select v-model="apiJurisdictionId" placeholder="请选择api接口权限id">
           <el-option
-            v-for="item in identityApiAuthorityRelationsData"
-            :key="item.identity_api_authority_relation_id"
+            v-for="item in add"
+            :key="item.api_authority_id"
             :label="item.api_authority_text"
-            :value="item.identity_api_authority_relation_id"
+            :value="item.api_authority_id"
           />
         </el-select>
         <div class="btn">
@@ -176,6 +176,8 @@ export default {
 
       idx: 0,//用于切换 添加用户和 更新用户
 
+      add:[] //请选择api接口权限id
+
     }
   },
   computed: {
@@ -202,20 +204,21 @@ export default {
       //获取视图权限
       viewAuthoritysData:state => state.viewUsers.viewAuthoritysData,
       //身份和api权限
-      identityApiAuthorityRelationsData:state => state.viewUsers.identityApiAuthorityRelationsData,
+      // identityApiAuthorityRelationsData:state => state.viewUsers.identityApiAuthorityRelationsData,
+      identityApiD:state => state.indexUsers.identityApiD,
       //身份设置试图
       identityViewAuthorityRelationsData:state => state.viewUsers.identityViewAuthorityRelationsData
     })
   },
-  created() {
+  async created() {
     this.setidentity()
     //  console.log(this.identitysData,'2222')
     this.setUserData()
     // console.log(this.userDatas,'55555555')
     this.setViewAuthority()
     // console.log(this.viewAuthoritysData,222222)    
-    this.setIdentityApiAuthorityRelation()
-    console.log(this.identityApiAuthorityRelationsData,'试卷类型')
+    this.add =  await this.setIdentityApiAuthorityRelation()
+    // console.log(this.add,'试卷类型')
     this.setidentityViewAuthorityRelation()
     // console.log(this.identityViewAuthorityRelationsData,111111111)
   },
@@ -290,9 +293,7 @@ export default {
           user_pwd: this.pwd,
           identity_id: this.identityId
         });
-        // console.log(res,7878)
         this.hint(res);
-        // console.log(this.setUpdataUserInfo(),111)
       }
       //清空
       this.userId = '',
@@ -356,18 +357,10 @@ export default {
     //添加视图接口权限
     async view() {
       let obj = {};
-      // obj = this.existingViewValue.find((item,index)=>{
-      //   // console.log(item,this.existingView,'shitu')
-      //   if(item.authority === this.existingView){
-      //      return item
-      //   }
-      // });
        obj = this.existingViewValue.find(item => {
         return item.authority === this.existingView;
       });
-      // console.log(this.existingViewValue,9999999999)
-      // console.log(this.existingView,'shitu') //点击添加的值
-      console.log(obj,888)
+      // console.log(obj,888)
       
       if(!this.existingView){
         this.$message({
@@ -382,7 +375,7 @@ export default {
         view_id:'111' //视图id  
       }) 
       this.hint(res);
-      this.existingView = ''//,
+      this.existingView = ''
       obj.view_id = ''
     },
     //给身份设置视图权限
@@ -423,7 +416,7 @@ export default {
     },
     //重置
     reset(res){
-      console.log(1111)
+      console.log(11111)
     }
   }
 }
@@ -439,9 +432,6 @@ export default {
     font-size:22px;
     font-weight: 500;
     padding:20px 0;
-    // >span{
-    //   color: rgba(0, 0, 0, 0.65)
-    // }
   }
 }
 .addBox {

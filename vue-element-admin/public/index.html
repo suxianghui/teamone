@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
     <title><%= webpackConfig.name %></title>
+    <!-- 引入百度统计 -->
     <script>
       var _hmt = _hmt || [];
       (function () {
@@ -15,6 +16,11 @@
         var s = document.getElementsByTagName("script")[0];
         s.parentNode.insertBefore(hm, s);
       })();
+    </script>
+    <!-- 引入错误自动追踪,sentry -->
+    <script src="https://browser.sentry-cdn.com/5.1.1/bundle.min.js" crossorigin="anonymous"></script>
+    <script>
+      Sentry.init({ dsn: 'https://1330ca708a614107937fab6d5dcd6dbd@sentry.io/1449269' });
     </script>
   </head>
   <body>

@@ -73,10 +73,11 @@ const mutations = {
     },
     //获取身份和api权限关系
     getIdentityApiAuthorityRelations(state, payload) {
+        console.log(payload,'123123')
         state.identityApiAuthorityRelationsData = payload.data;
         
         // console.log(payload,'payload')
-        // console.log(state.identityApiAuthorityRelationsData, '获取身份和api')
+        console.log(state.identityApiAuthorityRelationsData, '获取身份和api')
         // deWeight(state.identityApiAuthorityRelationsData)
     },
     //获取视图权限数据
@@ -130,7 +131,7 @@ const actions = {
         commit('getIdentity', result)
         return result
     },
-    //展示api接口数据
+    // 展示api接口数据
     async setApiAuthority({ commit }, payload) {
         let result = await apiAuthority(payload);
         // console.log(result, '展示api')
@@ -138,25 +139,37 @@ const actions = {
         return result
     },
     //展示身份和api权限关系
-    async setIdentityApiAuthorityRelation({ commit }, payload) {
-        console.log('payload',payload)
-        let result = await identityApiAuthorityRelation(payload);
-        // console.log(new Set(result.data), '展示身份和api')
-        commit('getIdentityApiAuthorityRelations', result)
-        return result
+    // async setIdentityApiAuthorityRelation({ commit }, payload) {
+    //     let result = await identityApiAuthorityRelation(payload);
+    //     // console.log(result.data, '展示身份和api')
+    //     commit('getIdentityApiAuthorityRelations', result)
+    //     return result
+    // },
+    setIdentityApiAuthorityRelation({ commit, state }, payload) {
+        return new Promise(async (resolve, reject) => {
+            let data = await apiAuthority()
+            resolve(data.data)
+        })
     },
+    //展示身份和api权限
+    del({ commit, state }, payload) {
+        return new Promise(async (resolve, reject) => {
+            let data = await identityApiAuthorityRelation()
+            // console.log(data.data,'123132123666')
+            resolve(data.data)
+        })
+    },
+
     //获取视图权限
     async setViewAuthority({ commit }, payload) {
         
         let result = await viewAuthority(payload);
-        // console.log(result, '展示视图权限')
         commit('getViewAuthoritys', result)
         return result
     },
     //展示身份和视图权限关系
     async setidentityViewAuthorityRelation({ commit }, payload) {
         let result = await identityViewAuthorityRelation(payload);
-        // console.log(result, '展示身份和视图')
         commit('getIdentityViewAuthorityRelations', result)
         return result
     },
@@ -173,15 +186,6 @@ function pageList(page, data) {
     }
     return data
 }
-
-//循环
-// function loop(data,payload){
-//     for(let key in payolad){
-//         data[key] = payload[key]
-//     }
-//     return data
-// }
-
 // //去重
 function deWeight(data) {
     return data = [...new Set(data)]

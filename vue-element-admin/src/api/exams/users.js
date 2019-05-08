@@ -105,7 +105,6 @@ export function identityApiAuthorityRelation() {
   return request({
     url: '/user/identity_api_authority_relation',
     method: 'get',
-
   })
 }
 
