@@ -7,11 +7,7 @@
         <el-dropdown class="avatar-container right-menu-item">
 
         <div class="avatar-wrapper">
-          <img :src="userInfo.avatar" class="user-avatar">
-          <span class="user_name">{{userInfo.user_name}}</span>
-          <!-- 图片上传到导航     -->
-          <!-- <pan-thumb :image="userInfo.avatar" />
-          <span>{{userInfo.user_name}}</span> -->
+          <img :src="image" class="user-avatar">
           <i class="el-icon-caret-bottom" />
         </div>
 
@@ -111,9 +107,9 @@ export default {
     })
   },
   created(){
-    // this.setAvatar(this.image)
     this.getInfo()
-    // console.log('avatar111',this.userInfo)
+    // console.log('useravatar',this.avatar)
+    this.image=this.avatar?this.avatar:this.image
   },
   methods: {
     // ...mapMutations({

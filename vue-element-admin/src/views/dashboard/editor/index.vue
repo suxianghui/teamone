@@ -1,7 +1,7 @@
 <template>
   <div class="dashboard-editor-container">
     <div class=" clearfix">
-      <pan-thumb :image="userInfo.avatar" style="float: left">
+      <pan-thumb :image="this.avatar?this.avatar:this.image" style="float: left">
         Your roles:
         <span class="pan-info-roles">{{ getInfo.identity_text }}</span>
       </pan-thumb>
@@ -27,7 +27,8 @@ export default {
   components: { PanThumb, GithubCorner },
   data() {
     return {
-      emptyGif: 'https://wpimg.wallstcn.com/0e03b7da-db9e-4819-ba10-9016ddfdaed3'
+      emptyGif: 'https://wpimg.wallstcn.com/0e03b7da-db9e-4819-ba10-9016ddfdaed3',
+      image: 'https://wpimg.wallstcn.com/577965b9-bb9e-4e02-9f0c-095b41417191'
     }
   },
   computed: {
